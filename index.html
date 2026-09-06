@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PVPBattles - Minecraft PvP Server</title>
+    <meta name="description" content="PVPBattles - Minecraft PvP Server">
+    <meta name="theme-color" content="#080b12">
+
+    <title>PVPBattles | Minecraft PvP Server</title>
 
     <style>
         * {
@@ -13,11 +16,29 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #070a10;
+            --bg-soft: #0c111b;
+            --card: rgba(15, 22, 35, 0.78);
+            --border: rgba(88, 166, 255, 0.18);
+            --blue: #58a6ff;
+            --blue-light: #79c0ff;
+            --text: #f0f6fc;
+            --muted: #8b949e;
+            --radius: 18px;
+        }
+
         html {
             scroll-behavior: smooth;
         }
 
         body {
+            min-height: 100vh;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 50% -10%, rgba(88,166,255,.18), transparent 38%),
+                radial-gradient(circle at 90% 40%, rgba(88,166,255,.07), transparent 30%),
+                var(--bg);
             font-family:
                 Inter,
                 system-ui,
@@ -25,478 +46,530 @@
                 BlinkMacSystemFont,
                 "Segoe UI",
                 sans-serif;
-
-            background: #05070b;
-            color: #ffffff;
             overflow-x: hidden;
         }
-
-        /* ===== Background ===== */
 
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-
-            background:
-                radial-gradient(
-                    circle at 50% 20%,
-                    rgba(30, 130, 255, 0.18),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at 10% 80%,
-                    rgba(0, 90, 255, 0.08),
-                    transparent 30%
-                );
-
             pointer-events: none;
-            z-index: -2;
-        }
-
-        .grid {
-            position: fixed;
-            inset: 0;
-
+            opacity: .16;
             background-image:
-                linear-gradient(
-                    rgba(255,255,255,0.025) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255,255,255,0.025) 1px,
-                    transparent 1px
-                );
-
+                linear-gradient(rgba(88,166,255,.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(88,166,255,.08) 1px, transparent 1px);
             background-size: 50px 50px;
-
-            mask-image: linear-gradient(
-                to bottom,
-                black,
-                transparent 85%
-            );
-
-            pointer-events: none;
-            z-index: -1;
+            mask-image: linear-gradient(to bottom, black, transparent 80%);
         }
 
-        /* ===== Navigation ===== */
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-        nav {
+        button,
+        select {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin: auto;
+        }
+
+        /* Header */
+
+        header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-
-            padding: 20px 7%;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            background: rgba(5, 7, 11, 0.7);
-            backdrop-filter: blur(15px);
-
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-
             z-index: 100;
+            backdrop-filter: blur(16px);
+            background: rgba(7, 10, 16, .72);
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+
+        .nav {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
 
         .logo {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: .5px;
         }
 
         .logo span {
-            color: #3aa7ff;
+            color: var(--blue);
         }
 
-        nav a {
-            color: #aaa;
-            text-decoration: none;
-            margin-left: 25px;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--muted);
             font-size: 14px;
-            transition: 0.2s;
+            font-weight: 700;
+            transition: .2s;
         }
 
-        nav a:hover {
-            color: #55c0ff;
+        .nav-links a:hover {
+            color: var(--text);
         }
 
-        /* ===== Hero ===== */
+        .language {
+            appearance: none;
+            color: var(--text);
+            background: #0d1420;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 9px 32px 9px 12px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .menu-button {
+            display: none;
+            width: 42px;
+            height: 42px;
+            color: var(--text);
+            background: #0d1420;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* Hero */
 
         .hero {
             min-height: 100vh;
-
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-
             text-align: center;
+            padding: 120px 0 70px;
+        }
 
-            padding: 120px 20px 80px;
+        .hero-content {
+            width: 100%;
         }
 
         .badge {
-            display: inline-block;
-
-            padding: 8px 16px;
-            margin-bottom: 25px;
-
-            border: 1px solid rgba(85,192,255,0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border: 1px solid var(--border);
             border-radius: 999px;
-
-            background: rgba(40,150,255,0.08);
-
-            color: #55c0ff;
+            background: rgba(88,166,255,.07);
+            color: var(--blue-light);
             font-size: 13px;
-            font-weight: 700;
-
-            animation: float 3s ease-in-out infinite;
+            font-weight: 800;
+            margin-bottom: 25px;
         }
 
         .hero h1 {
-            font-size: clamp(55px, 12vw, 130px);
-            line-height: 0.9;
-
+            font-size: clamp(52px, 10vw, 110px);
+            line-height: .95;
             font-weight: 1000;
-            letter-spacing: -5px;
-
-            background: linear-gradient(
-                135deg,
-                #ffffff,
-                #55c0ff,
-                #258cff
-            );
-
+            letter-spacing: -4px;
+            background: linear-gradient(135deg, #fff, #58a6ff 60%, #79c0ff);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
 
-            margin-bottom: 25px;
+        .hero h2 {
+            margin-top: 24px;
+            font-size: clamp(23px, 4vw, 38px);
+            font-weight: 850;
         }
 
         .hero p {
             max-width: 650px;
-
-            color: #9ba4b3;
-
-            font-size: 18px;
-            line-height: 1.7;
-
-            margin-bottom: 35px;
+            margin: 18px auto 0;
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: clamp(15px, 2vw, 18px);
         }
-
-        /* ===== Buttons ===== */
 
         .buttons {
             display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
             justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
         }
 
         .button {
+            min-height: 48px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
-            min-width: 150px;
-
-            padding: 14px 25px;
-
-            border-radius: 10px;
-
-            text-decoration: none;
-
-            font-weight: 800;
-
-            transition:
-                transform 0.2s,
-                box-shadow 0.2s,
-                background 0.2s;
+            padding: 0 22px;
+            border-radius: 12px;
+            font-weight: 850;
+            font-size: 14px;
+            transition: .2s;
+            cursor: pointer;
         }
 
-        .button:hover {
-            transform: translateY(-3px);
+        .button-primary {
+            color: #06101c;
+            background: var(--blue);
+            box-shadow: 0 0 35px rgba(88,166,255,.2);
         }
 
-        .primary {
-            background: #2494ff;
-            color: white;
-
-            box-shadow:
-                0 0 30px rgba(36,148,255,0.25);
+        .button-primary:hover {
+            transform: translateY(-2px);
+            background: var(--blue-light);
         }
 
-        .primary:hover {
-            background: #43a5ff;
-            box-shadow:
-                0 0 45px rgba(36,148,255,0.4);
+        .button-secondary {
+            color: var(--text);
+            background: rgba(255,255,255,.04);
+            border: 1px solid var(--border);
         }
 
-        .secondary {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
+        .button-secondary:hover {
+            transform: translateY(-2px);
+            border-color: rgba(88,166,255,.45);
         }
 
-        .secondary:hover {
-            background: rgba(255,255,255,0.09);
-        }
-
-        /* ===== Server Card ===== */
+        /* Server Card */
 
         .server-card {
-            margin-top: 55px;
-
-            width: min(550px, 100%);
-
-            padding: 20px;
-
-            border-radius: 16px;
-
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-
-            backdrop-filter: blur(15px);
+            max-width: 650px;
+            margin: 60px auto 0;
+            padding: 22px;
+            text-align: left;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 25px 80px rgba(0,0,0,.25);
         }
 
         .server-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-
-            margin-bottom: 15px;
+            gap: 15px;
+            margin-bottom: 18px;
         }
 
-        .server-name {
+        .server-title {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #7ee787;
+            font-size: 12px;
             font-weight: 800;
         }
 
-        .online {
-            color: #55e68a;
-            font-size: 13px;
-            font-weight: 700;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #3fb950;
+            box-shadow: 0 0 12px rgba(63,185,80,.7);
         }
 
         .ip-box {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(0,0,0,.25);
+            border: 1px solid rgba(255,255,255,.06);
         }
 
         .ip {
             flex: 1;
+            font-size: clamp(16px, 3vw, 21px);
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: var(--blue-light);
+        }
 
-            padding: 13px 15px;
+        .coming {
+            color: var(--blue-light);
+        }
 
-            background: #090d14;
+        .copy-button {
+            border: 0;
             border-radius: 9px;
-
-            color: #55c0ff;
-
-            font-family: monospace;
-            text-align: left;
+            padding: 9px 13px;
+            color: var(--muted);
+            background: rgba(255,255,255,.06);
+            cursor: not-allowed;
         }
 
-        .copy {
-            border: none;
-
-            padding: 13px 16px;
-
-            border-radius: 9px;
-
-            background: #1677d2;
-            color: white;
-
-            cursor: pointer;
-
-            font-weight: 700;
-        }
-
-        .copy:hover {
-            background: #258cff;
-        }
-
-        /* ===== Sections ===== */
+        /* Sections */
 
         section {
-            padding: 100px 7%;
+            padding: 100px 0;
         }
 
-        .section-title {
+        .section-heading {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 45px;
         }
 
-        .section-title h2 {
-            font-size: 42px;
-            margin-bottom: 10px;
+        .section-heading .small {
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        .section-title p {
-            color: #7f8998;
+        .section-heading h2 {
+            margin-top: 10px;
+            font-size: clamp(30px, 5vw, 48px);
         }
 
-        /* ===== Cards ===== */
+        .section-heading p {
+            margin: 14px auto 0;
+            max-width: 600px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
 
         .features {
-            max-width: 1100px;
-            margin: auto;
-
             display: grid;
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
         }
 
         .feature {
-            padding: 30px;
-
-            background: rgba(255,255,255,0.035);
-
-            border: 1px solid rgba(255,255,255,0.07);
-
-            border-radius: 16px;
-
-            transition: 0.25s;
+            padding: 28px;
+            min-height: 210px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: .25s;
         }
 
         .feature:hover {
-            transform: translateY(-6px);
-
-            border-color:
-                rgba(85,192,255,0.3);
-
-            background:
-                rgba(85,192,255,0.05);
+            transform: translateY(-5px);
+            border-color: rgba(88,166,255,.4);
+            box-shadow: 0 20px 50px rgba(0,0,0,.2);
         }
 
-        .icon {
-            font-size: 32px;
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: rgba(88,166,255,.1);
+            font-size: 23px;
             margin-bottom: 20px;
         }
 
         .feature h3 {
+            font-size: 20px;
             margin-bottom: 10px;
         }
 
         .feature p {
-            color: #858e9d;
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        /* Discord */
+
+        .discord {
+            text-align: center;
+        }
+
+        .discord-card {
+            padding: clamp(35px, 7vw, 65px);
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at center, rgba(88,166,255,.13), transparent 65%),
+                var(--card);
+            border: 1px solid var(--border);
+        }
+
+        .discord-card h2 {
+            font-size: clamp(30px, 6vw, 50px);
+        }
+
+        .discord-card p {
+            max-width: 600px;
+            margin: 15px auto 25px;
+            color: var(--muted);
             line-height: 1.7;
         }
 
-        /* ===== CTA ===== */
-
-        .cta {
-            text-align: center;
-
-            max-width: 900px;
-            margin: 50px auto 100px;
-
-            padding: 70px 30px;
-
-            border-radius: 25px;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(36,148,255,0.16),
-                    rgba(255,255,255,0.025)
-                );
-
-            border: 1px solid
-                rgba(85,192,255,0.15);
-        }
-
-        .cta h2 {
-            font-size: 42px;
-            margin-bottom: 15px;
-        }
-
-        .cta p {
-            color: #8d96a5;
-            margin-bottom: 30px;
-        }
-
-        /* ===== Footer ===== */
+        /* Footer */
 
         footer {
-            padding: 35px 7%;
-
-            border-top:
-                1px solid rgba(255,255,255,0.06);
-
-            text-align: center;
-
-            color: #687180;
-
+            padding: 30px 0;
+            border-top: 1px solid rgba(255,255,255,.05);
+            color: var(--muted);
             font-size: 13px;
         }
 
-        /* ===== Animation ===== */
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-5px);
-            }
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
 
-        /* ===== Mobile ===== */
+        /* Mobile */
 
-        @media (max-width: 750px) {
-
-            nav {
-                padding: 17px 5%;
+        @media (max-width: 760px) {
+            .container {
+                width: min(100% - 28px, 1120px);
             }
 
-            nav div:last-child {
+            .nav {
+                height: 64px;
+            }
+
+            .nav-right {
+                gap: 10px;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 64px;
+                left: 14px;
+                right: 14px;
                 display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+                padding: 12px;
+                background: rgba(10,15,24,.97);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                backdrop-filter: blur(20px);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 13px;
+                border-radius: 9px;
+            }
+
+            .nav-links a:hover {
+                background: rgba(88,166,255,.08);
+            }
+
+            .menu-button {
+                display: block;
+            }
+
+            .language {
+                max-width: 130px;
             }
 
             .hero {
-                padding-top: 130px;
+                min-height: auto;
+                padding: 130px 0 70px;
             }
 
             .hero h1 {
-                letter-spacing: -3px;
+                letter-spacing: -2px;
             }
 
-            .hero p {
-                font-size: 16px;
+            .buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .server-card {
+                margin-top: 45px;
+                padding: 17px;
+            }
+
+            .ip-box {
+                padding: 13px;
+            }
+
+            .copy-button {
+                display: none;
+            }
+
+            section {
+                padding: 70px 0;
             }
 
             .features {
                 grid-template-columns: 1fr;
             }
 
-            section {
-                padding: 75px 5%;
+            .feature {
+                min-height: auto;
             }
 
-            .section-title h2,
-            .cta h2 {
-                font-size: 32px;
-            }
-
-            .ip-box {
+            .footer-inner {
                 flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (min-width: 761px) and (max-width: 1000px) {
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1600px) {
+            .container {
+                width: min(1280px, calc(100% - 80px));
             }
 
-            .ip {
-                width: 100%;
+            .hero {
+                min-height: 900px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
             }
 
-            .copy {
-                width: 100%;
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
             }
         }
     </style>
@@ -504,218 +577,233 @@
 
 <body>
 
-    <div class="grid"></div>
+<header>
+    <div class="container nav">
 
-    <!-- Navigation -->
-    <nav>
-        <div class="logo">
+        <a href="#" class="logo">
             PVP<span>Battles</span>
-        </div>
+        </a>
 
-        <div>
-            <a href="#home">Home</a>
-            <a href="#features">Features</a>
-            <a href="#discord">Discord</a>
-        </div>
-    </nav>
+        <div class="nav-right">
 
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" data-i18n="nav_home">ホーム</a>
+                <a href="#features" data-i18n="nav_features">特徴</a>
+                <a href="#discord" data-i18n="nav_discord">Discord</a>
+            </nav>
+
+            <select class="language" id="languageSelect" aria-label="Language">
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="zh">🇨🇳 简体中文</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
+
+            <button
+                class="menu-button"
+                id="menuButton"
+                aria-label="Open menu"
+                aria-expanded="false"
+            >
+                ☰
+            </button>
+
+        </div>
+    </div>
+</header>
+
+<main>
 
     <!-- Hero -->
-    <main id="home">
 
-        <div class="hero">
+    <section class="hero" id="home">
+        <div class="container hero-content">
 
-            <div class="badge">
-                ⚔️ MINECRAFT PVP SERVER
+            <div class="badge" data-i18n="badge">
+                ⚔️ MINECRAFT PvP SERVER
             </div>
 
             <h1>PVPBattles</h1>
 
-            <p>
-                Fight. Compete. Become the best.<br>
-                A Minecraft PvP server built for players who love competition.
+            <h2 data-i18n="hero_title">
+                Minecraftで、本気のPvPを。
+            </h2>
+
+            <p data-i18n="hero_description">
+                仲間と戦い、ライバルと競い、頂点を目指そう。
             </p>
 
             <div class="buttons">
-
-                <a
-                    class="button primary"
-                    href="#server"
-                >
-                    🎮 PLAY NOW
+                <a href="#server" class="button button-primary" data-i18n="play">
+                    今すぐプレイ
                 </a>
 
-                <a
-                    class="button secondary"
-                    href="#features"
-                >
-                    LEARN MORE
+                <a href="#features" class="button button-secondary" data-i18n="learn">
+                    特徴を見る
                 </a>
-
             </div>
 
-
             <!-- Server -->
-            <div
-                class="server-card"
-                id="server"
-            >
+
+            <div class="server-card" id="server">
 
                 <div class="server-top">
+                    <div class="server-title" data-i18n="server_info">
+                        SERVER INFO
+                    </div>
 
-                    <span class="server-name">
-                        PVPBattles Network
-                    </span>
-
-                    <span class="online">
-                        ● ONLINE
-                    </span>
-
+                    <div class="status">
+                        <span class="status-dot"></span>
+                        <span data-i18n="status">COMING SOON</span>
+                    </div>
                 </div>
 
                 <div class="ip-box">
-
-                    <div
-                        class="ip"
-                        id="server-ip"
-                    >
-                        play.pvpbattles.net
+                    <div class="ip coming" data-i18n="coming_soon">
+                        COMING SOON
                     </div>
 
                     <button
-                        class="copy"
-                        onclick="copyIP()"
+                        class="copy-button"
+                        disabled
+                        data-i18n="copy"
                     >
-                        COPY
+                        コピー
                     </button>
-
                 </div>
 
             </div>
 
         </div>
+    </section>
 
+    <!-- Features -->
 
-        <!-- Features -->
-        <section id="features">
+    <section id="features">
+        <div class="container">
 
-            <div class="section-title">
+            <div class="section-heading">
+                <div class="small" data-i18n="features_small">
+                    FEATURES
+                </div>
 
-                <h2>Why PVPBattles?</h2>
+                <h2 data-i18n="features_title">
+                    PVPBattlesの特徴
+                </h2>
 
-                <p>
-                    Built for competitive Minecraft players.
+                <p data-i18n="features_description">
+                    PvPを楽しむための環境を、シンプルに。
                 </p>
-
             </div>
-
 
             <div class="features">
 
-                <div class="feature">
+                <article class="feature">
+                    <div class="feature-icon">⚔️</div>
 
-                    <div class="icon">⚔️</div>
+                    <h3 data-i18n="feature1_title">
+                        PvPに特化
+                    </h3>
 
-                    <h3>Competitive PvP</h3>
-
-                    <p>
-                        Test your skills against other players
-                        and prove that you're the best.
+                    <p data-i18n="feature1_text">
+                        戦闘を楽しむためのPvPサーバーを目指しています。
                     </p>
+                </article>
 
-                </div>
+                <article class="feature">
+                    <div class="feature-icon">🏆</div>
 
+                    <h3 data-i18n="feature2_title">
+                        ランキング
+                    </h3>
 
-                <div class="feature">
-
-                    <div class="icon">🏆</div>
-
-                    <h3>Climb the Leaderboard</h3>
-
-                    <p>
-                        Fight your way to the top and become
-                        one of the best players on PVPBattles.
+                    <p data-i18n="feature2_text">
+                        プレイヤー同士で競い合い、頂点を目指そう。
                     </p>
+                </article>
 
-                </div>
+                <article class="feature">
+                    <div class="feature-icon">🌐</div>
 
+                    <h3 data-i18n="feature3_title">
+                        コミュニティ
+                    </h3>
 
-                <div class="feature">
-
-                    <div class="icon">🌐</div>
-
-                    <h3>Crossplay</h3>
-
-                    <p>
-                        Play with friends across supported
-                        Minecraft editions.
+                    <p data-i18n="feature3_text">
+                        Discordを通じてプレイヤー同士で交流できます。
                     </p>
-
-                </div>
+                </article>
 
             </div>
+        </div>
+    </section>
 
-        </section>
+    <!-- Discord -->
 
+    <section class="discord" id="discord">
+        <div class="container">
 
-        <!-- Discord -->
-        <section id="discord">
+            <div class="discord-card">
 
-            <div class="cta">
+                <h2 data-i18n="discord_title">
+                    PVPBattlesに参加しよう
+                </h2>
 
-                <h2>Join the Community</h2>
-
-                <p>
-                    Stay updated, meet other players,
-                    and join the PVPBattles community.
+                <p data-i18n="discord_description">
+                    最新情報やサーバーのお知らせはDiscordでチェック！
                 </p>
 
                 <a
-                    class="button primary"
-                    href="https://discord.gg/"
+                    href="https://discord.gg/tyCm7xx4jz"
                     target="_blank"
+                    rel="noopener noreferrer"
+                    class="button button-primary"
+                    data-i18n="discord_button"
                 >
-                    💬 JOIN DISCORD
+                    Discordに参加
                 </a>
 
             </div>
 
-        </section>
+        </div>
+    </section>
 
-    </main>
+</main>
 
+<footer>
+    <div class="container footer-inner">
+        <div>
+            © <span id="year"></span> PVPBattles
+        </div>
 
-    <!-- Footer -->
-    <footer>
+        <div data-i18n="footer">
+            Minecraft PvP Community
+        </div>
+    </div>
+</footer>
 
-        © 2026 PVPBattles.
-        All rights reserved.
+<script>
+    const translations = {
 
-    </footer>
+        ja: {
+            nav_home: "ホーム",
+            nav_features: "特徴",
+            nav_discord: "Discord",
 
+            badge: "⚔️ MINECRAFT PvP SERVER",
+            hero_title: "Minecraftで、本気のPvPを。",
+            hero_description: "仲間と戦い、ライバルと競い、頂点を目指そう。",
+            play: "今すぐプレイ",
+            learn: "特徴を見る",
 
-    <script>
+            server_info: "SERVER INFO",
+            status: "COMING SOON",
+            coming_soon: "COMING SOON",
+            copy: "コピー",
 
-        function copyIP() {
-
-            const ip =
-                document.getElementById("server-ip")
-                .textContent
-                .trim();
-
-            navigator.clipboard.writeText(ip);
-
-            const button =
-                document.querySelector(".copy");
-
-            button.textContent = "COPIED!";
-
-            setTimeout(() => {
-                button.textContent = "COPY";
-            }, 1500);
-        }
-
-    </script>
-
-</body>
-</html>
+            features_small: "FEATURES",
+            feature           

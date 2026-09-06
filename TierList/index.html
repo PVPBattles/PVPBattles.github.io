@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="PVPBattles TierList">
+
+    <title>PVPBattles - TierList</title>
+
+    <style>
+        :root {
+            --bg: #080b10;
+            --bar: #0a0e14;
+            --border: rgba(255, 255, 255, 0.09);
+            --text: #f5f7fa;
+            --muted: #9ca8b7;
+            --blue: #55c0ff;
+            --card: #101722;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            background: var(--bg);
+            color: var(--text);
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* HEADER */
+
+        .site-header {
+            width: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 24px 20px;
+        }
+
+        .header-image {
+            display: block;
+
+            width: min(760px, 92vw);
+            height: auto;
+            max-height: 180px;
+
+            object-fit: contain;
+        }
+
+        /* NAV */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            width: 100%;
+
+            background: rgba(10, 14, 20, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            width: min(1100px, 100%);
+            min-height: 64px;
+
+            margin: 0 auto;
+            padding: 0 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .nav-link {
+            padding: 12px 18px;
+
+            border-radius: 9px;
+
+            color: #cbd4df;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: white;
+            background: rgba(85, 192, 255, 0.09);
+        }
+
+        .nav-link.active {
+            color: var(--blue);
+        }
+
+        /* MAIN */
+
+        main {
+            width: min(900px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 85px 0 110px;
+        }
+
+        .title {
+            text-align: center;
+        }
+
+        .title h1 {
+            margin: 0;
+
+            font-size: clamp(38px, 7vw, 62px);
+            letter-spacing: -2px;
+        }
+
+        .title h1 span {
+            color: var(--blue);
+        }
+
+        .title p {
+            max-width: 600px;
+
+            margin: 16px auto 0;
+
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* TIER LIST */
+
+        .tier-list {
+            margin-top: 50px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tier {
+            min-height: 80px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
+            border-radius: 13px;
+
+            font-size: clamp(24px, 5vw, 34px);
+            font-weight: 900;
+            letter-spacing: 1px;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .tier:hover {
+            transform: translateX(5px);
+            border-color: rgba(85, 192, 255, 0.35);
+        }
+
+        .tier.ht {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(85, 192, 255, 0.13),
+                    var(--card)
+                );
+        }
+
+        .tier.lt {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.045),
+                    var(--card)
+                );
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 38px 20px;
+
+            border-top: 1px solid var(--border);
+
+            text-align: center;
+
+            color: #6f7a88;
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .site-header {
+                padding: 18px 14px;
+            }
+
+            .header-image {
+                width: 94vw;
+                max-height: 130px;
+            }
+
+            .nav-inner {
+                min-height: 58px;
+
+                padding: 0 8px;
+
+                overflow-x: auto;
+
+                justify-content: flex-start;
+            }
+
+            .nav-links {
+                width: max-content;
+                margin: 0 auto;
+            }
+
+            .nav-link {
+                padding: 10px 13px;
+                font-size: 14px;
+            }
+
+            main {
+                padding-top: 65px;
+            }
+
+            .tier {
+                min-height: 70px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <img
+        class="header-image"
+        src="/assets/header.png"
+        alt="PVPBattles"
+    >
+</header>
+
+<nav class="navbar">
+    <div class="nav-inner">
+
+        <div class="nav-links">
+
+            <a class="nav-link" href="/home/">
+                Home
+            </a>
+
+            <a
+                class="nav-link"
+                href="https://discord.gg/tyCm7xx4jz"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Discord
+            </a>
+
+            <a class="nav-link active" href="/tierlist/">
+                TierList
+            </a>
+
+            <a class="nav-link" href="/home/#support">
+                Support
+            </a>
+
+        </div>
+
+    </div>
+</nav>
+
+<main>
+
+    <div class="title">
+
+        <h1>
+            Tier<span>List</span>
+        </h1>
+
+        <p>
+            PVPBattles TierList
+        </p>
+
+    </div>
+
+    <div class="tier-list">
+
+        <div class="tier ht">
+            HT1
+        </div>
+
+        <div class="tier ht">
+            HT2
+        </div>
+
+        <div class="tier ht">
+            HT3
+        </div>
+
+        <div class="tier ht">
+            HT4
+        </div>
+
+        <div class="tier ht">
+            HT5
+        </div>
+
+        <div class="tier lt">
+            LT1
+        </div>
+
+        <div class="tier lt">
+            LT2
+        </div>
+
+        <div class="tier lt">
+            LT3
+        </div>
+
+        <div class="tier lt">
+            LT4
+        </div>
+
+        <div class="tier lt">
+            LT5
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    © PVPBattles. All rights reserved.
+</footer>
+
+</body>
+</html>

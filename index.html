@@ -4,28 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="PVPBattles - Minecraft PvP Server">
-    <meta name="theme-color" content="#080b12">
-
-    <title>PVPBattles | Minecraft PvP Server</title>
+    <title>PVPBattles</title>
+    <meta name="description" content="PVPBattles - Competitive Minecraft PvP Server">
 
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg: #070a10;
-            --bg-soft: #0c111b;
-            --card: rgba(15, 22, 35, 0.78);
-            --border: rgba(88, 166, 255, 0.18);
-            --blue: #58a6ff;
-            --blue-light: #79c0ff;
-            --text: #f0f6fc;
-            --muted: #8b949e;
-            --radius: 18px;
         }
 
         html {
@@ -33,33 +19,15 @@
         }
 
         body {
-            min-height: 100vh;
-            color: var(--text);
-            background:
-                radial-gradient(circle at 50% -10%, rgba(88,166,255,.18), transparent 38%),
-                radial-gradient(circle at 90% 40%, rgba(88,166,255,.07), transparent 30%),
-                var(--bg);
             font-family:
                 Inter,
-                system-ui,
                 -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
                 sans-serif;
+            background: #05070b;
+            color: #ffffff;
             overflow-x: hidden;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            opacity: .16;
-            background-image:
-                linear-gradient(rgba(88,166,255,.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(88,166,255,.08) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: linear-gradient(to bottom, black, transparent 80%);
         }
 
         a {
@@ -72,9 +40,38 @@
             font: inherit;
         }
 
-        .container {
-            width: min(1120px, calc(100% - 40px));
-            margin: auto;
+        /* Background */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(30, 144, 255, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 0% 100%,
+                    rgba(0, 102, 255, 0.08),
+                    transparent 30%
+                ),
+                #05070b;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.15;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
         }
 
         /* Header */
@@ -84,88 +81,88 @@
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 100;
+            height: 72px;
+            z-index: 1000;
+            background: rgba(5, 7, 11, 0.78);
             backdrop-filter: blur(16px);
-            background: rgba(7, 10, 16, .72);
-            border-bottom: 1px solid rgba(255,255,255,.05);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
 
-        .nav {
-            height: 72px;
+        .header-inner {
+            width: min(1200px, calc(100% - 40px));
+            height: 100%;
+            margin: auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
         }
 
         .logo {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 900;
-            letter-spacing: .5px;
+            letter-spacing: -0.5px;
         }
 
         .logo span {
-            color: var(--blue);
+            color: #55c0ff;
         }
 
-        .nav-right {
+        nav {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 26px;
         }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .nav-links a {
-            color: var(--muted);
+        nav a {
+            color: #aeb8c7;
             font-size: 14px;
             font-weight: 700;
-            transition: .2s;
+            transition: 0.2s;
         }
 
-        .nav-links a:hover {
-            color: var(--text);
+        nav a:hover {
+            color: #ffffff;
         }
 
         .language {
-            appearance: none;
-            color: var(--text);
-            background: #0d1420;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 9px 32px 9px 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.04);
+            color: #ffffff;
+            border-radius: 9px;
+            padding: 8px 10px;
             cursor: pointer;
             outline: none;
         }
 
+        .language option {
+            background: #0b1018;
+            color: white;
+        }
+
         .menu-button {
             display: none;
-            width: 42px;
-            height: 42px;
-            color: var(--text);
-            background: #0d1420;
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            border: 0;
+            background: transparent;
+            color: white;
+            font-size: 26px;
             cursor: pointer;
-            font-size: 20px;
         }
 
         /* Hero */
 
         .hero {
             min-height: 100vh;
+            width: min(1200px, calc(100% - 40px));
+            margin: auto;
+            padding-top: 72px;
             display: flex;
             align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 120px 0 70px;
         }
 
         .hero-content {
-            width: 100%;
+            max-width: 900px;
         }
 
         .badge {
@@ -173,293 +170,290 @@
             align-items: center;
             gap: 8px;
             padding: 8px 14px;
-            border: 1px solid var(--border);
+            margin-bottom: 22px;
+            border: 1px solid rgba(85,192,255,0.22);
             border-radius: 999px;
-            background: rgba(88,166,255,.07);
-            color: var(--blue-light);
+            background: rgba(85,192,255,0.07);
+            color: #7ed0ff;
             font-size: 13px;
             font-weight: 800;
-            margin-bottom: 25px;
+        }
+
+        .badge::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #55c0ff;
+            box-shadow: 0 0 12px #55c0ff;
         }
 
         .hero h1 {
-            font-size: clamp(52px, 10vw, 110px);
-            line-height: .95;
-            font-weight: 1000;
-            letter-spacing: -4px;
-            background: linear-gradient(135deg, #fff, #58a6ff 60%, #79c0ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: clamp(52px, 9vw, 105px);
+            line-height: 0.95;
+            font-weight: 950;
+            letter-spacing: -5px;
+            margin-bottom: 28px;
         }
 
-        .hero h2 {
-            margin-top: 24px;
-            font-size: clamp(23px, 4vw, 38px);
-            font-weight: 850;
+        .hero h1 span {
+            color: #55c0ff;
         }
 
         .hero p {
-            max-width: 650px;
-            margin: 18px auto 0;
-            color: var(--muted);
+            max-width: 720px;
+            margin: auto;
+            color: #9ca8b8;
+            font-size: clamp(16px, 2vw, 19px);
             line-height: 1.8;
-            font-size: clamp(15px, 2vw, 18px);
         }
 
         .buttons {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
             gap: 12px;
-            margin-top: 32px;
+            flex-wrap: wrap;
+            margin-top: 34px;
         }
 
         .button {
             min-height: 48px;
+            padding: 0 22px;
+            border-radius: 10px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0 22px;
-            border-radius: 12px;
-            font-weight: 850;
+            font-weight: 800;
             font-size: 14px;
-            transition: .2s;
-            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.2s;
         }
 
         .button-primary {
-            color: #06101c;
-            background: var(--blue);
-            box-shadow: 0 0 35px rgba(88,166,255,.2);
+            background: #55c0ff;
+            color: #041018;
+            border-color: #55c0ff;
         }
 
-        .button-primary:hover {
+        .button-primary:hover:not(:disabled) {
             transform: translateY(-2px);
-            background: var(--blue-light);
+            box-shadow: 0 10px 35px rgba(85,192,255,0.2);
         }
 
         .button-secondary {
-            color: var(--text);
-            background: rgba(255,255,255,.04);
-            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.04);
+            color: #ffffff;
         }
 
         .button-secondary:hover {
-            transform: translateY(-2px);
-            border-color: rgba(88,166,255,.45);
+            background: rgba(255,255,255,0.08);
         }
 
-        /* Server Card */
-
-        .server-card {
-            max-width: 650px;
-            margin: 60px auto 0;
-            padding: 22px;
-            text-align: left;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            backdrop-filter: blur(14px);
-            box-shadow: 0 25px 80px rgba(0,0,0,.25);
-        }
-
-        .server-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 18px;
-        }
-
-        .server-title {
-            font-size: 13px;
-            color: var(--muted);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            color: #7ee787;
-            font-size: 12px;
-            font-weight: 800;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #3fb950;
-            box-shadow: 0 0 12px rgba(63,185,80,.7);
-        }
-
-        .ip-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px;
-            border-radius: 12px;
-            background: rgba(0,0,0,.25);
-            border: 1px solid rgba(255,255,255,.06);
-        }
-
-        .ip {
-            flex: 1;
-            font-size: clamp(16px, 3vw, 21px);
-            font-weight: 900;
-            letter-spacing: 1px;
-            color: var(--blue-light);
-        }
-
-        .coming {
-            color: var(--blue-light);
-        }
-
-        .copy-button {
-            border: 0;
-            border-radius: 9px;
-            padding: 9px 13px;
-            color: var(--muted);
-            background: rgba(255,255,255,.06);
+        .button:disabled {
             cursor: not-allowed;
+            opacity: 0.55;
         }
 
         /* Sections */
 
         section {
-            padding: 100px 0;
+            width: min(1200px, calc(100% - 40px));
+            margin: auto;
+            padding: 110px 0;
         }
 
         .section-heading {
             text-align: center;
-            margin-bottom: 45px;
+            margin-bottom: 48px;
         }
 
-        .section-heading .small {
-            color: var(--blue);
+        .section-heading .eyebrow {
+            color: #55c0ff;
             font-size: 12px;
             font-weight: 900;
             letter-spacing: 2px;
             text-transform: uppercase;
+            margin-bottom: 12px;
         }
 
         .section-heading h2 {
-            margin-top: 10px;
-            font-size: clamp(30px, 5vw, 48px);
+            font-size: clamp(32px, 5vw, 52px);
+            letter-spacing: -2px;
+            margin-bottom: 14px;
         }
 
         .section-heading p {
-            margin: 14px auto 0;
-            max-width: 600px;
-            color: var(--muted);
+            color: #8d99aa;
+            max-width: 650px;
+            margin: auto;
             line-height: 1.7;
         }
 
-        .features {
+        /* Server */
+
+        .server-card {
+            max-width: 850px;
+            margin: auto;
+            padding: 34px;
+            border-radius: 18px;
+            background: linear-gradient(
+                145deg,
+                rgba(255,255,255,0.06),
+                rgba(255,255,255,0.025)
+            );
+            border: 1px solid rgba(255,255,255,0.08);
+            text-align: center;
+        }
+
+        .server-status {
+            color: #55c0ff;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+        }
+
+        .server-ip {
+            font-size: clamp(22px, 5vw, 38px);
+            font-weight: 900;
+            margin-bottom: 22px;
+        }
+
+        .server-ip span {
+            color: #677386;
+        }
+
+        /* Features */
+
+        .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
+            gap: 16px;
         }
 
         .feature {
             padding: 28px;
             min-height: 210px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            transition: .25s;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.07);
+            transition: 0.25s;
         }
 
         .feature:hover {
             transform: translateY(-5px);
-            border-color: rgba(88,166,255,.4);
-            box-shadow: 0 20px 50px rgba(0,0,0,.2);
+            border-color: rgba(85,192,255,0.3);
+            background: rgba(85,192,255,0.045);
         }
 
         .feature-icon {
-            width: 48px;
-            height: 48px;
-            display: grid;
-            place-items: center;
-            border-radius: 13px;
-            background: rgba(88,166,255,.1);
-            font-size: 23px;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(85,192,255,0.1);
+            font-size: 22px;
             margin-bottom: 20px;
         }
 
         .feature h3 {
-            font-size: 20px;
+            font-size: 18px;
             margin-bottom: 10px;
         }
 
         .feature p {
-            color: var(--muted);
-            line-height: 1.7;
+            color: #8d99aa;
             font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* TierList */
+
+        .tier-section {
+            position: relative;
+        }
+
+        .tier-list {
+            max-width: 700px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .tier {
+            min-height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            font-size: 20px;
+            font-weight: 950;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+
+        .tier:hover {
+            transform: scale(1.015);
+            border-color: rgba(85,192,255,0.35);
+            background: rgba(85,192,255,0.08);
         }
 
         /* Discord */
 
-        .discord {
-            text-align: center;
-        }
-
         .discord-card {
-            padding: clamp(35px, 7vw, 65px);
-            border-radius: 24px;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            padding: 55px 30px;
+            border-radius: 20px;
             background:
-                radial-gradient(circle at center, rgba(88,166,255,.13), transparent 65%),
-                var(--card);
-            border: 1px solid var(--border);
+                radial-gradient(
+                    circle at center,
+                    rgba(85,192,255,0.12),
+                    transparent 65%
+                ),
+                rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.08);
         }
 
         .discord-card h2 {
-            font-size: clamp(30px, 6vw, 50px);
+            font-size: clamp(30px, 5vw, 48px);
+            margin-bottom: 14px;
         }
 
         .discord-card p {
-            max-width: 600px;
-            margin: 15px auto 25px;
-            color: var(--muted);
+            color: #929eae;
             line-height: 1.7;
+            margin-bottom: 26px;
         }
 
         /* Footer */
 
         footer {
-            padding: 30px 0;
-            border-top: 1px solid rgba(255,255,255,.05);
-            color: var(--muted);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 30px 20px;
+            text-align: center;
+            color: #667386;
             font-size: 13px;
-        }
-
-        .footer-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
         }
 
         /* Mobile */
 
-        @media (max-width: 760px) {
-            .container {
-                width: min(100% - 28px, 1120px);
-            }
-
-            .nav {
+        @media (max-width: 800px) {
+            header {
                 height: 64px;
             }
 
-            .nav-right {
-                gap: 10px;
+            .header-inner {
+                width: min(100% - 28px, 1200px);
             }
 
-            .nav-links {
+            nav {
                 position: absolute;
                 top: 64px;
                 left: 14px;
@@ -469,106 +463,78 @@
                 align-items: stretch;
                 gap: 4px;
                 padding: 12px;
-                background: rgba(10,15,24,.97);
-                border: 1px solid var(--border);
                 border-radius: 14px;
-                backdrop-filter: blur(20px);
+                background: rgba(8,11,17,0.97);
+                border: 1px solid rgba(255,255,255,0.08);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.4);
             }
 
-            .nav-links.open {
+            nav.open {
                 display: flex;
             }
 
-            .nav-links a {
+            nav a {
                 padding: 13px;
-                border-radius: 9px;
+                border-radius: 8px;
             }
 
-            .nav-links a:hover {
-                background: rgba(88,166,255,.08);
+            nav a:hover {
+                background: rgba(255,255,255,0.05);
+            }
+
+            .language {
+                margin: 5px;
             }
 
             .menu-button {
                 display: block;
             }
 
-            .language {
-                max-width: 130px;
-            }
-
             .hero {
-                min-height: auto;
-                padding: 130px 0 70px;
+                width: min(100% - 28px, 1200px);
             }
 
             .hero h1 {
-                letter-spacing: -2px;
-            }
-
-            .buttons {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .button {
-                width: 100%;
-            }
-
-            .server-card {
-                margin-top: 45px;
-                padding: 17px;
-            }
-
-            .ip-box {
-                padding: 13px;
-            }
-
-            .copy-button {
-                display: none;
+                letter-spacing: -3px;
             }
 
             section {
-                padding: 70px 0;
+                width: min(100% - 28px, 1200px);
+                padding: 80px 0;
             }
 
-            .features {
+            .features-grid {
                 grid-template-columns: 1fr;
             }
 
-            .feature {
-                min-height: auto;
-            }
-
-            .footer-inner {
-                flex-direction: column;
-                text-align: center;
+            .server-card {
+                padding: 26px 18px;
             }
         }
 
-        @media (min-width: 761px) and (max-width: 1000px) {
-            .features {
+        @media (min-width: 801px) and (max-width: 1100px) {
+            .features-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
         @media (min-width: 1600px) {
-            .container {
-                width: min(1280px, calc(100% - 80px));
+            .header-inner,
+            .hero,
+            section {
+                width: min(1400px, calc(100% - 80px));
             }
 
-            .hero {
-                min-height: 900px;
+            .features-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
-
             *,
             *::before,
             *::after {
+                scroll-behavior: auto !important;
                 transition: none !important;
             }
         }
@@ -578,41 +544,40 @@
 <body>
 
 <header>
-    <div class="container nav">
+    <div class="header-inner">
 
-        <a href="#" class="logo">
+        <a href="#home" class="logo">
             PVP<span>Battles</span>
         </a>
 
-        <div class="nav-right">
+        <nav id="nav">
+            <a href="#home" data-i18n="navHome">ホーム</a>
+            <a href="#features" data-i18n="navFeatures">特徴</a>
+            <a href="#tierlist" data-i18n="navTier">TierList</a>
+            <a href="#server" data-i18n="navServer">サーバー</a>
+            <a href="#discord" data-i18n="navDiscord">Discord</a>
 
-            <nav class="nav-links" id="navLinks">
-                <a href="#home" data-i18n="nav_home">ホーム</a>
-                <a href="#features" data-i18n="nav_features">特徴</a>
-                <a href="#discord" data-i18n="nav_discord">Discord</a>
-            </nav>
-
-            <select class="language" id="languageSelect" aria-label="Language">
+            <select class="language" id="language">
                 <option value="ja">🇯🇵 日本語</option>
                 <option value="en">🇺🇸 English</option>
                 <option value="ko">🇰🇷 한국어</option>
-                <option value="zh">🇨🇳 简体中文</option>
+                <option value="zh">🇨🇳 中文</option>
                 <option value="es">🇪🇸 Español</option>
                 <option value="fr">🇫🇷 Français</option>
                 <option value="de">🇩🇪 Deutsch</option>
                 <option value="pt">🇧🇷 Português</option>
             </select>
+        </nav>
 
-            <button
-                class="menu-button"
-                id="menuButton"
-                aria-label="Open menu"
-                aria-expanded="false"
-            >
-                ☰
-            </button>
+        <button
+            class="menu-button"
+            id="menuButton"
+            type="button"
+            aria-label="Menu"
+        >
+            ☰
+        </button>
 
-        </div>
     </div>
 </header>
 
@@ -621,189 +586,230 @@
     <!-- Hero -->
 
     <section class="hero" id="home">
-        <div class="container hero-content">
+        <div class="hero-content">
 
             <div class="badge" data-i18n="badge">
-                ⚔️ MINECRAFT PvP SERVER
+                JAPAN PvP SERVER
             </div>
 
-            <h1>PVPBattles</h1>
+            <h1>
+                PVP<span>Battles</span>
+            </h1>
 
-            <h2 data-i18n="hero_title">
-                Minecraftで、本気のPvPを。
-            </h2>
-
-            <p data-i18n="hero_description">
-                仲間と戦い、ライバルと競い、頂点を目指そう。
+            <p data-i18n="heroText">
+                日本から快適にプレイできる、PvPに特化したMinecraftサーバー。
+                低遅延・カスタムUI・TierListなど、競技性と遊びやすさを追求。
             </p>
 
             <div class="buttons">
-                <a href="#server" class="button button-primary" data-i18n="play">
+
+                <button
+                    class="button button-primary"
+                    type="button"
+                    disabled
+                    data-i18n="play"
+                >
                     今すぐプレイ
+                </button>
+
+                <a
+                    href="#features"
+                    class="button button-secondary"
+                    data-i18n="learn"
+                >
+                    詳しく見る
                 </a>
-
-                <a href="#features" class="button button-secondary" data-i18n="learn">
-                    特徴を見る
-                </a>
-            </div>
-
-            <!-- Server -->
-
-            <div class="server-card" id="server">
-
-                <div class="server-top">
-                    <div class="server-title" data-i18n="server_info">
-                        SERVER INFO
-                    </div>
-
-                    <div class="status">
-                        <span class="status-dot"></span>
-                        <span data-i18n="status">COMING SOON</span>
-                    </div>
-                </div>
-
-                <div class="ip-box">
-                    <div class="ip coming" data-i18n="coming_soon">
-                        COMING SOON
-                    </div>
-
-                    <button
-                        class="copy-button"
-                        disabled
-                        data-i18n="copy"
-                    >
-                        コピー
-                    </button>
-                </div>
 
             </div>
 
         </div>
+    </section>
+
+    <!-- Server -->
+
+    <section id="server">
+
+        <div class="section-heading">
+            <div class="eyebrow" data-i18n="serverEyebrow">
+                SERVER
+            </div>
+
+            <h2 data-i18n="serverTitle">
+                サーバー
+            </h2>
+
+            <p data-i18n="serverText">
+                PVPBattlesは現在準備中です。
+            </p>
+        </div>
+
+        <div class="server-card">
+
+            <div class="server-status" data-i18n="serverStatus">
+                COMING SOON
+            </div>
+
+            <div class="server-ip">
+                <span>COMING SOON</span>
+            </div>
+
+        </div>
+
     </section>
 
     <!-- Features -->
 
     <section id="features">
-        <div class="container">
 
-            <div class="section-heading">
-                <div class="small" data-i18n="features_small">
-                    FEATURES
-                </div>
+        <div class="section-heading">
 
-                <h2 data-i18n="features_title">
-                    PVPBattlesの特徴
-                </h2>
+            <div class="eyebrow" data-i18n="featuresEyebrow">
+                FEATURES
+            </div>
 
-                <p data-i18n="features_description">
-                    PvPを楽しむための環境を、シンプルに。
+            <h2 data-i18n="featuresTitle">
+                PVPBattlesの特徴
+            </h2>
+
+            <p data-i18n="featuresText">
+                PvPをより快適に、より競技的に楽しむための環境。
+            </p>
+
+        </div>
+
+        <div class="features-grid">
+
+            <div class="feature">
+                <div class="feature-icon">⚔️</div>
+                <h3 data-i18n="feature1Title">
+                    Competitive PvP
+                </h3>
+                <p data-i18n="feature1Text">
+                    PvPに特化した競技性の高いゲームプレイ。
                 </p>
             </div>
 
-            <div class="features">
-
-                <article class="feature">
-                    <div class="feature-icon">⚔️</div>
-
-                    <h3 data-i18n="feature1_title">
-                        PvPに特化
-                    </h3>
-
-                    <p data-i18n="feature1_text">
-                        戦闘を楽しむためのPvPサーバーを目指しています。
-                    </p>
-                </article>
-
-                <article class="feature">
-                    <div class="feature-icon">🏆</div>
-
-                    <h3 data-i18n="feature2_title">
-                        ランキング
-                    </h3>
-
-                    <p data-i18n="feature2_text">
-                        プレイヤー同士で競い合い、頂点を目指そう。
-                    </p>
-                </article>
-
-                <article class="feature">
-                    <div class="feature-icon">🌐</div>
-
-                    <h3 data-i18n="feature3_title">
-                        コミュニティ
-                    </h3>
-
-                    <p data-i18n="feature3_text">
-                        Discordを通じてプレイヤー同士で交流できます。
-                    </p>
-                </article>
-
+            <div class="feature">
+                <div class="feature-icon">🏆</div>
+                <h3 data-i18n="feature2Title">
+                    Leaderboards
+                </h3>
+                <p data-i18n="feature2Text">
+                    プレイヤー同士で成績を競い、ランキング上位を目指せます。
+                </p>
             </div>
+
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h3 data-i18n="feature3Title">
+                    Player Statistics
+                </h3>
+                <p data-i18n="feature3Text">
+                    プレイヤーの戦績や成績を確認できます。
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🇯🇵</div>
+                <h3 data-i18n="feature4Title">
+                    Japan-Based Server
+                </h3>
+                <p data-i18n="feature4Text">
+                    日本国内のサーバーで、国内プレイヤーに快適な環境を提供。
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3 data-i18n="feature5Title">
+                    Low Latency
+                </h3>
+                <p data-i18n="feature5Text">
+                    日本からの接続で低遅延なPvP体験を目指しています。
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">💬</div>
+                <h3 data-i18n="feature6Title">
+                    Fast Discord Support
+                </h3>
+                <p data-i18n="feature6Text">
+                    Discordからすぐに質問やサポートを受けられます。
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <h3 data-i18n="feature7Title">
+                    Custom UI
+                </h3>
+                <p data-i18n="feature7Text">
+                    独自にデザインされた、見やすく直感的なカスタムUI。
+                </p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🏅</div>
+                <h3 data-i18n="feature8Title">
+                    TierList System
+                </h3>
+                <p data-i18n="feature8Text">
+                    LT5からHT1までのTierListシステムでPvPの実力を競えます。
+                </p>
+            </div>
+
         </div>
+
+    </section>
+
+    <!-- TierList -->
+
+    <section class="tier-section" id="tierlist">
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                TIERLIST
+            </div>
+
+            <h2>
+                PVPBattles TierList
+            </h2>
+
+            <p data-i18n="tierText">
+                PvPの実力をTierで確認。
+                HT1からLT5までのTierを用意しています。
+            </p>
+
+        </div>
+
+        <div class="tier-list">
+
+            <div class="tier">HT1</div>
+            <div class="tier">HT2</div>
+            <div class="tier">HT3</div>
+            <div class="tier">HT4</div>
+            <div class="tier">HT5</div>
+            <div class="tier">LT1</div>
+            <div class="tier">LT2</div>
+            <div class="tier">LT3</div>
+            <div class="tier">LT4</div>
+            <div class="tier">LT5</div>
+
+        </div>
+
     </section>
 
     <!-- Discord -->
 
-    <section class="discord" id="discord">
-        <div class="container">
+    <section id="discord">
 
-            <div class="discord-card">
+        <div class="discord-card">
 
-                <h2 data-i18n="discord_title">
-                    PVPBattlesに参加しよう
-                </h2>
+            <h2 data-i18n="discordTitle">
+                Discordに参加しよう
+            </h2>
 
-                <p data-i18n="discord_description">
-                    最新情報やサーバーのお知らせはDiscordでチェック！
-                </p>
-
-                <a
-                    href="https://discord.gg/tyCm7xx4jz"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="button button-primary"
-                    data-i18n="discord_button"
-                >
-                    Discordに参加
-                </a>
-
-            </div>
-
-        </div>
-    </section>
-
-</main>
-
-<footer>
-    <div class="container footer-inner">
-        <div>
-            © <span id="year"></span> PVPBattles
-        </div>
-
-        <div data-i18n="footer">
-            Minecraft PvP Community
-        </div>
-    </div>
-</footer>
-
-<script>
-    const translations = {
-
-        ja: {
-            nav_home: "ホーム",
-            nav_features: "特徴",
-            nav_discord: "Discord",
-
-            badge: "⚔️ MINECRAFT PvP SERVER",
-            hero_title: "Minecraftで、本気のPvPを。",
-            hero_description: "仲間と戦い、ライバルと競い、頂点を目指そう。",
-            play: "今すぐプレイ",
-            learn: "特徴を見る",
-
-            server_info: "SERVER INFO",
-            status: "COMING SOON",
-            coming_soon: "COMING SOON",
-            copy: "コピー",
-
-            features_small: "FEATURES",
-            feature           
+            <p data-i18n="discordText">
+    

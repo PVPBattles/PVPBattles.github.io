@@ -3,10 +3,719 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PVPBattles</title>
+
+    <title>PVPBattles - Minecraft PvP Server</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background: #05070b;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* ===== Background ===== */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at 50% 20%,
+                    rgba(30, 130, 255, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 10% 80%,
+                    rgba(0, 90, 255, 0.08),
+                    transparent 30%
+                );
+
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .grid {
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 50px 50px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent 85%
+            );
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ===== Navigation ===== */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+
+            padding: 20px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(5, 7, 11, 0.7);
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #3aa7ff;
+        }
+
+        nav a {
+            color: #aaa;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #55c0ff;
+        }
+
+        /* ===== Hero ===== */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 120px 20px 80px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 8px 16px;
+            margin-bottom: 25px;
+
+            border: 1px solid rgba(85,192,255,0.3);
+            border-radius: 999px;
+
+            background: rgba(40,150,255,0.08);
+
+            color: #55c0ff;
+            font-size: 13px;
+            font-weight: 700;
+
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 12vw, 130px);
+            line-height: 0.9;
+
+            font-weight: 1000;
+            letter-spacing: -5px;
+
+            background: linear-gradient(
+                135deg,
+                #ffffff,
+                #55c0ff,
+                #258cff
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 25px;
+        }
+
+        .hero p {
+            max-width: 650px;
+
+            color: #9ba4b3;
+
+            font-size: 18px;
+            line-height: 1.7;
+
+            margin-bottom: 35px;
+        }
+
+        /* ===== Buttons ===== */
+
+        .buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 150px;
+
+            padding: 14px 25px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-weight: 800;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        .primary {
+            background: #2494ff;
+            color: white;
+
+            box-shadow:
+                0 0 30px rgba(36,148,255,0.25);
+        }
+
+        .primary:hover {
+            background: #43a5ff;
+            box-shadow:
+                0 0 45px rgba(36,148,255,0.4);
+        }
+
+        .secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .secondary:hover {
+            background: rgba(255,255,255,0.09);
+        }
+
+        /* ===== Server Card ===== */
+
+        .server-card {
+            margin-top: 55px;
+
+            width: min(550px, 100%);
+
+            padding: 20px;
+
+            border-radius: 16px;
+
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(15px);
+        }
+
+        .server-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .server-name {
+            font-weight: 800;
+        }
+
+        .online {
+            color: #55e68a;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .ip-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ip {
+            flex: 1;
+
+            padding: 13px 15px;
+
+            background: #090d14;
+            border-radius: 9px;
+
+            color: #55c0ff;
+
+            font-family: monospace;
+            text-align: left;
+        }
+
+        .copy {
+            border: none;
+
+            padding: 13px 16px;
+
+            border-radius: 9px;
+
+            background: #1677d2;
+            color: white;
+
+            cursor: pointer;
+
+            font-weight: 700;
+        }
+
+        .copy:hover {
+            background: #258cff;
+        }
+
+        /* ===== Sections ===== */
+
+        section {
+            padding: 100px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #7f8998;
+        }
+
+        /* ===== Cards ===== */
+
+        .features {
+            max-width: 1100px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .feature {
+            padding: 30px;
+
+            background: rgba(255,255,255,0.035);
+
+            border: 1px solid rgba(255,255,255,0.07);
+
+            border-radius: 16px;
+
+            transition: 0.25s;
+        }
+
+        .feature:hover {
+            transform: translateY(-6px);
+
+            border-color:
+                rgba(85,192,255,0.3);
+
+            background:
+                rgba(85,192,255,0.05);
+        }
+
+        .icon {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #858e9d;
+            line-height: 1.7;
+        }
+
+        /* ===== CTA ===== */
+
+        .cta {
+            text-align: center;
+
+            max-width: 900px;
+            margin: 50px auto 100px;
+
+            padding: 70px 30px;
+
+            border-radius: 25px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(36,148,255,0.16),
+                    rgba(255,255,255,0.025)
+                );
+
+            border: 1px solid
+                rgba(85,192,255,0.15);
+        }
+
+        .cta h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #8d96a5;
+            margin-bottom: 30px;
+        }
+
+        /* ===== Footer ===== */
+
+        footer {
+            padding: 35px 7%;
+
+            border-top:
+                1px solid rgba(255,255,255,0.06);
+
+            text-align: center;
+
+            color: #687180;
+
+            font-size: 13px;
+        }
+
+        /* ===== Animation ===== */
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* ===== Mobile ===== */
+
+        @media (max-width: 750px) {
+
+            nav {
+                padding: 17px 5%;
+            }
+
+            nav div:last-child {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 130px;
+            }
+
+            .hero h1 {
+                letter-spacing: -3px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 75px 5%;
+            }
+
+            .section-title h2,
+            .cta h2 {
+                font-size: 32px;
+            }
+
+            .ip-box {
+                flex-direction: column;
+            }
+
+            .ip {
+                width: 100%;
+            }
+
+            .copy {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>PVPBattles</h1>
-    <p>Welcome to PVPBattles!</p>
+
+    <div class="grid"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            PVP<span>Battles</span>
+        </div>
+
+        <div>
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#discord">Discord</a>
+        </div>
+    </nav>
+
+
+    <!-- Hero -->
+    <main id="home">
+
+        <div class="hero">
+
+            <div class="badge">
+                ⚔️ MINECRAFT PVP SERVER
+            </div>
+
+            <h1>PVPBattles</h1>
+
+            <p>
+                Fight. Compete. Become the best.<br>
+                A Minecraft PvP server built for players who love competition.
+            </p>
+
+            <div class="buttons">
+
+                <a
+                    class="button primary"
+                    href="#server"
+                >
+                    🎮 PLAY NOW
+                </a>
+
+                <a
+                    class="button secondary"
+                    href="#features"
+                >
+                    LEARN MORE
+                </a>
+
+            </div>
+
+
+            <!-- Server -->
+            <div
+                class="server-card"
+                id="server"
+            >
+
+                <div class="server-top">
+
+                    <span class="server-name">
+                        PVPBattles Network
+                    </span>
+
+                    <span class="online">
+                        ● ONLINE
+                    </span>
+
+                </div>
+
+                <div class="ip-box">
+
+                    <div
+                        class="ip"
+                        id="server-ip"
+                    >
+                        play.pvpbattles.net
+                    </div>
+
+                    <button
+                        class="copy"
+                        onclick="copyIP()"
+                    >
+                        COPY
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Features -->
+        <section id="features">
+
+            <div class="section-title">
+
+                <h2>Why PVPBattles?</h2>
+
+                <p>
+                    Built for competitive Minecraft players.
+                </p>
+
+            </div>
+
+
+            <div class="features">
+
+                <div class="feature">
+
+                    <div class="icon">⚔️</div>
+
+                    <h3>Competitive PvP</h3>
+
+                    <p>
+                        Test your skills against other players
+                        and prove that you're the best.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">🏆</div>
+
+                    <h3>Climb the Leaderboard</h3>
+
+                    <p>
+                        Fight your way to the top and become
+                        one of the best players on PVPBattles.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="icon">🌐</div>
+
+                    <h3>Crossplay</h3>
+
+                    <p>
+                        Play with friends across supported
+                        Minecraft editions.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Discord -->
+        <section id="discord">
+
+            <div class="cta">
+
+                <h2>Join the Community</h2>
+
+                <p>
+                    Stay updated, meet other players,
+                    and join the PVPBattles community.
+                </p>
+
+                <a
+                    class="button primary"
+                    href="https://discord.gg/"
+                    target="_blank"
+                >
+                    💬 JOIN DISCORD
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        © 2026 PVPBattles.
+        All rights reserved.
+
+    </footer>
+
+
+    <script>
+
+        function copyIP() {
+
+            const ip =
+                document.getElementById("server-ip")
+                .textContent
+                .trim();
+
+            navigator.clipboard.writeText(ip);
+
+            const button =
+                document.querySelector(".copy");
+
+            button.textContent = "COPIED!";
+
+            setTimeout(() => {
+                button.textContent = "COPY";
+            }, 1500);
+        }
+
+    </script>
+
 </body>
 </html>

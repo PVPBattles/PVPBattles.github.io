@@ -46,7 +46,7 @@
     }
 
     /* =========================
-       NAV
+       NAVIGATION
     ========================= */
 
     .nav-bar {
@@ -62,6 +62,7 @@
       justify-content: center;
 
       background: rgba(11, 15, 20, 0.96);
+
       border-top: 1px solid #1d2630;
       border-bottom: 1px solid #1d2630;
 
@@ -75,6 +76,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 20px;
     }
 
@@ -86,6 +88,7 @@
 
     .nav-link {
       padding: 10px 15px;
+
       border-radius: 8px;
 
       color: #b8c2cc;
@@ -164,6 +167,7 @@
     .page-heading h1 {
       font-size: clamp(28px, 5vw, 46px);
       font-weight: 900;
+
       letter-spacing: -1px;
     }
 
@@ -181,6 +185,7 @@
 
     .search-area {
       width: min(700px, 100%);
+
       margin: 0 auto 30px;
     }
 
@@ -208,7 +213,10 @@
 
     .search-box:focus {
       border-color: #55c0ff;
-      box-shadow: 0 0 0 3px rgba(85, 192, 255, 0.08);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(85, 192, 255, 0.08);
     }
 
     /* =========================
@@ -217,6 +225,7 @@
 
     .kit-tabs-wrapper {
       width: 100%;
+
       overflow-x: auto;
 
       padding-bottom: 8px;
@@ -229,6 +238,7 @@
       min-width: max-content;
 
       display: flex;
+
       justify-content: center;
 
       gap: 8px;
@@ -239,6 +249,7 @@
       height: 58px;
 
       display: flex;
+
       align-items: center;
       justify-content: center;
 
@@ -262,14 +273,19 @@
 
     .kit-tab:hover {
       color: #fff;
+
       border-color: #3a4a58;
+
       background: #151e27;
+
       transform: translateY(-1px);
     }
 
     .kit-tab.active {
       color: #fff;
+
       border-color: #55c0ff;
+
       background: #15212b;
     }
 
@@ -284,6 +300,33 @@
 
     .kit-tab span {
       white-space: nowrap;
+    }
+
+    /* =========================
+       OVERALL TROPHY
+    ========================= */
+
+    .overall-icon {
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      width: 28px;
+      height: 28px;
+
+      font-size: 26px;
+
+      line-height: 1;
+
+      flex-shrink: 0;
+    }
+
+    .result-overall-icon {
+      width: 30px;
+      height: 30px;
+
+      font-size: 28px;
     }
 
     /* =========================
@@ -328,11 +371,12 @@
     }
 
     /* =========================
-       PLAYER
+       PLAYERS
     ========================= */
 
     .players {
       width: 100%;
+
       min-width: 650px;
     }
 
@@ -373,6 +417,7 @@
       min-width: 0;
 
       display: flex;
+
       align-items: center;
 
       gap: 9px;
@@ -382,7 +427,9 @@
       min-width: 0;
 
       overflow: hidden;
+
       text-overflow: ellipsis;
+
       white-space: nowrap;
 
       font-size: 15px;
@@ -414,7 +461,9 @@
       flex-shrink: 0;
     }
 
-    /* Tier colors */
+    /* =========================
+       TIER COLORS
+    ========================= */
 
     .tier-ht1 {
       border-color: #ff3b3b;
@@ -561,7 +610,7 @@
     }
 
     /* =========================
-       EMPTY
+       EMPTY STATE
     ========================= */
 
     .empty-state {
@@ -613,6 +662,7 @@
 
     .info-button:hover {
       color: #fff;
+
       border-color: #55c0ff;
     }
 
@@ -635,7 +685,7 @@
     }
 
     /* =========================
-       MOBILE
+       RESPONSIVE
     ========================= */
 
     @media (max-width: 800px) {
@@ -657,6 +707,7 @@
         right: 0;
 
         flex-direction: column;
+
         align-items: stretch;
 
         padding: 10px 15px;
@@ -716,6 +767,13 @@
         height: 24px;
       }
 
+      .overall-icon {
+        width: 24px;
+        height: 24px;
+
+        font-size: 23px;
+      }
+
       .player-name-text {
         font-size: 14px;
       }
@@ -740,7 +798,7 @@
 
   <!-- =========================
        HEADER
-  ========================== -->
+  ========================= -->
 
   <header class="site-header">
     <img
@@ -750,9 +808,10 @@
     >
   </header>
 
+
   <!-- =========================
        NAVIGATION
-  ========================== -->
+  ========================= -->
 
   <nav class="nav-bar">
     <div class="nav-inner">
@@ -824,19 +883,25 @@
     </div>
   </nav>
 
+
   <!-- =========================
        MAIN
-  ========================== -->
+  ========================= -->
 
   <main>
 
     <section class="page-heading">
-      <h1>PVPBattles TierList</h1>
+
+      <h1>
+        PVPBattles TierList
+      </h1>
 
       <p>
         Competitive PvP rankings and player statistics.
       </p>
+
     </section>
+
 
     <!-- SEARCH -->
 
@@ -852,9 +917,10 @@
 
     </section>
 
+
     <!-- =========================
          KIT TABS
-    ========================== -->
+    ========================= -->
 
     <div class="kit-tabs-wrapper">
 
@@ -863,16 +929,23 @@
         id="kitTabs"
       >
 
+        <!-- OVERALL -->
+
         <button
           class="kit-tab active"
           data-kit="overall"
         >
-          <img
-            src="/assets/tierlist/overall.png"
-            alt="Overall"
-          >
-          <span>OVERALL</span>
+          <span class="overall-icon">
+            🏆
+          </span>
+
+          <span>
+            OVERALL
+          </span>
         </button>
+
+
+        <!-- SWORD -->
 
         <button
           class="kit-tab"
@@ -882,8 +955,14 @@
             src="/assets/tierlist/sword.png"
             alt="Sword"
           >
-          <span>Sword</span>
+
+          <span>
+            Sword
+          </span>
         </button>
+
+
+        <!-- AXE -->
 
         <button
           class="kit-tab"
@@ -893,8 +972,14 @@
             src="/assets/tierlist/axe.png"
             alt="Axe"
           >
-          <span>Axe</span>
+
+          <span>
+            Axe
+          </span>
         </button>
+
+
+        <!-- UHC -->
 
         <button
           class="kit-tab"
@@ -904,8 +989,14 @@
             src="/assets/tierlist/uhc.png"
             alt="UHC"
           >
-          <span>UHC</span>
+
+          <span>
+            UHC
+          </span>
         </button>
+
+
+        <!-- POT -->
 
         <button
           class="kit-tab"
@@ -915,8 +1006,14 @@
             src="/assets/tierlist/pot.png"
             alt="Pot"
           >
-          <span>Pot</span>
+
+          <span>
+            Pot
+          </span>
         </button>
+
+
+        <!-- MACE -->
 
         <button
           class="kit-tab"
@@ -926,8 +1023,14 @@
             src="/assets/tierlist/mace.png"
             alt="Mace"
           >
-          <span>Mace</span>
+
+          <span>
+            Mace
+          </span>
         </button>
+
+
+        <!-- ENDGAME -->
 
         <button
           class="kit-tab"
@@ -937,8 +1040,14 @@
             src="/assets/tierlist/endgame.png"
             alt="EndGame"
           >
-          <span>EndGame</span>
+
+          <span>
+            EndGame
+          </span>
         </button>
+
+
+        <!-- SPEARMACE -->
 
         <button
           class="kit-tab"
@@ -948,8 +1057,14 @@
             src="/assets/tierlist/spearmace.png"
             alt="SpearMace"
           >
-          <span>SpearMace</span>
+
+          <span>
+            SpearMace
+          </span>
         </button>
+
+
+        <!-- BOW -->
 
         <button
           class="kit-tab"
@@ -959,48 +1074,71 @@
             src="/assets/tierlist/bow.png"
             alt="Bow"
           >
-          <span>Bow</span>
+
+          <span>
+            Bow
+          </span>
         </button>
 
       </div>
 
     </div>
 
+
     <!-- =========================
-         PLAYER LIST
-    ========================== -->
+         PLAYER TABLE
+    ========================= -->
 
     <section class="tierlist-card">
 
       <div class="table-header">
-        <div>#</div>
-        <div>PLAYER</div>
-        <div>REGION</div>
-        <div>POINTS</div>
+
+        <div>
+          #
+        </div>
+
+        <div>
+          PLAYER
+        </div>
+
+        <div>
+          REGION
+        </div>
+
+        <div>
+          POINTS
+        </div>
+
       </div>
+
 
       <div
         class="players"
         id="players"
       ></div>
 
+
       <!-- =========================
            KIT RESULTS
-      ========================== -->
+      ========================= -->
 
       <div
         class="kit-results"
         id="kitResults"
       >
 
+        <!-- OVERALL -->
+
         <div
           class="kit-result"
           data-kit-result="overall"
         >
-          <img
-            src="/assets/tierlist/overall.png"
-            alt="Overall"
+
+          <span
+            class="overall-icon result-overall-icon"
           >
+            🏆
+          </span>
 
           <div class="kit-result-name">
             OVERALL
@@ -1009,12 +1147,17 @@
           <div class="tier">
             —
           </div>
+
         </div>
+
+
+        <!-- SWORD -->
 
         <div
           class="kit-result"
           data-kit-result="sword"
         >
+
           <img
             src="/assets/tierlist/sword.png"
             alt="Sword"
@@ -1027,12 +1170,17 @@
           <div class="tier">
             —
           </div>
+
         </div>
+
+
+        <!-- AXE -->
 
         <div
           class="kit-result"
           data-kit-result="axe"
         >
+
           <img
             src="/assets/tierlist/axe.png"
             alt="Axe"
@@ -1045,12 +1193,17 @@
           <div class="tier">
             —
           </div>
+
         </div>
+
+
+        <!-- UHC -->
 
         <div
           class="kit-result"
           data-kit-result="uhc"
         >
+
           <img
             src="/assets/tierlist/uhc.png"
             alt="UHC"
@@ -1063,12 +1216,17 @@
           <div class="tier">
             —
           </div>
+
         </div>
+
+
+        <!-- POT -->
 
         <div
           class="kit-result"
           data-kit-result="pot"
         >
+
           <img
             src="/assets/tierlist/pot.png"
             alt="Pot"
@@ -1081,12 +1239,17 @@
           <div class="tier">
             —
           </div>
+
         </div>
+
+
+        <!-- MACE -->
 
         <div
           class="kit-result"
           data-kit-result="mace"
         >
+
           <img
             src="/assets/tierlist/mace.png"
             alt="Mace"
@@ -1099,91 +1262,15 @@
           <div class="tier">
             —
           </div>
+
         </div>
+
+
+        <!-- ENDGAME -->
 
         <div
           class="kit-result"
           data-kit-result="endgame"
         >
-          <img
-            src="/assets/tierlist/endgame.png"
-            alt="EndGame"
-          >
 
-          <div class="kit-result-name">
-            ENDGAME
-          </div>
-
-          <div class="tier">
-            —
-          </div>
-        </div>
-
-        <div
-          class="kit-result"
-          data-kit-result="spearmace"
-        >
-          <img
-            src="/assets/tierlist/spearmace.png"
-            alt="SpearMace"
-          >
-
-          <div class="kit-result-name">
-            SPEARMACE
-          </div>
-
-          <div class="tier">
-            —
-          </div>
-        </div>
-
-        <div
-          class="kit-result"
-          data-kit-result="bow"
-        >
-          <img
-            src="/assets/tierlist/bow.png"
-            alt="Bow"
-          >
-
-          <div class="kit-result-name">
-            BOW
-          </div>
-
-          <div class="tier">
-            —
-          </div>
-        </div>
-
-      </div>
-
-    </section>
-
-    <button
-      class="info-button"
-      id="infoButton"
-    >
-      TierList Info
-    </button>
-
-  </main>
-
-  <!-- =========================
-       FOOTER
-  ========================== -->
-
-  <footer>
-    © 2026 PVPBattles
-  </footer>
-
-  <script>
-    /* =========================
-       PLAYER DATA
-    ========================== */
-
-    const players = [
-      /*
-      例:
-
-      {
-        name:
+          <im

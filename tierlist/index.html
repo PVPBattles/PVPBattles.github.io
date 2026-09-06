@@ -2,25 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <meta name="description" content="PVPBattles TierList">
+    <meta
+        name="description"
+        content="PVPBattles TierList"
+    >
 
     <title>PVPBattles - TierList</title>
 
     <style>
         :root {
             --bg: #080b10;
-            --bar: #0a0e14;
-            --card: #101722;
-            --border: rgba(255,255,255,.09);
-            --text: #f5f7fa;
-            --muted: #9ca8b7;
+            --panel: #0d121b;
+            --panel-2: #111823;
+            --panel-3: #151d29;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(85, 192, 255, 0.35);
+            --text: #f4f7fb;
+            --muted: #8e9aaa;
             --blue: #55c0ff;
+            --green: #53d6b1;
+            --yellow: #f0c75e;
+            --red: #ff5d6c;
         }
 
         * {
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -42,60 +57,78 @@
             text-decoration: none;
         }
 
-        /* HEADER */
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
 
         .site-header {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 24px 20px;
+            padding: 22px 20px;
         }
 
         .header-image {
+            display: block;
             width: min(760px, 92vw);
-            max-height: 180px;
+            max-height: 170px;
             object-fit: contain;
         }
 
-        /* LANGUAGE */
+        /* =========================
+           LANGUAGE
+        ========================= */
 
         .language-wrapper {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
+            top: 18px;
+            right: 18px;
+            z-index: 20;
         }
 
         .language-select {
             appearance: none;
-            background: var(--bar);
-            color: var(--text);
+            min-height: 38px;
+            padding: 0 12px;
             border: 1px solid var(--border);
             border-radius: 9px;
-            padding: 9px 12px;
-            font-size: 14px;
-            cursor: pointer;
             outline: none;
+            background: var(--panel);
+            color: var(--text);
+            cursor: pointer;
         }
 
-        /* NAV */
+        .language-select:focus {
+            border-color: var(--border-hover);
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
 
         .navbar {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(10,14,20,.94);
+            background: rgba(10, 14, 20, 0.95);
             backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
         }
 
         .nav-inner {
-            min-height: 64px;
             width: min(1100px, 100%);
+            min-height: 62px;
             margin: auto;
-            padding: 0 20px;
+            padding: 0 18px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -103,198 +136,512 @@
 
         .nav-links {
             display: flex;
-            gap: 6px;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
 
         .nav-link {
-            padding: 12px 18px;
+            padding: 11px 17px;
             border-radius: 9px;
-            color: #cbd4df;
-            font-size: 15px;
-            font-weight: 600;
-            transition: .2s;
+            color: #c5ced9;
+            font-size: 14px;
+            font-weight: 700;
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
         }
 
         .nav-link:hover {
-            color: white;
-            background: rgba(85,192,255,.09);
+            color: #ffffff;
+            background: rgba(85, 192, 255, 0.08);
         }
 
         .nav-link.active {
             color: var(--blue);
         }
 
-        /* MAIN */
+        /* =========================
+           MAIN
+        ========================= */
 
         main {
-            width: min(1000px, calc(100% - 32px));
-            margin: auto;
-            padding: 85px 0 110px;
+            width: min(1120px, calc(100% - 28px));
+            margin: 0 auto;
+            padding: 55px 0 90px;
         }
 
-        .title {
+        .page-title {
             text-align: center;
+            margin-bottom: 34px;
         }
 
-        .title h1 {
+        .page-title h1 {
             margin: 0;
-            font-size: clamp(40px, 8vw, 64px);
+            font-size: clamp(38px, 6vw, 58px);
+            font-weight: 900;
             letter-spacing: -2px;
         }
 
-        .title h1 span {
+        .page-title h1 span {
             color: var(--blue);
         }
 
-        .title p {
-            margin: 15px 0 0;
+        .page-title p {
+            margin: 10px 0 0;
             color: var(--muted);
+            font-size: 14px;
         }
 
-        /* SEARCH */
+        /* =========================
+           CONTROLS
+        ========================= */
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 14px;
+        }
 
         .search {
-            width: min(620px, 100%);
-            margin: 40px auto 30px;
+            position: relative;
+            flex: 1;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667282;
+            pointer-events: none;
+            font-size: 15px;
         }
 
         .search input {
             width: 100%;
-            padding: 15px 17px;
+            height: 46px;
+            padding: 0 15px 0 40px;
             border: 1px solid var(--border);
-            border-radius: 10px;
-            background: var(--card);
-            color: var(--text);
-            font-size: 15px;
+            border-radius: 9px;
             outline: none;
-        }
-
-        .search input:focus {
-            border-color: rgba(85,192,255,.45);
+            background: var(--panel);
+            color: var(--text);
         }
 
         .search input::placeholder {
-            color: #697585;
+            color: #687585;
         }
 
-        /* TABLE */
+        .search input:focus {
+            border-color: var(--border-hover);
+        }
 
-        .tier-list {
+        .control-button {
+            width: 46px;
+            height: 46px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--panel);
+            color: var(--muted);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .control-button:hover {
+            color: var(--text);
+            border-color: var(--border-hover);
+        }
+
+        /* =========================
+           KIT TABS
+        ========================= */
+
+        .kit-tabs-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 18px;
+            scrollbar-width: thin;
+        }
+
+        .kit-tabs {
+            display: flex;
+            gap: 7px;
+            min-width: max-content;
+        }
+
+        .kit-tab {
+            min-width: 76px;
+            height: 56px;
+            padding: 5px 10px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--panel);
+            color: var(--muted);
+            cursor: pointer;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+            transition: 0.2s;
         }
 
-        .tier-row {
-            min-height: 82px;
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            align-items: stretch;
-            overflow: hidden;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+        .kit-tab:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
         }
 
-        .tier-name {
+        .kit-tab.active {
+            color: #ffffff;
+            border-color: rgba(85, 192, 255, 0.45);
+            background: rgba(85, 192, 255, 0.08);
+        }
+
+        .kit-icon {
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(85,192,255,.09);
-            color: var(--blue);
-            font-size: 21px;
-            font-weight: 900;
-            border-right: 1px solid var(--border);
+            font-size: 17px;
         }
 
-        .players {
+        .kit-name {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+        /* =========================
+           TABLE HEADER
+        ========================= */
+
+        .table-header {
+            display: grid;
+            grid-template-columns:
+                52px
+                minmax(210px, 1.5fr)
+                90px
+                minmax(430px, 3fr);
+            gap: 10px;
+            padding: 0 15px 9px;
+            color: #707c8d;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .table-header .player-heading {
+            text-align: left;
+        }
+
+        .table-header .region-heading,
+        .table-header .points-heading {
+            text-align: center;
+        }
+
+        .table-header .kits-heading {
+            text-align: center;
+        }
+
+        /* =========================
+           PLAYER LIST
+        ========================= */
+
+        .player-list {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .player-row {
+            display: grid;
+            grid-template-columns:
+                52px
+                minmax(210px, 1.5fr)
+                90px
+                minmax(430px, 3fr);
+            gap: 10px;
+            min-height: 76px;
+            align-items: center;
+            padding: 8px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.018),
+                    rgba(255,255,255,0.005)
+                );
+            transition:
+                border-color 0.2s ease,
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .player-row:hover {
+            border-color: var(--border-hover);
+            background: var(--panel-2);
+            transform: translateY(-1px);
+        }
+
+        .position {
+            text-align: center;
+            color: var(--blue);
+            font-size: 19px;
+            font-weight: 900;
+        }
+
+        .player-info {
             min-width: 0;
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 15px;
+            gap: 11px;
         }
 
-        .player {
-            display: inline-flex;
-            align-items: center;
-            min-height: 38px;
-            padding: 7px 12px;
+        .avatar {
+            width: 42px;
+            height: 42px;
+            flex: 0 0 42px;
+            border-radius: 7px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #182231,
+                    #0c121b
+                );
             border: 1px solid var(--border);
-            border-radius: 8px;
-            background: rgba(255,255,255,.025);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .player-name {
+            min-width: 0;
+        }
+
+        .player-name strong {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             font-size: 14px;
         }
 
-        .empty {
-            color: #687483;
-            font-size: 14px;
+        .player-name small {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 10px;
         }
 
-        /* FOOTER */
+        .region {
+            display: flex;
+            justify-content: center;
+        }
 
-        footer {
-            padding: 38px 20px;
-            border-top: 1px solid var(--border);
+        .region-badge {
+            min-width: 45px;
+            padding: 6px 7px;
+            border: 1px solid rgba(83, 214, 177, 0.2);
+            border-radius: 7px;
+            color: var(--green);
+            background: rgba(83, 214, 177, 0.04);
             text-align: center;
-            color: #6f7a88;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .points {
+            display: none;
+        }
+
+        .kit-results {
+            min-width: 0;
+            display: grid;
+            grid-template-columns:
+                repeat(9, minmax(40px, 1fr));
+            gap: 5px;
+        }
+
+        .kit-result {
+            min-width: 0;
+            height: 52px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: rgba(0, 0, 0, 0.12);
+        }
+
+        .kit-result-icon {
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        .kit-tier {
+            min-width: 27px;
+            padding: 2px 4px;
+            border-radius: 3px;
+            background: rgba(240, 199, 94, 0.1);
+            border: 1px solid rgba(240, 199, 94, 0.2);
+            color: var(--yellow);
+            text-align: center;
+            font-size: 8px;
+            font-weight: 900;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty-state {
+            padding: 70px 20px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--panel);
+            text-align: center;
+        }
+
+        .empty-state-icon {
+            font-size: 34px;
+            opacity: 0.6;
+        }
+
+        .empty-state h2 {
+            margin: 14px 0 6px;
+            font-size: 19px;
+        }
+
+        .empty-state p {
+            margin: 0;
+            color: var(--muted);
             font-size: 13px;
         }
 
-        /* MOBILE */
+        /* =========================
+           FOOTER
+        ========================= */
 
-        @media (max-width: 700px) {
+        footer {
+            padding: 35px 20px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: #697584;
+            font-size: 12px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
 
             .site-header {
-                padding: 18px 14px;
+                padding: 18px 12px;
             }
 
             .header-image {
                 width: 94vw;
-                max-height: 130px;
+                max-height: 125px;
             }
 
             .language-wrapper {
-                top: 10px;
-                right: 10px;
+                top: 9px;
+                right: 9px;
             }
 
             .language-select {
-                padding: 8px 10px;
-                font-size: 13px;
+                min-height: 35px;
+                padding: 0 8px;
+                font-size: 12px;
             }
 
             .nav-inner {
-                overflow-x: auto;
                 justify-content: flex-start;
+                overflow-x: auto;
                 padding: 0 8px;
             }
 
             .nav-links {
-                width: max-content;
+                min-width: max-content;
                 margin: auto;
             }
 
             .nav-link {
                 padding: 10px 13px;
-                font-size: 14px;
+                font-size: 13px;
             }
 
             main {
-                padding-top: 65px;
+                width: calc(100% - 20px);
+                padding-top: 40px;
             }
 
-            .tier-row {
-                grid-template-columns: 76px 1fr;
+            .page-title {
+                margin-bottom: 25px;
             }
 
-            .tier-name {
-                font-size: 18px;
+            .controls {
+                gap: 7px;
             }
 
-            .players {
-                padding: 10px;
+            .control-button {
+                display: none;
+            }
+
+            .table-header {
+                grid-template-columns:
+                    45px
+                    190px
+                    75px
+                    405px;
+                width: 750px;
+            }
+
+            .player-list {
+                width: 750px;
+            }
+
+            .player-row {
+                grid-template-columns:
+                    45px
+                    190px
+                    75px
+                    405px;
+            }
+
+            .player-list-wrapper {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .page-title h1 {
+                font-size: 40px;
+            }
+
+            .page-title p {
+                font-size: 12px;
+            }
+
+            .kit-tab {
+                min-width: 68px;
+                height: 52px;
+            }
+
+            .search input {
+                height: 44px;
             }
         }
     </style>
@@ -302,314 +649,191 @@
 
 <body>
 
-<header class="site-header">
+    <!-- HEADER -->
 
-    <div class="language-wrapper">
-        <select id="languageSelect" class="language-select">
-            <option value="ja">🇯🇵 日本語</option>
-            <option value="en">🇺🇸 English</option>
-            <option value="ko">🇰🇷 한국어</option>
-            <option value="zh">🇨🇳 中文</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="pt">🇧🇷 Português</option>
-        </select>
-    </div>
+    <header class="site-header">
 
-    <img
-        src="/assets/header.png"
-        alt="PVPBattles"
-        class="header-image"
-    >
-
-</header>
-
-<nav class="navbar">
-    <div class="nav-inner">
-
-        <div class="nav-links">
-
-            <a
-                href="/home/"
-                class="nav-link"
-                data-i18n="home"
-            >Home</a>
-
-            <a
-                href="https://discord.gg/tyCm7xx4jz"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="nav-link"
-            >Discord</a>
-
-            <a
-                href="/tierlist/"
-                class="nav-link active"
-            >TierList</a>
-
-            <a
-                href="/home/#support"
-                class="nav-link"
-                data-i18n="support"
-            >Support</a>
-
+        <div class="language-wrapper">
+            <select
+                id="languageSelect"
+                class="language-select"
+                aria-label="Language"
+            >
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="zh">🇨🇳 中文</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="pt">🇧🇷 Português</option>
+            </select>
         </div>
 
-    </div>
-</nav>
-
-<main>
-
-    <div class="title">
-
-        <h1>
-            Tier<span>List</span>
-        </h1>
-
-        <p>
-            PVPBattles TierList
-        </p>
-
-    </div>
-
-    <div class="search">
-        <input
-            id="playerSearch"
-            type="search"
-            placeholder="Search players..."
-            autocomplete="off"
+        <img
+            src="/assets/header.png"
+            alt="PVPBattles"
+            class="header-image"
         >
-    </div>
 
-    <div class="tier-list">
+    </header>
 
-        <div class="tier-row" data-tier="HT1">
-            <div class="tier-name">HT1</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
+    <!-- NAV -->
+
+    <nav class="navbar">
+
+        <div class="nav-inner">
+
+            <div class="nav-links">
+
+                <a
+                    href="/home/"
+                    class="nav-link"
+                    data-i18n="home"
+                >
+                    ホーム
+                </a>
+
+                <a
+                    href="https://discord.gg/tyCm7xx4jz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="nav-link"
+                >
+                    Discord
+                </a>
+
+                <a
+                    href="/tierlist/"
+                    class="nav-link active"
+                >
+                    TierList
+                </a>
+
+                <a
+                    href="/home/#support"
+                    class="nav-link"
+                    data-i18n="support"
+                >
+                    サポート
+                </a>
+
             </div>
+
         </div>
 
-        <div class="tier-row" data-tier="HT2">
-            <div class="tier-name">HT2</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
-            </div>
+    </nav>
+
+    <!-- MAIN -->
+
+    <main>
+
+        <div class="page-title">
+
+            <h1>
+                PVPBattles
+                <span>TierList</span>
+            </h1>
+
+            <p>
+                Competitive Minecraft PvP Rankings
+            </p>
+
         </div>
 
-        <div class="tier-row" data-tier="HT3">
-            <div class="tier-name">HT3</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
+        <!-- SEARCH -->
+
+        <div class="controls">
+
+            <div class="search">
+
+                <span class="search-icon">
+                    🔍
+                </span>
+
+                <input
+                    id="playerSearch"
+                    type="search"
+                    placeholder="Search..."
+                    autocomplete="off"
+                >
+
             </div>
+
+            <button
+                class="control-button"
+                type="button"
+                title="Information"
+            >
+                ⓘ
+            </button>
+
         </div>
 
-        <div class="tier-row" data-tier="HT4">
-            <div class="tier-name">HT4</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
-            </div>
-        </div>
+        <!-- KIT TABS -->
 
-        <div class="tier-row" data-tier="HT5">
-            <div class="tier-name">HT5</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
-            </div>
-        </div>
+        <div class="kit-tabs-wrapper">
 
-        <div class="tier-row" data-tier="LT1">
-            <div class="tier-name">LT1</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
-            </div>
-        </div>
+            <div class="kit-tabs">
 
-        <div class="tier-row" data-tier="LT2">
-            <div class="tier-name">LT2</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
-            </div>
-        </div>
+                <button
+                    class="kit-tab active"
+                    type="button"
+                    data-kit="overall"
+                >
+                    <span class="kit-icon">🏆</span>
+                    <span class="kit-name">OVERALL</span>
+                </button>
 
-        <div class="tier-row" data-tier="LT3">
-            <div class="tier-name">LT3</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
-            </div>
-        </div>
+                <button
+                    class="kit-tab"
+                    type="button"
+                    data-kit="vanilla"
+                >
+                    <span class="kit-icon">🧱</span>
+                    <span class="kit-name">VANILLA</span>
+                </button>
 
-        <div class="tier-row" data-tier="LT4">
-            <div class="tier-name">LT4</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
-            </div>
-        </div>
+                <button
+                    class="kit-tab"
+                    type="button"
+                    data-kit="sword"
+                >
+                    <span class="kit-icon">⚔️</span>
+                    <span class="kit-name">SWORD</span>
+                </button>
 
-        <div class="tier-row" data-tier="LT5">
-            <div class="tier-name">LT5</div>
-            <div class="players">
-                <span class="empty">No players listed yet.</span>
-            </div>
-        </div>
+                <button
+                    class="kit-tab"
+                    type="button"
+                    data-kit="axe"
+                >
+                    <span class="kit-icon">🪓</span>
+                    <span class="kit-name">AXE</span>
+                </button>
 
-    </div>
+                <button
+                    class="kit-tab"
+                    type="button"
+                    data-kit="pot"
+                >
+                    <span class="kit-icon">🧪</span>
+                    <span class="kit-name">POT</span>
+                </button>
 
-</main>
+                <button
+                    class="kit-tab"
+                    type="button"
+                    data-kit="nether"
+                >
+                    <span class="kit-icon">🟪</span>
+                    <span class="kit-name">NETHER</span>
+                </button>
 
-<footer>
-    © PVPBattles. All rights reserved.
-</footer>
-
-<script>
-    const translations = {
-        ja: {
-            home: "ホーム",
-            support: "サポート"
-        },
-        en: {
-            home: "Home",
-            support: "Support"
-        },
-        ko: {
-            home: "홈",
-            support: "지원"
-        },
-        zh: {
-            home: "首页",
-            support: "支持"
-        },
-        es: {
-            home: "Inicio",
-            support: "Soporte"
-        },
-        fr: {
-            home: "Accueil",
-            support: "Support"
-        },
-        de: {
-            home: "Startseite",
-            support: "Support"
-        },
-        pt: {
-            home: "Início",
-            support: "Suporte"
-        }
-    };
-
-    const languageSelect =
-        document.getElementById("languageSelect");
-
-    const playerSearch =
-        document.getElementById("playerSearch");
-
-    function detectLanguage() {
-
-        const saved =
-            localStorage.getItem("pvpbattles-language");
-
-        if (saved && translations[saved]) {
-            return saved;
-        }
-
-        const browser =
-            navigator.language.toLowerCase();
-
-        if (browser.startsWith("ja")) return "ja";
-        if (browser.startsWith("ko")) return "ko";
-        if (browser.startsWith("zh")) return "zh";
-        if (browser.startsWith("es")) return "es";
-        if (browser.startsWith("fr")) return "fr";
-        if (browser.startsWith("de")) return "de";
-        if (browser.startsWith("pt")) return "pt";
-
-        return "ja";
-    }
-
-    function applyLanguage(language) {
-
-        const data =
-            translations[language] || translations.ja;
-
-        document
-            .querySelectorAll("[data-i18n]")
-            .forEach(element => {
-
-                const key =
-                    element.dataset.i18n;
-
-                if (data[key]) {
-                    element.textContent = data[key];
-                }
-            });
-
-        languageSelect.value = language;
-
-        localStorage.setItem(
-            "pvpbattles-language",
-            language
-        );
-    }
-
-    languageSelect.addEventListener(
-        "change",
-        () => applyLanguage(languageSelect.value)
-    );
-
-    /* Player search */
-
-    playerSearch.addEventListener(
-        "input",
-        () => {
-
-            const query =
-                playerSearch.value
-                    .trim()
-                    .toLowerCase();
-
-            document
-                .querySelectorAll(".tier-row")
-                .forEach(row => {
-
-                    const players =
-                        row.querySelector(".players");
-
-                    const playerElements =
-                        players.querySelectorAll(".player");
-
-                    if (playerElements.length === 0) {
-                        row.style.display = "";
-                        return;
-                    }
-
-                    let visible = false;
-
-                    playerElements.forEach(player => {
-
-                        const name =
-                            player.textContent
-                                .toLowerCase();
-
-                        const match =
-                            name.includes(query);
-
-                        player.style.display =
-                            match ? "" : "none";
-
-                        if (match) {
-                            visible = true;
-                        }
-                    });
-
-                    row.style.display =
-                        visible ? "" : "none";
-                });
-        }
-    );
-
-    applyLanguage(detectLanguage());
-</script>
-
-</body>
-</html>
+                <button
+                    class="kit-tab"
+                    type="button"
+                    data-kit="smp"
+                >
+                    <span class="kit-icon">⚙️</span>
+                    <span class="kit-name"

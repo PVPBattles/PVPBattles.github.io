@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>PVPBattles TierList</title>
+  <title>PVPBattles - TierList</title>
 
   <style>
+    @font-face {
+      font-family: "Minecraft";
+      src: url("/assets/fonts/minecraft_font.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #0b0f14;
+      --panel: #111820;
+      --panel-2: #151e28;
+      --border: #263442;
+      --text: #f4f7fa;
+      --muted: #8f9baa;
+      --accent: #55c0ff;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -19,14 +37,20 @@
 
     body {
       min-height: 100vh;
-      background: #0b0f14;
-      color: #fff;
-      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Minecraft", monospace;
+      overflow-x: hidden;
     }
 
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
     }
 
     /* =========================
@@ -35,48 +59,40 @@
 
     .site-header {
       width: 100%;
-      background: #0b0f14;
+      background: var(--bg);
     }
 
     .header-image {
       width: 100%;
       display: block;
-      max-height: 180px;
+      max-height: 220px;
       object-fit: contain;
+      object-position: center;
     }
 
     /* =========================
        NAVIGATION
     ========================= */
 
-    .nav-bar {
+    .nav {
+      width: 100%;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(11, 15, 20, 0.97);
       position: sticky;
       top: 0;
-      z-index: 1000;
-
-      width: 100%;
-      min-height: 58px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background: rgba(11, 15, 20, 0.96);
-
-      border-top: 1px solid #1d2630;
-      border-bottom: 1px solid #1d2630;
-
-      backdrop-filter: blur(10px);
+      z-index: 100;
     }
 
     .nav-inner {
-      width: min(1200px, 100%);
+      max-width: 1200px;
+      margin: 0 auto;
+      min-height: 58px;
       padding: 0 20px;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       gap: 20px;
     }
 
@@ -87,64 +103,42 @@
     }
 
     .nav-link {
-      padding: 10px 15px;
-
-      border-radius: 8px;
-
-      color: #b8c2cc;
-
-      font-size: 14px;
-      font-weight: 700;
-
+      padding: 11px 14px;
+      border-radius: 7px;
+      color: var(--muted);
       transition: 0.2s ease;
+      white-space: nowrap;
     }
 
     .nav-link:hover,
     .nav-link.active {
-      color: #fff;
-      background: #151d26;
+      color: var(--text);
+      background: var(--panel-2);
     }
 
-    /* =========================
-       LANGUAGE
-    ========================= */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
     .language-select {
-      border: 1px solid #283541;
-      border-radius: 8px;
-
-      padding: 8px 10px;
-
-      background: #111820;
-      color: #fff;
-
-      font-size: 13px;
-
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 9px 10px;
       outline: none;
       cursor: pointer;
     }
 
-    .language-select:focus {
-      border-color: #55c0ff;
-    }
-
-    /* =========================
-       MOBILE MENU
-    ========================= */
-
     .menu-button {
       display: none;
-
-      border: 1px solid #283541;
-      border-radius: 8px;
-
-      padding: 9px 11px;
-
-      background: #111820;
-      color: #fff;
-
-      font-size: 20px;
-
+      border: 1px solid var(--border);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 7px;
+      padding: 9px 12px;
       cursor: pointer;
     }
 
@@ -153,29 +147,27 @@
     ========================= */
 
     main {
-      width: min(1250px, 100%);
+      width: 100%;
+    }
+
+    .container {
+      width: min(1200px, calc(100% - 32px));
       margin: 0 auto;
-
-      padding: 45px 20px 70px;
     }
 
-    .page-heading {
+    .page-title {
+      padding: 55px 0 30px;
       text-align: center;
-      margin-bottom: 35px;
     }
 
-    .page-heading h1 {
-      font-size: clamp(28px, 5vw, 46px);
-      font-weight: 900;
-
-      letter-spacing: -1px;
+    .page-title h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      letter-spacing: 1px;
+      margin-bottom: 14px;
     }
 
-    .page-heading p {
-      margin-top: 10px;
-
-      color: #8995a1;
-
+    .page-title p {
+      color: var(--muted);
       font-size: 14px;
     }
 
@@ -183,514 +175,277 @@
        SEARCH
     ========================= */
 
-    .search-area {
-      width: min(700px, 100%);
-
-      margin: 0 auto 30px;
+    .search-box {
+      margin-bottom: 22px;
     }
 
-    .search-box {
+    .search-input {
       width: 100%;
+      height: 52px;
+      padding: 0 17px;
 
-      padding: 14px 17px;
-
-      border: 1px solid #283541;
-      border-radius: 10px;
-
+      color: var(--text);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
       outline: none;
-
-      background: #111820;
-      color: #fff;
-
-      font-size: 15px;
 
       transition: 0.2s ease;
     }
 
-    .search-box::placeholder {
-      color: #65717d;
-    }
-
-    .search-box:focus {
-      border-color: #55c0ff;
-
-      box-shadow:
-        0 0 0 3px
-        rgba(85, 192, 255, 0.08);
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(85, 192, 255, 0.08);
     }
 
     /* =========================
        KIT TABS
     ========================= */
 
-    .kit-tabs-wrapper {
-      width: 100%;
-
+    .kit-tabs {
+      display: flex;
+      gap: 8px;
       overflow-x: auto;
-
-      padding-bottom: 8px;
-      margin-bottom: 28px;
+      padding-bottom: 10px;
+      margin-bottom: 18px;
 
       scrollbar-width: thin;
     }
 
-    .kit-tabs {
-      min-width: max-content;
-
-      display: flex;
-
-      justify-content: center;
-
-      gap: 8px;
-    }
-
     .kit-tab {
-      min-width: 90px;
-      height: 58px;
+      flex: 0 0 auto;
+
+      min-width: 105px;
+      height: 66px;
+      padding: 8px 12px;
 
       display: flex;
-
       align-items: center;
       justify-content: center;
+      gap: 8px;
 
-      gap: 7px;
-
-      padding: 7px 12px;
-
-      border: 1px solid #283541;
-      border-radius: 9px;
-
-      background: #111820;
-      color: #aab5bf;
-
-      font-size: 12px;
-      font-weight: 800;
+      color: var(--muted);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
 
       cursor: pointer;
-
       transition: 0.2s ease;
     }
 
     .kit-tab:hover {
-      color: #fff;
-
-      border-color: #3a4a58;
-
-      background: #151e27;
-
-      transform: translateY(-1px);
+      color: var(--text);
+      border-color: #3a4b5d;
     }
 
     .kit-tab.active {
-      color: #fff;
-
-      border-color: #55c0ff;
-
-      background: #15212b;
+      color: var(--text);
+      border-color: var(--accent);
+      background: var(--panel-2);
     }
 
-    .kit-tab img {
-      width: 28px;
-      height: 28px;
-
+    .kit-icon {
+      width: 32px;
+      height: 32px;
       object-fit: contain;
-
-      flex-shrink: 0;
+      image-rendering: pixelated;
     }
 
-    .kit-tab span {
+    .kit-name {
+      font-size: 12px;
       white-space: nowrap;
     }
 
     /* =========================
-       OVERALL TROPHY
+       TABLE
     ========================= */
 
-    .overall-icon {
-      display: inline-flex;
-
-      align-items: center;
-      justify-content: center;
-
-      width: 28px;
-      height: 28px;
-
-      font-size: 26px;
-
-      line-height: 1;
-
-      flex-shrink: 0;
+    .tier-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
     }
 
-    .result-overall-icon {
-      width: 30px;
-      height: 30px;
-
-      font-size: 28px;
-    }
-
-    /* =========================
-       TIERLIST CARD
-    ========================= */
-
-    .tierlist-card {
-      width: 100%;
-
-      overflow-x: auto;
-      overflow-y: hidden;
-
-      border: 1px solid #202b35;
-      border-radius: 12px;
-
-      background: #0f151b;
-    }
-
-    .table-header {
+    .table-head,
+    .player-row {
       display: grid;
+      grid-template-columns: 65px minmax(220px, 1fr) 180px;
+      align-items: center;
+    }
 
-      grid-template-columns:
-        55px
-        minmax(250px, 1fr)
-        110px
-        110px;
+    .table-head {
+      min-height: 48px;
+      padding: 0 20px;
 
-      min-width: 650px;
-
-      padding: 15px 18px;
-
-      border-bottom: 1px solid #202b35;
-
-      background: #121a22;
-
-      color: #6f7c88;
+      color: var(--muted);
+      background: var(--panel-2);
+      border-bottom: 1px solid var(--border);
 
       font-size: 11px;
-      font-weight: 900;
-
-      letter-spacing: 0.7px;
-    }
-
-    /* =========================
-       PLAYERS
-    ========================= */
-
-    .players {
-      width: 100%;
-
-      min-width: 650px;
     }
 
     .player-row {
-      display: grid;
-
-      grid-template-columns:
-        55px
-        minmax(250px, 1fr)
-        110px
-        110px;
-
-      min-height: 70px;
-
-      align-items: center;
-
-      padding: 10px 18px;
-
-      border-bottom: 1px solid #19232c;
+      min-height: 78px;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s ease;
     }
 
     .player-row:last-child {
       border-bottom: none;
     }
 
-    .player-number {
-      color: #596773;
+    .player-row:hover {
+      background: rgba(255, 255, 255, 0.025);
+    }
 
-      font-size: 14px;
-      font-weight: 900;
+    .rank {
+      color: var(--muted);
+      font-size: 13px;
     }
 
     /* =========================
-       PLAYER NAME + TIER
+       PLAYER
     ========================= */
 
-    .player-name {
-      min-width: 0;
-
+    .player-info {
       display: flex;
-
       align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
 
-      gap: 9px;
+    .skin {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+
+      border-radius: 5px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+
+      image-rendering: pixelated;
+      object-fit: cover;
+    }
+
+    .player-name {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-width: 0;
     }
 
     .player-name-text {
-      min-width: 0;
-
-      overflow: hidden;
-
-      text-overflow: ellipsis;
-
-      white-space: nowrap;
-
+      color: var(--text);
       font-size: 15px;
-      font-weight: 800;
-    }
-
-    .player-tier {
-      display: inline-flex;
-
-      align-items: center;
-      justify-content: center;
-
-      min-width: 38px;
-      height: 22px;
-
-      padding: 0 6px;
-
-      border: 1px solid #555;
-      border-radius: 5px;
-
-      background: #171d24;
-      color: #fff;
-
-      font-size: 10px;
-      font-weight: 900;
-
-      white-space: nowrap;
-
-      flex-shrink: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* =========================
-       TIER COLORS
+       TIER BADGE
     ========================= */
 
-    .tier-ht1 {
-      border-color: #ff3b3b;
-      background: #3a1515;
-      color: #ff6565;
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 43px;
+      height: 25px;
+      padding: 0 7px;
+
+      border-radius: 5px;
+      font-size: 11px;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.12);
     }
 
-    .tier-ht2 {
-      border-color: #ff7b3d;
-      background: #351d13;
-      color: #ff9a63;
-    }
+    .tier-ht1 { background: #e53935; }
+    .tier-ht2 { background: #f4511e; }
+    .tier-ht3 { background: #fb8c00; }
+    .tier-ht4 { background: #f9a825; }
+    .tier-ht5 { background: #c0a000; }
 
-    .tier-ht3 {
-      border-color: #ffc43d;
-      background: #352d13;
-      color: #ffd765;
-    }
+    .tier-lt1 { background: #43a047; }
+    .tier-lt2 { background: #00897b; }
+    .tier-lt3 { background: #1e88e5; }
+    .tier-lt4 { background: #3949ab; }
+    .tier-lt5 { background: #6d4c41; }
 
-    .tier-ht4 {
-      border-color: #66d17a;
-      background: #17301d;
-      color: #7ee68f;
-    }
-
-    .tier-ht5 {
-      border-color: #55c0ff;
-      background: #142c3b;
-      color: #70cbff;
-    }
-
-    .tier-lt1 {
-      border-color: #55c0ff;
-      background: #142c3b;
-      color: #70cbff;
-    }
-
-    .tier-lt2 {
-      border-color: #9d7cff;
-      background: #211936;
-      color: #b49cff;
-    }
-
-    .tier-lt3 {
-      border-color: #c06cff;
-      background: #2b1835;
-      color: #cf8cff;
-    }
-
-    .tier-lt4 {
-      border-color: #d75cba;
-      background: #32182d;
-      color: #e27ccc;
-    }
-
-    .tier-lt5 {
-      border-color: #777;
-      background: #20252b;
-      color: #aaa;
-    }
-
-    .region {
-      color: #9ba7b2;
-
-      font-size: 13px;
-      font-weight: 700;
-    }
+    /* =========================
+       POINTS
+    ========================= */
 
     .points {
-      color: #fff;
-
+      text-align: right;
       font-size: 14px;
-      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .points-value {
+      color: var(--text);
     }
 
     /* =========================
-       KIT RESULTS
+       KIT RESULT
     ========================= */
 
-    .kit-results {
-      display: grid;
-
-      grid-template-columns:
-        repeat(9, minmax(110px, 1fr));
-
-      min-width: 990px;
-
-      border-top: 1px solid #202b35;
-    }
-
     .kit-result {
-      min-height: 105px;
+      margin-top: 18px;
+      padding: 16px;
+
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
 
       display: flex;
-
-      flex-direction: column;
-
       align-items: center;
-      justify-content: center;
-
-      gap: 7px;
-
-      padding: 12px 8px;
-
-      border-right: 1px solid #202b35;
+      gap: 14px;
     }
 
-    .kit-result:last-child {
-      border-right: none;
-    }
-
-    .kit-result img {
-      width: 30px;
-      height: 30px;
-
+    .kit-result-icon {
+      width: 44px;
+      height: 44px;
       object-fit: contain;
+      image-rendering: pixelated;
     }
 
     .kit-result-name {
-      color: #8995a1;
-
-      font-size: 10px;
-      font-weight: 900;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.5px;
+      font-size: 14px;
     }
 
-    .tier {
-      min-width: 50px;
-
-      padding: 6px 8px;
-
-      border-radius: 6px;
-
-      background: #1a232c;
-      color: #fff;
-
-      font-size: 13px;
-      font-weight: 900;
-
-      text-align: center;
+    .kit-result-description {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
     }
 
     /* =========================
-       EMPTY STATE
+       EMPTY
     ========================= */
 
-    .empty-state {
+    .empty {
       padding: 55px 20px;
-
       text-align: center;
-
-      color: #697681;
-    }
-
-    .empty-state strong {
-      display: block;
-
-      margin-bottom: 8px;
-
-      color: #aab5bf;
-
-      font-size: 16px;
-    }
-
-    .empty-state span {
-      font-size: 13px;
+      color: var(--muted);
+      display: none;
     }
 
     /* =========================
-       INFO
+       MOBILE
     ========================= */
 
-    .info-button {
-      display: block;
+    @media (max-width: 760px) {
+      .header-image {
+        max-height: 150px;
+      }
 
-      margin: 28px auto 0;
-
-      padding: 10px 17px;
-
-      border: 1px solid #283541;
-      border-radius: 8px;
-
-      background: #111820;
-      color: #9ba7b2;
-
-      font-size: 13px;
-      font-weight: 700;
-
-      cursor: pointer;
-
-      transition: 0.2s ease;
-    }
-
-    .info-button:hover {
-      color: #fff;
-
-      border-color: #55c0ff;
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer {
-      width: 100%;
-
-      padding: 25px 20px;
-
-      border-top: 1px solid #1d2630;
-
-      text-align: center;
-
-      color: #596773;
-
-      font-size: 12px;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 800px) {
       .nav-inner {
-        padding: 10px 15px;
+        min-height: 54px;
+        padding: 0 14px;
       }
 
       .menu-button {
@@ -701,20 +456,16 @@
         display: none;
 
         position: absolute;
-
-        top: 58px;
         left: 0;
         right: 0;
+        top: 54px;
+
+        padding: 10px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
 
         flex-direction: column;
-
         align-items: stretch;
-
-        padding: 10px 15px;
-
-        background: #0b0f14;
-
-        border-bottom: 1px solid #1d2630;
       }
 
       .nav-links.open {
@@ -722,73 +473,88 @@
       }
 
       .nav-link {
-        width: 100%;
-
         text-align: center;
       }
 
-      .kit-tabs {
-        justify-content: flex-start;
+      .language-select {
+        max-width: 105px;
       }
 
-      main {
-        padding-top: 32px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .header-image {
-        max-height: 130px;
+      .container {
+        width: min(100% - 20px, 1200px);
       }
 
-      .page-heading {
-        margin-bottom: 25px;
+      .page-title {
+        padding: 38px 0 24px;
       }
 
-      .page-heading h1 {
-        font-size: 30px;
+      .table-head,
+      .player-row {
+        grid-template-columns: 40px minmax(0, 1fr) 95px;
       }
 
-      .page-heading p {
-        font-size: 12px;
+      .table-head {
+        padding: 0 12px;
       }
 
-      .kit-tab {
-        min-width: 82px;
-        height: 54px;
-
-        padding: 6px 9px;
-
-        font-size: 10px;
+      .player-row {
+        padding: 10px 12px;
+        min-height: 70px;
       }
 
-      .kit-tab img {
-        width: 24px;
-        height: 24px;
+      .skin {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
       }
 
-      .overall-icon {
-        width: 24px;
-        height: 24px;
-
-        font-size: 23px;
+      .player-info {
+        gap: 9px;
       }
 
       .player-name-text {
-        font-size: 14px;
+        font-size: 12px;
       }
 
-      .player-tier {
-        min-width: 36px;
-        height: 21px;
-
+      .tier-badge {
+        min-width: 38px;
+        height: 22px;
         font-size: 9px;
+      }
+
+      .points {
+        font-size: 11px;
       }
     }
 
-    @media (min-width: 1600px) {
-      main {
-        max-width: 1450px;
+    @media (max-width: 420px) {
+      .table-head,
+      .player-row {
+        grid-template-columns: 30px minmax(0, 1fr) 78px;
+      }
+
+      .skin {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+      }
+
+      .player-name {
+        gap: 5px;
+      }
+
+      .player-name-text {
+        max-width: 100%;
+      }
+
+      .kit-tab {
+        min-width: 92px;
+        height: 58px;
+      }
+
+      .kit-icon {
+        width: 27px;
+        height: 27px;
       }
     }
   </style>
@@ -798,7 +564,7 @@
 
   <!-- =========================
        HEADER
-  ========================= -->
+  ========================== -->
 
   <header class="site-header">
     <img
@@ -808,469 +574,408 @@
     >
   </header>
 
-
   <!-- =========================
-       NAVIGATION
-  ========================= -->
+       NAV
+  ========================== -->
 
-  <nav class="nav-bar">
+  <nav class="nav">
     <div class="nav-inner">
 
-      <button
-        class="menu-button"
-        id="menuButton"
-        aria-label="Open menu"
-      >
-        ☰
-      </button>
-
-      <div
-        class="nav-links"
-        id="navLinks"
-      >
-
-        <a
-          class="nav-link"
-          href="/home/"
-          data-i18n="home"
-        >
-          Home
-        </a>
-
+      <div class="nav-links" id="navLinks">
+        <a class="nav-link" href="/home/">Home</a>
         <a
           class="nav-link"
           href="https://discord.gg/tyCm7xx4jz"
           target="_blank"
           rel="noopener noreferrer"
-          data-i18n="discord"
         >
           Discord
         </a>
-
-        <a
-          class="nav-link active"
-          href="/tierlist/"
-          data-i18n="tierlist"
-        >
-          TierList
-        </a>
-
-        <a
-          class="nav-link"
-          href="/home/#support"
-          data-i18n="support"
-        >
-          Support
-        </a>
-
+        <a class="nav-link active" href="/tierlist/">TierList</a>
+        <a class="nav-link" href="/home/#support">Support</a>
       </div>
 
-      <select
-        class="language-select"
-        id="languageSelect"
-        aria-label="Language"
-      >
-        <option value="ja">🇯🇵 日本語</option>
-        <option value="en">🇺🇸 English</option>
-        <option value="ko">🇰🇷 한국어</option>
-        <option value="zh">🇨🇳 中文</option>
-        <option value="es">🇪🇸 Español</option>
-        <option value="fr">🇫🇷 Français</option>
-        <option value="de">🇩🇪 Deutsch</option>
-        <option value="pt">🇧🇷 Português</option>
-      </select>
+      <div class="nav-right">
+        <select
+          class="language-select"
+          id="languageSelect"
+          aria-label="Language"
+        >
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="en">🇺🇸 English</option>
+          <option value="ko">🇰🇷 한국어</option>
+          <option value="zh">🇨🇳 中文</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="pt">🇧🇷 Português</option>
+        </select>
+
+        <button
+          class="menu-button"
+          id="menuButton"
+          type="button"
+          aria-label="Menu"
+        >
+          ☰
+        </button>
+      </div>
 
     </div>
   </nav>
 
-
   <!-- =========================
-       MAIN
-  ========================= -->
+       CONTENT
+  ========================== -->
 
   <main>
+    <div class="container">
 
-    <section class="page-heading">
+      <section class="page-title">
+        <h1 id="pageTitle">TierList</h1>
+        <p id="pageDescription">
+          PVPBattles Player Rankings
+        </p>
+      </section>
 
-      <h1>
-        PVPBattles TierList
-      </h1>
+      <!-- SEARCH -->
 
-      <p>
-        Competitive PvP rankings and player statistics.
-      </p>
-
-    </section>
-
-
-    <!-- SEARCH -->
-
-    <section class="search-area">
-
-      <input
-        id="searchInput"
-        class="search-box"
-        type="search"
-        placeholder="Search player..."
-        autocomplete="off"
-      >
-
-    </section>
-
-
-    <!-- =========================
-         KIT TABS
-    ========================= -->
-
-    <div class="kit-tabs-wrapper">
-
-      <div
-        class="kit-tabs"
-        id="kitTabs"
-      >
-
-        <!-- OVERALL -->
-
-        <button
-          class="kit-tab active"
-          data-kit="overall"
+      <div class="search-box">
+        <input
+          class="search-input"
+          id="searchInput"
+          type="search"
+          placeholder="Search player..."
+          autocomplete="off"
+          spellcheck="false"
         >
-          <span class="overall-icon">
-            🏆
-          </span>
+      </div>
 
-          <span>
+      <!-- KIT TABS -->
+
+      <div class="kit-tabs" id="kitTabs"></div>
+
+      <!-- PLAYER TABLE -->
+
+      <section class="tier-card">
+
+        <div class="table-head">
+          <div>#</div>
+          <div>PLAYER</div>
+          <div style="text-align:right;">POINTS</div>
+        </div>
+
+        <div id="playerList"></div>
+
+        <div class="empty" id="emptyMessage">
+          No players found.
+        </div>
+
+      </section>
+
+      <!-- CURRENT KIT -->
+
+      <div class="kit-result">
+        <img
+          class="kit-result-icon"
+          id="currentKitIcon"
+          src="/assets/tierlist/overall.png"
+          alt=""
+        >
+
+        <div>
+          <div
+            class="kit-result-name"
+            id="currentKitName"
+          >
             OVERALL
-          </span>
-        </button>
+          </div>
 
-
-        <!-- SWORD -->
-
-        <button
-          class="kit-tab"
-          data-kit="sword"
-        >
-          <img
-            src="/assets/tierlist/sword.png"
-            alt="Sword"
+          <div
+            class="kit-result-description"
+            id="currentKitDescription"
           >
-
-          <span>
-            Sword
-          </span>
-        </button>
-
-
-        <!-- AXE -->
-
-        <button
-          class="kit-tab"
-          data-kit="axe"
-        >
-          <img
-            src="/assets/tierlist/axe.png"
-            alt="Axe"
-          >
-
-          <span>
-            Axe
-          </span>
-        </button>
-
-
-        <!-- UHC -->
-
-        <button
-          class="kit-tab"
-          data-kit="uhc"
-        >
-          <img
-            src="/assets/tierlist/uhc.png"
-            alt="UHC"
-          >
-
-          <span>
-            UHC
-          </span>
-        </button>
-
-
-        <!-- POT -->
-
-        <button
-          class="kit-tab"
-          data-kit="pot"
-        >
-          <img
-            src="/assets/tierlist/pot.png"
-            alt="Pot"
-          >
-
-          <span>
-            Pot
-          </span>
-        </button>
-
-
-        <!-- MACE -->
-
-        <button
-          class="kit-tab"
-          data-kit="mace"
-        >
-          <img
-            src="/assets/tierlist/mace.png"
-            alt="Mace"
-          >
-
-          <span>
-            Mace
-          </span>
-        </button>
-
-
-        <!-- ENDGAME -->
-
-        <button
-          class="kit-tab"
-          data-kit="endgame"
-        >
-          <img
-            src="/assets/tierlist/endgame.png"
-            alt="EndGame"
-          >
-
-          <span>
-            EndGame
-          </span>
-        </button>
-
-
-        <!-- SPEARMACE -->
-
-        <button
-          class="kit-tab"
-          data-kit="spearmace"
-        >
-          <img
-            src="/assets/tierlist/spearmace.png"
-            alt="SpearMace"
-          >
-
-          <span>
-            SpearMace
-          </span>
-        </button>
-
-
-        <!-- BOW -->
-
-        <button
-          class="kit-tab"
-          data-kit="bow"
-        >
-          <img
-            src="/assets/tierlist/bow.png"
-            alt="Bow"
-          >
-
-          <span>
-            Bow
-          </span>
-        </button>
-
+            Overall ranking based on all kits.
+          </div>
+        </div>
       </div>
 
     </div>
+  </main>
 
+  <script>
+    /* =========================================================
+       CONFIG
+    ========================================================= */
 
-    <!-- =========================
-         PLAYER TABLE
-    ========================= -->
+    const KITS = [
+      {
+        id: "overall",
+        name: "OVERALL",
+        image: "/assets/tierlist/overall.png"
+      },
+      {
+        id: "sword",
+        name: "Sword",
+        image: "/assets/tierlist/sword.png"
+      },
+      {
+        id: "axe",
+        name: "Axe",
+        image: "/assets/tierlist/axe.png"
+      },
+      {
+        id: "uhc",
+        name: "UHC",
+        image: "/assets/tierlist/uhc.png"
+      },
+      {
+        id: "pot",
+        name: "Pot",
+        image: "/assets/tierlist/pot.png"
+      },
+      {
+        id: "mace",
+        name: "Mace",
+        image: "/assets/tierlist/mace.png"
+      },
+      {
+        id: "endgame",
+        name: "EndGame",
+        image: "/assets/tierlist/endgame.png"
+      },
+      {
+        id: "smp",
+        name: "SMP",
+        image: "/assets/tierlist/smp.png"
+      },
+      {
+        id: "nethpot",
+        name: "NethPot",
+        image: "/assets/tierlist/nethpot.png"
+      }
+    ];
 
-    <section class="tierlist-card">
+    /*
+     * Tier score:
+     *
+     * HT1 = 10
+     * HT2 = 9
+     * HT3 = 8
+     * HT4 = 7
+     * HT5 = 6
+     * LT1 = 5
+     * LT2 = 4
+     * LT3 = 3
+     * LT4 = 2
+     * LT5 = 1
+     *
+     * 8 kits × 10 = 80
+     * 80 points -> 300 website Points
+     */
 
-      <div class="table-header">
+    const TIER_SCORE = {
+      HT1: 10,
+      HT2: 9,
+      HT3: 8,
+      HT4: 7,
+      HT5: 6,
+      LT1: 5,
+      LT2: 4,
+      LT3: 3,
+      LT4: 2,
+      LT5: 1
+    };
 
-        <div>
-          #
-        </div>
+    /*
+     * プレイヤーを追加するときはここだけ変更すればOK。
+     *
+     * overall は自動計算するので基本的に入力不要。
+     *
+     * 例:
+     *
+     * {
+     *   name: "PlayerName",
+     *   kits: {
+     *     sword: "HT1",
+     *     axe: "HT2",
+     *     uhc: "HT3",
+     *     pot: "HT4",
+     *     mace: "HT5",
+     *     endgame: "LT1",
+     *     smp: "LT2",
+     *     nethpot: "LT3"
+     *   }
+     * }
+     */
 
-        <div>
-          PLAYER
-        </div>
+    const players = [
+      {
+        name: "SEIYA5620",
+        kits: {
+          sword: null,
+          axe: null,
+          uhc: null,
+          pot: null,
+          mace: null,
+          endgame: "LT4",
+          smp: null,
+          nethpot: null
+        }
+      },
 
-        <div>
-          REGION
-        </div>
+      {
+        name: "herokinokino",
+        kits: {
+          sword: "HT5",
+          axe: null,
+          uhc: null,
+          pot: null,
+          mace: null,
+          endgame: null,
+          smp: null,
+          nethpot: null
+        }
+      }
+    ];
 
-        <div>
-          POINTS
-        </div>
+    /* =========================================================
+       LANGUAGE
+    ========================================================= */
 
-      </div>
+    const translations = {
+      ja: {
+        title: "TierList",
+        description: "PVPBattles プレイヤーランキング",
+        search: "プレイヤーを検索...",
+        player: "PLAYER",
+        points: "POINTS",
+        empty: "プレイヤーが見つかりません。",
+        overall: "すべてのKitを基準にした総合ランキング。"
+      },
 
+      en: {
+        title: "TierList",
+        description: "PVPBattles Player Rankings",
+        search: "Search player...",
+        player: "PLAYER",
+        points: "POINTS",
+        empty: "No players found.",
+        overall: "Overall ranking based on all kits."
+      },
 
-      <div
-        class="players"
-        id="players"
-      ></div>
+      ko: {
+        title: "TierList",
+        description: "PVPBattles 플레이어 랭킹",
+        search: "플레이어 검색...",
+        player: "PLAYER",
+        points: "POINTS",
+        empty: "플레이어를 찾을 수 없습니다.",
+        overall: "모든 Kit를 기준으로 한 종합 랭킹."
+      },
 
+      zh: {
+        title: "TierList",
+        description: "PVPBattles 玩家排名",
+        search: "搜索玩家...",
+        player: "PLAYER",
+        points: "POINTS",
+        empty: "没有找到玩家。",
+        overall: "基于所有 Kit 的综合排名。"
+      },
 
-      <!-- =========================
-           KIT RESULTS
-      ========================= -->
+      es: {
+        title: "TierList",
+        description: "Clasificación de jugadores de PVPBattles",
+        search: "Buscar jugador...",
+        player: "PLAYER",
+        points: "POINTS",
+        empty: "No se encontraron jugadores.",
+        overall: "Clasificación general basada en todos los kits."
+      },
 
-      <div
-        class="kit-results"
-        id="kitResults"
-      >
+      fr: {
+        title: "TierList",
+        description: "Classement des joueurs PVPBattles",
+        search: "Rechercher un joueur...",
+        player: "PLAYER",
+        points: "POINTS",
+        empty: "Aucun joueur trouvé.",
+        overall: "Classement général basé sur tous les kits."
+      },
 
-        <!-- OVERALL -->
+      de: {
+        title: "TierList",
+        description: "PVPBattles Spieler-Rangliste",
+        search: "Spieler suchen...",
+        player: "PLAYER",
+        points: "POINTS",
+        empty: "Keine Spieler gefunden.",
+        overall: "Gesamtrangliste basierend auf allen Kits."
+      },
 
-        <div
-          class="kit-result"
-          data-kit-result="overall"
-        >
+      pt: {
+        title: "TierList",
+        description: "Ranking de jogadores do PVPBattles",
+        search: "Pesquisar jogador...",
+        player: "PLAYER",
+        points: "POINTS",
+        empty: "Nenhum jogador encontrado.",
+        overall: "Ranking geral baseado em todos os kits."
+      }
+    };
 
-          <span
-            class="overall-icon result-overall-icon"
-          >
-            🏆
-          </span>
+    /* =========================================================
+       STATE
+    ========================================================= */
 
-          <div class="kit-result-name">
-            OVERALL
-          </div>
+    let currentKit = "overall";
+    let currentLanguage = getInitialLanguage();
 
-          <div class="tier">
-            —
-          </div>
+    /* =========================================================
+       LANGUAGE HELPERS
+    ========================================================= */
 
-        </div>
+    function getInitialLanguage() {
+      const saved = localStorage.getItem("pvpbattles-language");
 
+      if (saved && translations[saved]) {
+        return saved;
+      }
 
-        <!-- SWORD -->
+      const browserLanguage = navigator.language.toLowerCase();
 
-        <div
-          class="kit-result"
-          data-kit-result="sword"
-        >
+      if (browserLanguage.startsWith("ja")) return "ja";
+      if (browserLanguage.startsWith("ko")) return "ko";
+      if (browserLanguage.startsWith("zh")) return "zh";
+      if (browserLanguage.startsWith("es")) return "es";
+      if (browserLanguage.startsWith("fr")) return "fr";
+      if (browserLanguage.startsWith("de")) return "de";
+      if (browserLanguage.startsWith("pt")) return "pt";
 
-          <img
-            src="/assets/tierlist/sword.png"
-            alt="Sword"
-          >
+      return "en";
+    }
 
-          <div class="kit-result-name">
-            SWORD
-          </div>
+    function applyLanguage() {
+      const t = translations[currentLanguage];
 
-          <div class="tier">
-            —
-          </div>
+      document.documentElement.lang = currentLanguage;
 
-        </div>
+      document.getElementById("pageTitle").textContent = t.title;
+      document.getElementById("pageDescription").textContent =
+        t.description;
 
+      document.getElementById("searchInput").placeholder =
+        t.search;
 
-        <!-- AXE -->
+      document.querySelector(".table-head div:nth-child(2)")
+        .textContent = t.player;
 
-        <div
-          class="kit-result"
-          data-kit-result="axe"
-        >
+      document.querySelector(".table-head div:nth-child(3)")
+        .textContent = t.points;
 
-          <img
-            src="/assets/tierlist/axe.png"
-            alt="Axe"
-          >
+      document.getElementById("emptyMessage").textContent =
+        t.empty;
 
-          <div class="kit-result-name">
-            AXE
-          </div>
-
-          <div class="tier">
-            —
-          </div>
-
-        </div>
-
-
-        <!-- UHC -->
-
-        <div
-          class="kit-result"
-          data-kit-result="uhc"
-        >
-
-          <img
-            src="/assets/tierlist/uhc.png"
-            alt="UHC"
-          >
-
-          <div class="kit-result-name">
-            UHC
-          </div>
-
-          <div class="tier">
-            —
-          </div>
-
-        </div>
-
-
-        <!-- POT -->
-
-        <div
-          class="kit-result"
-          data-kit-result="pot"
-        >
-
-          <img
-            src="/assets/tierlist/pot.png"
-            alt="Pot"
-          >
-
-          <div class="kit-result-name">
-            POT
-          </div>
-
-          <div class="tier">
-            —
-          </div>
-
-        </div>
-
-
-        <!-- MACE -->
-
-        <div
-          class="kit-result"
-          data-kit-result="mace"
-        >
-
-          <img
-            src="/assets/tierlist/mace.png"
-            alt="Mace"
-          >
-
-          <div class="kit-result-name">
-            MACE
-          </div>
-
-          <div class="tier">
-            —
-          </div>
-
-        </div>
-
-
-        <!-- ENDGAME -->
-
-        <div
-          class="kit-result"
-          data-kit-result="endgame"
-        >
-
-          <im
+      document.getElementById("languageSelect").value =
+        cur

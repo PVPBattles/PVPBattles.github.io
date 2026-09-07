@@ -11,101 +11,93 @@
 
 <body>
 
-    <!-- Header -->
-    <header class="site-header">
-        <a href="../home/" class="logo-link">
-            <img src="../assets/header.png" alt="PVPBattles">
-        </a>
-    </header>
+<header class="site-header">
+    <a href="../home/" class="logo-link">
+        <img src="../assets/header.png" alt="PVPBattles">
+    </a>
+</header>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-links">
-            <a href="../home/">Home</a>
-            <a href="https://discord.gg/tyCm7xx4jz" target="_blank">Discord</a>
-            <a href="./" class="active">TierList</a>
-            <a href="../home/#support">Support</a>
-        </div>
+<nav class="navbar">
 
-        <button class="menu-button" id="menuButton">
-            ☰
-        </button>
-
-        <select id="languageSelect" class="language-select">
-            <option value="ja">🇯🇵 日本語</option>
-            <option value="en">🇺🇸 English</option>
-            <option value="ko">🇰🇷 한국어</option>
-            <option value="zh">🇨🇳 中文</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="pt">🇧🇷 Português</option>
-        </select>
-    </nav>
-
-    <!-- Mobile menu -->
-    <div class="mobile-menu" id="mobileMenu">
+    <div class="nav-links">
         <a href="../home/">Home</a>
         <a href="https://discord.gg/tyCm7xx4jz" target="_blank">Discord</a>
-        <a href="./">TierList</a>
+        <a href="./" class="active">TierList</a>
         <a href="../home/#support">Support</a>
     </div>
 
-    <main>
+    <button class="menu-button" id="menuButton" type="button">
+        ☰
+    </button>
 
-        <!-- Title -->
-        <section class="tier-header">
-            <h1>TierList</h1>
-            <p>PVPBattles Player Rankings</p>
-        </section>
+    <select id="languageSelect" class="language-select">
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="en">🇺🇸 English</option>
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="zh">🇨🇳 中文</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="pt">🇧🇷 Português</option>
+    </select>
 
-        <!-- Search -->
-        <section class="search-area">
-            <input
-                type="text"
-                id="playerSearch"
-                placeholder="Search player..."
-                autocomplete="off"
-            >
-        </section>
+</nav>
 
-        <!-- Kit tabs -->
-        <section class="kit-tabs-wrapper">
-            <div class="kit-tabs" id="kitTabs"></div>
-        </section>
+<div class="mobile-menu" id="mobileMenu">
+    <a href="../home/">Home</a>
+    <a href="https://discord.gg/tyCm7xx4jz" target="_blank">Discord</a>
+    <a href="./">TierList</a>
+    <a href="../home/#support">Support</a>
+</div>
 
-        <!-- Table -->
-        <section class="ranking">
+<main>
 
-            <div class="table-header">
-                <div>#</div>
-                <div>PLAYER</div>
-                <div>POINTS</div>
-            </div>
+    <section class="tier-header">
+        <h1>TierList</h1>
+        <p>PVPBattles Player Rankings</p>
+    </section>
 
-            <div id="playerList"></div>
+    <section class="search-area">
+        <input
+            id="playerSearch"
+            type="text"
+            placeholder="Search player..."
+            autocomplete="off"
+        >
+    </section>
 
-        </section>
+    <section class="kit-tabs-wrapper">
+        <div class="kit-tabs" id="kitTabs"></div>
+    </section>
 
-        <!-- Information -->
-        <section class="info-card">
-            <img
-                id="infoIcon"
-                src="../assets/tierlist/Overall.png"
-                alt="Overall"
-            >
+    <section class="ranking">
 
-            <div>
-                <h2 id="infoTitle">OVERALL</h2>
-                <p id="infoDescription">
-                    Overall ranking based on all kits.
-                </p>
-            </div>
-        </section>
+        <div id="tableHeader" class="table-header"></div>
 
-    </main>
+        <div id="playerList"></div>
 
-    <script src="./script.js"></script>
+    </section>
+
+    <section class="info-card">
+
+        <img
+            id="infoIcon"
+            src="../assets/tierlist/overall.png"
+            alt="overall"
+        >
+
+        <div>
+            <h2 id="infoTitle">overall</h2>
+            <p id="infoDescription">
+                Overall ranking based on all kits.
+            </p>
+        </div>
+
+    </section>
+
+</main>
+
+<script src="./script.js"></script>
 
 </body>
 </html>

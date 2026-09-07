@@ -1,22 +1,31 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="PVPBattles - Competitive Minecraft PvP Server">
-
-    <title>PVPBattles - Home</title>
+    <title>PVPBattles</title>
+    <meta
+        name="description"
+        content="PVPBattles - Competitive Minecraft PvP."
+    >
 
     <style>
+        @font-face {
+            font-family: "Minecraft";
+            src: url("../assets/fonts/minecraft_font.ttf") format("truetype");
+            font-display: swap;
+        }
+
         :root {
-            --bg: #080b10;
-            --bar: #0a0e14;
-            --card: #101722;
-            --border: rgba(255,255,255,.09);
-            --text: #f5f7fa;
-            --muted: #9ca8b7;
+            --bg: #050713;
+            --bg-light: #080b19;
+            --card: #0b1020;
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #ffffff;
+            --muted: #9da8bd;
             --blue: #55c0ff;
+            --blue-dark: #3aa7e0;
         }
 
         * {
@@ -29,351 +38,499 @@
 
         body {
             margin: 0;
-            background: var(--bg);
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(55, 150, 220, 0.12),
+                    transparent 38%
+                ),
+                var(--bg);
             color: var(--text);
-            font-family:
-                Inter,
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
+            font-family: "Minecraft", sans-serif;
         }
 
         a {
             color: inherit;
-            text-decoration: none;
         }
 
-        /* HEADER */
+        /* =========================
+           HEADER
+        ========================= */
 
         .site-header {
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px 20px;
-        }
-
-        .header-image {
-            display: block;
-            width: min(760px, 92vw);
-            max-height: 180px;
-            object-fit: contain;
-        }
-
-        /* LANGUAGE */
-
-        .language-wrapper {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-
-        .language-select {
-            appearance: none;
-            background: var(--bar);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 9px 12px;
-            font-size: 14px;
-            cursor: pointer;
-            outline: none;
-        }
-
-        /* NAV */
-
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(10,14,20,.94);
-            backdrop-filter: blur(14px);
-            border-top: 1px solid var(--border);
+            z-index: 10;
+            padding: 18px 16px 10px;
+            text-align: center;
+            background: rgba(5, 7, 19, 0.94);
             border-bottom: 1px solid var(--border);
         }
 
-        .nav-inner {
-            min-height: 64px;
-            width: min(1100px, 100%);
-            margin: auto;
-            padding: 0 20px;
+        .header-logo-link {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 12px;
+        }
+
+        .header-logo {
+            display: block;
+            width: 170px;
+            height: auto;
+        }
+
+        .navbar {
             display: flex;
-            align-items: center;
             justify-content: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 6px;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 2px;
         }
 
-        .nav-link {
-            padding: 12px 18px;
-            border-radius: 9px;
-            color: #cbd4df;
-            font-size: 15px;
-            font-weight: 600;
-            transition: .2s;
+        .navbar a {
+            position: relative;
+            padding: 8px 13px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 13px;
+            border-radius: 7px;
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
         }
 
-        .nav-link:hover {
-            color: white;
-            background: rgba(85,192,255,.09);
+        .navbar a:hover,
+        .navbar a.active {
+            color: var(--text);
+            background: rgba(85, 192, 255, 0.1);
         }
 
-        .nav-link.active {
-            color: var(--blue);
+        .navbar a + a::before {
+            content: "｜";
+            position: absolute;
+            left: -3px;
+            color: #344056;
+            pointer-events: none;
         }
 
-        /* MAIN */
-
-        main {
-            width: min(1050px, calc(100% - 32px));
-            margin: auto;
-        }
-
-        section {
-            padding: 100px 0;
-        }
+        /* =========================
+           HERO
+        ========================= */
 
         .hero {
-            min-height: 620px;
+            position: relative;
+            overflow: hidden;
+            min-height: 590px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 80px 20px;
             text-align: center;
         }
 
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            top: -250px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(85, 192, 255, 0.08);
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+
         .hero-content {
-            max-width: 800px;
+            position: relative;
+            z-index: 1;
+            width: min(900px, 100%);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 7px 13px;
+            color: var(--blue);
+            background: rgba(85, 192, 255, 0.08);
+            border: 1px solid rgba(85, 192, 255, 0.2);
+            border-radius: 999px;
+            font-size: 12px;
         }
 
         .hero h1 {
             margin: 0;
-            font-size: clamp(44px, 9vw, 82px);
+            font-size: clamp(42px, 8vw, 82px);
             line-height: 1;
-            letter-spacing: -3px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(85, 192, 255, 0.15);
         }
 
         .hero h1 span {
             color: var(--blue);
         }
 
-        .hero p {
-            margin: 24px auto 0;
+        .hero-subtitle {
             max-width: 650px;
+            margin: 25px auto 0;
             color: var(--muted);
-            font-size: clamp(16px, 2vw, 19px);
-            line-height: 1.7;
+            font-size: clamp(14px, 2vw, 18px);
+            line-height: 1.8;
         }
 
-        .buttons {
-            margin-top: 34px;
+        .hero-buttons {
             display: flex;
             justify-content: center;
-            gap: 12px;
             flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 35px;
         }
 
         .button {
-            padding: 14px 24px;
-            border-radius: 10px;
-            font-weight: 700;
-            border: 1px solid var(--border);
-            transition: .2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 0 22px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            text-decoration: none;
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
         }
 
         .button-primary {
+            color: #03101a;
             background: var(--blue);
-            color: #071018;
         }
 
-        .button-primary:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.08);
-        }
-
-        .button-discord {
-            background: var(--card);
-        }
-
-        .button-discord:hover {
-            border-color: rgba(85,192,255,.4);
+        .button-secondary {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--border);
         }
 
         .button-disabled {
-            opacity: .45;
+            color: #697388;
+            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--border);
             cursor: not-allowed;
             pointer-events: none;
         }
 
-        /* SECTION TITLE */
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        .section {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 90px 0;
+        }
+
+        .section-header {
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .section-label {
+            margin-bottom: 10px;
+            color: var(--blue);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
 
         .section-title {
-            text-align: center;
-            margin-bottom: 45px;
-        }
-
-        .section-title h2 {
             margin: 0;
-            font-size: clamp(30px, 6vw, 46px);
+            font-size: clamp(26px, 4vw, 38px);
         }
 
-        .section-title p {
-            margin: 12px auto 0;
+        .section-description {
+            max-width: 650px;
+            margin: 15px auto 0;
             color: var(--muted);
-            line-height: 1.6;
+            font-size: 14px;
+            line-height: 1.8;
         }
 
-        /* FEATURES */
+        /* =========================
+           FEATURES
+        ========================= */
 
         .features {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: 15px;
         }
 
-        .feature {
-            padding: 28px;
-            min-height: 190px;
-            background: var(--card);
+        .feature-card {
+            padding: 26px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.045),
+                    rgba(255, 255, 255, 0.015)
+                );
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(85, 192, 255, 0.25);
+        }
+
+        .feature-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            margin-bottom: 18px;
+            color: var(--blue);
+            background: rgba(85, 192, 255, 0.08);
+            border-radius: 9px;
+            font-size: 17px;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           TIERLIST PREVIEW
+        ========================= */
+
+        .tier-preview {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .tier-preview-card,
+        .server-card,
+        .support-card {
+            padding: 35px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(85, 192, 255, 0.07),
+                    rgba(255, 255, 255, 0.02)
+                );
             border: 1px solid var(--border);
             border-radius: 14px;
         }
 
-        .feature h3 {
+        .tier-preview-card h3,
+        .server-card h3,
+        .support-card h3 {
             margin: 0 0 12px;
-            font-size: 20px;
+            font-size: 22px;
         }
 
-        .feature p {
+        .tier-preview-card p,
+        .server-card p,
+        .support-card p {
             margin: 0;
             color: var(--muted);
-            line-height: 1.7;
+            font-size: 13px;
+            line-height: 1.8;
         }
 
-        /* SERVER */
+        .tier-levels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 25px;
+        }
+
+        .tier {
+            padding: 8px 11px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 11px;
+        }
+
+        .tier.ht1 { color: #ff4b4b; }
+        .tier.ht2 { color: #ff8b32; }
+        .tier.ht3 { color: #ffb52e; }
+        .tier.ht4 { color: #ffe047; }
+        .tier.ht5 { color: #fff1a3; }
+        .tier.lt1 { color: #45d483; }
+        .tier.lt2 { color: #36cfa9; }
+        .tier.lt3 { color: #3ec5c5; }
+        .tier.lt4 { color: #55a8ff; }
+        .tier.lt5 { color: #9b9cff; }
+
+        /* =========================
+           SERVER
+        ========================= */
+
+        .server-section {
+            padding-top: 20px;
+        }
 
         .server-card {
-            max-width: 760px;
-            margin: auto;
-            padding: 42px 28px;
             text-align: center;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
         }
 
-        .status {
+        .coming-soon {
             display: inline-block;
-            padding: 7px 12px;
-            border-radius: 999px;
-            background: rgba(85,192,255,.1);
+            margin: 5px 0 25px;
+            padding: 8px 14px;
             color: var(--blue);
+            background: rgba(85, 192, 255, 0.08);
+            border: 1px solid rgba(85, 192, 255, 0.2);
+            border-radius: 999px;
+            font-size: 11px;
+        }
+
+        .server-ip {
+            margin-top: 25px;
+            padding: 16px;
+            color: #7c879b;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             font-size: 13px;
-            font-weight: 800;
-            letter-spacing: .5px;
         }
 
-        .server-card h3 {
-            margin: 20px 0 10px;
-            font-size: 30px;
-        }
+        /* =========================
+           SUPPORT
+        ========================= */
 
-        .server-card p {
-            color: var(--muted);
-            line-height: 1.7;
+        .support-section {
+            padding-top: 20px;
         }
-
-        /* SUPPORT */
 
         .support-card {
-            max-width: 760px;
-            margin: auto;
-            padding: 42px 28px;
             text-align: center;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
         }
 
-        .support-card p {
-            color: var(--muted);
-            line-height: 1.7;
+        .support-card .button {
+            margin-top: 25px;
         }
 
-        /* FOOTER */
+        /* =========================
+           FOOTER
+        ========================= */
 
         footer {
-            padding: 38px 20px;
-            border-top: 1px solid var(--border);
+            margin-top: 40px;
+            padding: 30px 20px;
             text-align: center;
-            color: #6f7a88;
-            font-size: 13px;
+            color: #68738a;
+            border-top: 1px solid var(--border);
+            font-size: 11px;
         }
 
-        /* MOBILE */
+        footer strong {
+            color: #aeb8ca;
+        }
 
-        @media (max-width: 750px) {
+        /* =========================
+           RESPONSIVE
+        ========================= */
 
-            .site-header {
-                padding: 18px 14px;
+        @media (max-width: 800px) {
+            .features {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .header-image {
-                width: 94vw;
-                max-height: 130px;
-            }
-
-            .language-wrapper {
-                top: 10px;
-                right: 10px;
-            }
-
-            .language-select {
-                font-size: 13px;
-                padding: 8px 10px;
-            }
-
-            .nav-inner {
-                overflow-x: auto;
-                justify-content: flex-start;
-                padding: 0 8px;
-            }
-
-            .nav-links {
-                width: max-content;
-                margin: auto;
-            }
-
-            .nav-link {
-                padding: 10px 13px;
-                font-size: 14px;
+            .tier-preview {
+                grid-template-columns: 1fr;
             }
 
             .hero {
                 min-height: 520px;
             }
+        }
 
-            section {
-                padding: 75px 0;
+        @media (max-width: 600px) {
+            .site-header {
+                padding-top: 14px;
+            }
+
+            .header-logo {
+                width: 140px;
+            }
+
+            .navbar {
+                gap: 0;
+            }
+
+            .navbar a {
+                padding: 7px 8px;
+                font-size: 10px;
+            }
+
+            .navbar a + a::before {
+                left: -2px;
+            }
+
+            .hero {
+                min-height: 500px;
+                padding: 60px 16px;
+            }
+
+            .hero h1 {
+                font-size: 45px;
+            }
+
+            .hero-subtitle {
+                font-size: 12px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: min(300px, 100%);
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .section {
+                width: min(100% - 24px, 1120px);
+                padding: 65px 0;
             }
 
             .features {
                 grid-template-columns: 1fr;
             }
 
-            .feature {
-                min-height: auto;
+            .feature-card {
+                padding: 22px;
             }
 
-            .button {
-                width: 100%;
-                max-width: 320px;
+            .tier-preview-card,
+            .server-card,
+            .support-card {
+                padding: 25px 20px;
             }
         }
     </style>
@@ -381,389 +538,234 @@
 
 <body>
 
-<header class="site-header">
+    <!-- =========================
+         COMMON HEADER
+    ========================= -->
 
-    <div class="language-wrapper">
-        <select id="languageSelect" class="language-select">
-            <option value="ja">🇯🇵 日本語</option>
-            <option value="en">🇺🇸 English</option>
-            <option value="ko">🇰🇷 한국어</option>
-            <option value="zh">🇨🇳 中文</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="pt">🇧🇷 Português</option>
-        </select>
-    </div>
+    <header class="site-header">
+        <a href="../home/" class="header-logo-link">
+            <img
+                src="../assets/header.png"
+                class="header-logo"
+                alt="PVPBattles"
+            >
+        </a>
 
-    <img
-        src="/assets/header.png"
-        alt="PVPBattles"
-        class="header-image"
-    >
-
-</header>
-
-<nav class="navbar">
-    <div class="nav-inner">
-
-        <div class="nav-links">
-
-            <a
-                href="/home/"
-                class="nav-link active"
-                data-i18n="home"
-            >ホーム</a>
-
+        <nav class="navbar" aria-label="Main navigation">
+            <a href="../home/" class="active">Home</a>
+            <a href="../tierlist/">TierList</a>
+            <a href="../news/">News</a>
             <a
                 href="https://discord.gg/tyCm7xx4jz"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="nav-link"
-                data-i18n="discord"
-            >Discord</a>
+            >
+                Discord
+            </a>
+            <a href="../server/">Server</a>
+        </nav>
+    </header>
 
-            <a
-                href="/tierlist/"
-                class="nav-link"
-                data-i18n="tierlist"
-            >TierList</a>
+    <main>
 
-            <a
-                href="#support"
-                class="nav-link"
-                data-i18n="support"
-            >サポート</a>
+        <!-- HERO -->
 
-        </div>
+        <section class="hero">
+            <div class="hero-content">
 
-    </div>
-</nav>
+                <div class="hero-badge">
+                    COMPETITIVE MINECRAFT PVP
+                </div>
 
-<main>
+                <h1>
+                    PVP<span>Battles</span>
+                </h1>
 
-    <section class="hero">
+                <p class="hero-subtitle">
+                    A competitive Minecraft PvP community focused on
+                    skill, rankings, and fair competition.
+                </p>
 
-        <div class="hero-content">
+                <div class="hero-buttons">
+                    <span class="button button-disabled">
+                        Play Now
+                    </span>
 
-            <h1>
-                PVP<span>Battles</span>
-            </h1>
+                    <a
+                        href="../tierlist/"
+                        class="button button-secondary"
+                    >
+                        View TierList
+                    </a>
+                </div>
 
-            <p data-i18n="heroDescription">
-                Minecraft PvPを楽しむための競技型サーバー。
-                快適な環境と見やすく使いやすいUIを提供します。
-            </p>
+            </div>
+        </section>
 
-            <div class="buttons">
+        <!-- FEATURES -->
 
-                <span
-                    class="button button-primary button-disabled"
-                    data-i18n="play"
-                >
-                    今すぐプレイ
-                </span>
+        <section class="section">
 
-                <a
-                    href="https://discord.gg/tyCm7xx4jz"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="button button-discord"
-                    data-i18n="joinDiscord"
-                >
-                    Discordに参加
-                </a>
+            <div class="section-header">
+                <div class="section-label">WHY PVPBATTLES</div>
+
+                <h2 class="section-title">
+                    Built for Competitive PvP
+                </h2>
+
+                <p class="section-description">
+                    Everything you need to track your PvP performance
+                    and compete with other players.
+                </p>
+            </div>
+
+            <div class="features">
+
+                <article class="feature-card">
+                    <div class="feature-icon">⚔</div>
+                    <h3>Competitive PvP</h3>
+                    <p>
+                        Compete against other Minecraft PvP players
+                        and prove your skills.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">◆</div>
+                    <h3>TierList</h3>
+                    <p>
+                        Player rankings from LT5 to HT1 across
+                        multiple PvP kits.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">★</div>
+                    <h3>Leaderboards</h3>
+                    <p>
+                        See who stands at the top of the PVPBattles
+                        rankings.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">◈</div>
+                    <h3>Player Statistics</h3>
+                    <p>
+                        Keep track of player performance and
+                        competitive progress.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">⌁</div>
+                    <h3>Low Latency</h3>
+                    <p>
+                        A Japan-based environment designed for
+                        responsive PvP gameplay.
+                    </p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">▣</div>
+                    <h3>Custom UI</h3>
+                    <p>
+                        Clean and easy-to-use interfaces designed
+                        for both desktop and mobile.
+                    </p>
+                </article>
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
+        <!-- TIERLIST -->
 
-    <section id="features">
+        <section class="section">
 
-        <div class="section-title">
+            <div class="section-header">
+                <div class="section-label">RANKINGS</div>
 
-            <h2 data-i18n="featuresTitle">
-                Features
-            </h2>
+                <h2 class="section-title">
+                    Find Your Tier
+                </h2>
 
-            <p data-i18n="featuresDescription">
-                PVPBattlesの特徴
-            </p>
-
-        </div>
-
-        <div class="features">
-
-            <article class="feature">
-                <h3 data-i18n="feature1Title">
-                    Competitive PvP
-                </h3>
-
-                <p data-i18n="feature1Text">
-                    競技性を重視したPvP環境を提供します。
+                <p class="section-description">
+                    Check player rankings across every supported
+                    PvP kit.
                 </p>
-            </article>
+            </div>
 
-            <article class="feature">
-                <h3 data-i18n="feature2Title">
-                    TierList
-                </h3>
+            <div class="tier-preview">
 
-                <p data-i18n="feature2Text">
-                    HT1からLT5までのTierListシステムを採用しています。
-                </p>
-            </article>
+                <div class="tier-preview-card">
+                    <h3>PVPBattles TierList</h3>
 
-            <article class="feature">
-                <h3 data-i18n="feature3Title">
-                    Leaderboards
-                </h3>
+                    <p>
+                        From LT5 to HT1, see where players stand
+                        across different competitive kits.
+                    </p>
 
-                <p data-i18n="feature3Text">
-                    プレイヤーのランキングを確認できます。
-                </p>
-            </article>
+                    <div class="tier-levels">
+                        <span class="tier ht1">HT1</span>
+                        <span class="tier ht2">HT2</span>
+                        <span class="tier ht3">HT3</span>
+                        <span class="tier ht4">HT4</span>
+                        <span class="tier ht5">HT5</span>
+                        <span class="tier lt1">LT1</span>
+                        <span class="tier lt2">LT2</span>
+                        <span class="tier lt3">LT3</span>
+                        <span class="tier lt4">LT4</span>
+                        <span class="tier lt5">LT5</span>
+                    </div>
+                </div>
 
-            <article class="feature">
-                <h3 data-i18n="feature4Title">
-                    Player Statistics
-                </h3>
+                <div class="tier-preview-card">
+                    <h3>Check the Rankings</h3>
 
-                <p data-i18n="feature4Text">
-                    プレイヤーの戦績や統計を確認できます。
-                </p>
-            </article>
+                    <p>
+                        Explore the full TierList and find your
+                        favorite players.
+                    </p>
 
-            <article class="feature">
-                <h3 data-i18n="feature5Title">
-                    Low Latency
-                </h3>
-
-                <p data-i18n="feature5Text">
-                    日本を拠点とした快適な接続環境を目指しています。
-                </p>
-            </article>
-
-            <article class="feature">
-                <h3 data-i18n="feature6Title">
-                    Custom UI
-                </h3>
-
-                <p data-i18n="feature6Text">
-                    見やすく、使いやすいカスタムUIを提供します。
-                </p>
-            </article>
-
-        </div>
-
-    </section>
-
-    <section id="server">
-
-        <div class="section-title">
-
-            <h2 data-i18n="serverTitle">
-                Server
-            </h2>
-
-        </div>
-
-        <div class="server-card">
-
-            <span class="status">
-                COMING SOON
-            </span>
-
-            <h3>PVPBattles</h3>
-
-            <p data-i18n="serverDescription">
-                サーバーは現在準備中です。
-                公開までしばらくお待ちください。
-            </p>
-
-        </div>
-
-    </section>
-
-    <section id="support">
-
-        <div class="section-title">
-
-            <h2 data-i18n="supportTitle">
-                Support
-            </h2>
-
-        </div>
-
-        <div class="support-card">
-
-            <p data-i18n="supportDescription">
-                サポートやお問い合わせはDiscordからお願いします。
-            </p>
-
-            <div class="buttons">
-
-                <a
-                    href="https://discord.gg/tyCm7xx4jz"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="button button-discord"
-                    data-i18n="contact"
-                >
-                    Discordでお問い合わせ
-                </a>
+                    <div class="hero-buttons">
+                        <a
+                            href="../tierlist/"
+                            class="button button-primary"
+                        >
+                            Open TierList
+                        </a>
+                    </div>
+                </div>
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
+        <!-- SERVER -->
 
-</main>
+        <section class="section server-section">
 
-<footer>
-    © PVPBattles. All rights reserved.
-</footer>
+            <div class="section-header">
+                <div class="section-label">SERVER</div>
 
-<script>
-    const translations = {
+                <h2 class="section-title">
+                    PVPBattles Server
+                </h2>
 
-        ja: {
-            home: "ホーム",
-            discord: "Discord",
-            tierlist: "TierList",
-            support: "サポート",
-            heroDescription:
-                "Minecraft PvPを楽しむための競技型サーバー。快適な環境と見やすく使いやすいUIを提供します。",
-            play: "今すぐプレイ",
-            joinDiscord: "Discordに参加",
-            featuresTitle: "Features",
-            featuresDescription: "PVPBattlesの特徴",
-            feature1Title: "Competitive PvP",
-            feature1Text: "競技性を重視したPvP環境を提供します。",
-            feature2Title: "TierList",
-            feature2Text: "HT1からLT5までのTierListシステムを採用しています。",
-            feature3Title: "Leaderboards",
-            feature3Text: "プレイヤーのランキングを確認できます。",
-            feature4Title: "Player Statistics",
-            feature4Text: "プレイヤーの戦績や統計を確認できます。",
-            feature5Title: "Low Latency",
-            feature5Text: "日本を拠点とした快適な接続環境を目指しています。",
-            feature6Title: "Custom UI",
-            feature6Text: "見やすく、使いやすいカスタムUIを提供します。",
-            serverTitle: "Server",
-            serverDescription: "サーバーは現在準備中です。公開までしばらくお待ちください。",
-            supportTitle: "Support",
-            supportDescription: "サポートやお問い合わせはDiscordからお願いします。",
-            contact: "Discordでお問い合わせ"
-        },
+                <p class="section-description">
+                    The server is currently under development.
+                </p>
+            </div>
 
-        en: {
-            home: "Home",
-            discord: "Discord",
-            tierlist: "TierList",
-            support: "Support",
-            heroDescription: "A competitive Minecraft PvP server focused on a smooth experience and clean, easy-to-use UI.",
-            play: "Play Now",
-            joinDiscord: "Join Discord",
-            featuresTitle: "Features",
-            featuresDescription: "What PVPBattles offers",
-            feature1Title: "Competitive PvP",
-            feature1Text: "A PvP environment focused on competitive gameplay.",
-            feature2Title: "TierList",
-            feature2Text: "A TierList system ranging from HT1 to LT5.",
-            feature3Title: "Leaderboards",
-            feature3Text: "Check player rankings and standings.",
-            feature4Title: "Player Statistics",
-            feature4Text: "View player performance and statistics.",
-            feature5Title: "Low Latency",
-            feature5Text: "A Japan-based server designed for low latency.",
-            feature6Title: "Custom UI",
-            feature6Text: "Clean and easy-to-use custom interfaces.",
-            serverTitle: "Server",
-            serverDescription: "The server is currently being prepared. Stay tuned for the launch.",
-            supportTitle: "Support",
-            supportDescription: "For support and inquiries, please contact us through Discord.",
-            contact: "Contact us on Discord"
-        },
+            <div class="server-card">
 
-        ko: {
-            home: "홈",
-            discord: "Discord",
-            tierlist: "TierList",
-            support: "지원",
-            heroDescription: "쾌적한 환경과 깔끔하고 사용하기 쉬운 UI를 제공하는 경쟁형 Minecraft PvP 서버입니다.",
-            play: "지금 플레이",
-            joinDiscord: "Discord 참가",
-            featuresTitle: "Features",
-            featuresDescription: "PVPBattles의 특징",
-            feature1Title: "Competitive PvP",
-            feature1Text: "경쟁적인 PvP 환경을 제공합니다.",
-            feature2Title: "TierList",
-            feature2Text: "HT1부터 LT5까지의 TierList 시스템을 제공합니다.",
-            feature3Title: "Leaderboards",
-            feature3Text: "플레이어 순위를 확인할 수 있습니다.",
-            feature4Title: "Player Statistics",
-            feature4Text: "플레이어의 전적과 통계를 확인할 수 있습니다.",
-            feature5Title: "Low Latency",
-            feature5Text: "일본 기반의 낮은 지연 환경을 목표로 합니다.",
-            feature6Title: "Custom UI",
-            feature6Text: "깔끔하고 사용하기 쉬운 커스텀 UI를 제공합니다.",
-            serverTitle: "Server",
-            serverDescription: "서버를 현재 준비하고 있습니다. 공개를 기다려 주세요.",
-            supportTitle: "Support",
-            supportDescription: "문의 및 지원은 Discord를 이용해 주세요.",
-            contact: "Discord 문의"
-        },
+                <div class="coming-soon">
+                    COMING SOON
+                </div>
 
-        zh: {
-            home: "首页",
-            discord: "Discord",
-            tierlist: "TierList",
-            support: "支持",
-            heroDescription: "专注于竞技体验的 Minecraft PvP 服务器，提供流畅的环境和易用的 UI。",
-            play: "立即游玩",
-            joinDiscord: "加入 Discord",
-            featuresTitle: "Features",
-            featuresDescription: "PVPBattles 的特色",
-            feature1Title: "Competitive PvP",
-            feature1Text: "提供注重竞技性的 PvP 环境。",
-            feature2Title: "TierList",
-            feature2Text: "提供从 HT1 到 LT5 的 TierList 系统。",
-            feature3Title: "Leaderboards",
-            feature3Text: "查看玩家排名。",
-            feature4Title: "Player Statistics",
-            feature4Text: "查看玩家战绩和统计数据。",
-            feature5Title: "Low Latency",
-            feature5Text: "以日本为中心，提供低延迟的连接环境。",
-            feature6Title: "Custom UI",
-            feature6Text: "提供清晰易用的自定义 UI。",
-            serverTitle: "Server",
-            serverDescription: "服务器目前正在准备中，请等待正式开放。",
-            supportTitle: "Support",
-            supportDescription: "如需支持或咨询，请通过 Discord 联系我们。",
-            contact: "通过 Discord 联系"
-        },
+                <h3>Server</h3>
 
-        es: {
-            home: "Inicio",
-            discord: "Discord",
-            tierlist: "TierList",
-            support: "Soporte",
-            heroDescription: "Un servidor competitivo de Minecraft PvP con una experiencia fluida y una interfaz limpia.",
-            play: "Jugar ahora",
-            joinDiscord: "Unirse a Discord",
-            featuresTitle: "Features",
-            featuresDescription: "Características de PVPBattles",
-            feature1Title: "Competitive PvP",
-            feature1Text: "Un entorno PvP centrado en la competición.",
-            feature2Title: "TierList",
-            feature2Text: "Sistema TierList desde HT1 hasta LT5.",
-            feature3Title: "Leaderboards",
-            feature3Text: "Consulta las clasificaciones de jugadores.",
-            feature4Title: "Player Statistics",
-            feature4Text: "Consulta estadísticas y rendimiento.",
-            feature5Title: "Low Latency",
-            feature5Text: "Servidor basado en Japón para una 
+                <p>
+                    The PVPBattles Minecraft server will be
+                    ava

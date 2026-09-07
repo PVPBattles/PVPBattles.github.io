@@ -7,8 +7,8 @@
 const kits = [
     {
         id: "overall",
-        name: "OVERALL",
-        image: "../assets/tierlist/Overall.png",
+        name: "overall",
+        image: "../assets/tierlist/overall.png",
         description: "Overall ranking based on all kits."
     },
     {
@@ -33,7 +33,7 @@ const kits = [
         id: "pot",
         name: "Pot",
         image: "../assets/tierlist/pot.png",
-        description: "Potion PvP rankings."
+        description: "Pot PvP rankings."
     },
     {
         id: "mace",
@@ -57,10 +57,9 @@ const kits = [
         id: "nethpot",
         name: "NethPot",
         image: "../assets/tierlist/nethpot.png",
-        description: "Netherite Potion PvP rankings."
+        description: "NethPot PvP rankings."
     }
 ];
-
 
 /* =========================
    TIER POINTS
@@ -80,7 +79,6 @@ const tierPoints = {
     LT5: 1
 };
 
-
 /* =========================
    PLAYER DATA
 ========================= */
@@ -90,14 +88,14 @@ const players = [
         name: "SEIYA5620",
 
         tiers: {
-            sword: null,
-            axe: null,
-            uhc: null,
-            pot: null,
-            mace: null,
+            sword: "-",
+            axe: "-",
+            uhc: "-",
+            pot: "-",
+            mace: "-",
             endgame: "LT4",
-            smp: null,
-            nethpot: null
+            smp: "-",
+            nethpot: "-"
         }
     },
 
@@ -106,17 +104,16 @@ const players = [
 
         tiers: {
             sword: "HT5",
-            axe: null,
-            uhc: null,
-            pot: null,
-            mace: null,
-            endgame: null,
-            smp: null,
-            nethpot: null
+            axe: "-",
+            uhc: "-",
+            pot: "-",
+            mace: "-",
+            endgame: "-",
+            smp: "-",
+            nethpot: "-"
         }
     }
 ];
-
 
 /* =========================
    STATE
@@ -124,7 +121,6 @@ const players = [
 
 let currentKit = "overall";
 let searchText = "";
-
 
 /* =========================
    ELEMENTS
@@ -134,24 +130,42 @@ const kitTabs = document.getElementById("kitTabs");
 const playerList = document.getElementById("playerList");
 const playerSearch = document.getElementById("playerSearch");
 
+const tableHeader = document.getElementById("tableHeader");
+
 const infoIcon = document.getElementById("infoIcon");
 const infoTitle = document.getElementById("infoTitle");
-const infoDescription = document.getElementById("infoDescription");
+const infoDescription = document.getElementById(
+    "infoDescription"
+);
 
 const menuButton = document.getElementById("menuButton");
 const mobileMenu = document.getElementById("mobileMenu");
 
-const languageSelect = document.getElementById("languageSelect");
-
+const languageSelect =
+    document.getElementById("languageSelect");
 
 /* =========================
-   CREATE KIT TABS
+   SKIN
+========================= */
+
+function getSkinUrl(playerName) {
+    return (
+        "https://mc-heads.net/avatar/" +
+        encodeURIComponent(playerName) +
+        "/48"
+    );
+}
+
+/* =========================
+   KIT TABS
 ========================= */
 
 function renderKitTabs() {
+
     kitTabs.innerHTML = "";
 
     kits.forEach((kit) => {
+
         const button = document.createElement("button");
 
         button.type = "button";
@@ -166,21 +180,19 @@ function renderKitTabs() {
         image.src = kit.image;
         image.alt = kit.name;
 
-        image.onerror = () => {
-            image.style.display = "none";
-        };
-
         const text = document.createElement("span");
+
         text.textContent = kit.name;
 
         button.appendChild(image);
         button.appendChild(text);
 
         button.addEventListener("click", () => {
+
             currentKit = kit.id;
 
             renderKitTabs();
-            renderPlayers();
+            renderTable();
             updateInfo();
         });
 
@@ -188,192 +200,321 @@ function renderKitTabs() {
     });
 }
 
-
 /* =========================
-   GET OVERALL POINTS
+   OVERALL POINTS
 ========================= */
 
 function getOverallPoints(player) {
-    let total = 0;
-    let completed = 0;
 
-    Object.values(player.tiers).forEach((tier) => {
-        if (!tier || !tierPoints[tier]) {
-            return;
+    let total = 0;
+
+    for (const kit of kits) {
+
+        if (kit.id === "overall") {
+            continue;
+        }
+
+        const tier = player.tiers[kit.id];
+
+        if (!tierPoints[tier]) {
+            return null;
         }
 
         total += tierPoints[tier];
-        completed++;
-    });
-
-    /*
-     * Overall is only calculated when all 8 kits
-     * have a tier.
-     */
-    if (completed !== 8) {
-        return null;
     }
 
     return Math.round((total / 80) * 300);
 }
 
-
 /* =========================
-   GET PLAYER POINTS
+   SORT PLAYERS
 ========================= */
 
-function getPlayerPoints(player, kitId) {
-    if (kitId === "overall") {
-        return getOverallPoints(player);
-    }
+function getSortedPlayers() {
 
-    const tier = player.tiers[kitId];
+    const filtered = players.filter((player) => {
 
-    if (!tier) {
-        return null;
-    }
-
-    return tierPoints[tier];
-}
-
-
-/* =========================
-   GET PLAYER TIER
-========================= */
-
-function getPlayerTier(player, kitId) {
-    if (kitId === "overall") {
-        return "OVERALL";
-    }
-
-    return player.tiers[kitId] || "—";
-}
-
-
-/* =========================
-   SKIN
-========================= */
-
-function getSkinUrl(playerName) {
-    return `https://mc-heads.net/avatar/${encodeURIComponent(
-        playerName
-    )}/48`;
-}
-
-
-/* =========================
-   RENDER PLAYERS
-========================= */
-
-function renderPlayers() {
-    playerList.innerHTML = "";
-
-    const filteredPlayers = players.filter((player) => {
         return player.name
             .toLowerCase()
             .includes(searchText.toLowerCase());
     });
 
-    /*
-     * Sort players.
-     * Players with points come first.
-     */
-    filteredPlayers.sort((a, b) => {
-        const aPoints = getPlayerPoints(a, currentKit);
-        const bPoints = getPlayerPoints(b, currentKit);
+    if (currentKit === "overall") {
 
-        if (aPoints === null && bPoints === null) {
-            return a.name.localeCompare(b.name);
-        }
+        return filtered.sort((a, b) => {
 
-        if (aPoints === null) {
-            return 1;
-        }
+            const aPoints = getOverallPoints(a);
+            const bPoints = getOverallPoints(b);
 
-        if (bPoints === null) {
-            return -1;
-        }
+            if (aPoints === null && bPoints === null) {
+                return a.name.localeCompare(b.name);
+            }
 
-        return bPoints - aPoints;
+            if (aPoints === null) {
+                return 1;
+            }
+
+            if (bPoints === null) {
+                return -1;
+            }
+
+            return bPoints - aPoints;
+        });
+    }
+
+    return filtered.sort((a, b) => {
+
+        const aTier = tierPoints[a.tiers[currentKit]] || 0;
+        const bTier = tierPoints[b.tiers[currentKit]] || 0;
+
+        return bTier - aTier;
+    });
+}
+
+/* =========================
+   TABLE HEADER
+========================= */
+
+function renderTableHeader() {
+
+    tableHeader.innerHTML = "";
+
+    if (currentKit === "overall") {
+
+        tableHeader.className =
+            "table-header overall-header";
+
+        const rank = document.createElement("div");
+
+        rank.textContent = "#";
+
+        const player = document.createElement("div");
+
+        player.textContent = "PLAYER";
+
+        tableHeader.appendChild(rank);
+        tableHeader.appendChild(player);
+
+        kits.slice(1).forEach((kit) => {
+
+            const kitHeader =
+                document.createElement("div");
+
+            kitHeader.className = "overall-kit-head";
+
+            const image = document.createElement("img");
+
+            image.src = kit.image;
+            image.alt = kit.name;
+
+            const name = document.createElement("span");
+
+            name.textContent = kit.name;
+
+            kitHeader.appendChild(image);
+            kitHeader.appendChild(name);
+
+            tableHeader.appendChild(kitHeader);
+        });
+
+        const points = document.createElement("div");
+
+        points.textContent = "POINTS";
+
+        tableHeader.appendChild(points);
+
+        return;
+    }
+
+    tableHeader.className =
+        "table-header kit-header";
+
+    const rank = document.createElement("div");
+
+    rank.textContent = "#";
+
+    const player = document.createElement("div");
+
+    player.textContent = "PLAYER";
+
+    const tier = document.createElement("div");
+
+    tier.textContent = "TIER / POINTS";
+
+    tableHeader.appendChild(rank);
+    tableHeader.appendChild(player);
+    tableHeader.appendChild(tier);
+}
+
+/* =========================
+   CREATE PLAYER INFO
+========================= */
+
+function createPlayerInfo(player) {
+
+    const wrapper = document.createElement("div");
+
+    wrapper.className = "player-info";
+
+    const skin = document.createElement("img");
+
+    skin.className = "player-skin";
+    skin.src = getSkinUrl(player.name);
+    skin.alt = player.name;
+
+    const name = document.createElement("div");
+
+    name.className = "player-name";
+    name.textContent = player.name;
+
+    wrapper.appendChild(skin);
+    wrapper.appendChild(name);
+
+    return wrapper;
+}
+
+/* =========================
+   OVERALL ROW
+========================= */
+
+function createOverallRow(player, index) {
+
+    const row = document.createElement("div");
+
+    row.className =
+        "player-row overall-row";
+
+    const number = document.createElement("div");
+
+    number.className = "player-number";
+    number.textContent = index + 1;
+
+    row.appendChild(number);
+
+    row.appendChild(createPlayerInfo(player));
+
+    kits.slice(1).forEach((kit) => {
+
+        const tier = document.createElement("div");
+
+        tier.className = "overall-tier";
+
+        tier.textContent =
+            player.tiers[kit.id] || "-";
+
+        row.appendChild(tier);
     });
 
+    const points = document.createElement("div");
+
+    points.className = "overall-points";
+
+    const overallPoints =
+        getOverallPoints(player);
+
+    points.textContent =
+        overallPoints === null
+            ? "-"
+            : `${overallPoints} Points`;
+
+    row.appendChild(points);
+
+    return row;
+}
+
+/* =========================
+   NORMAL KIT ROW
+========================= */
+
+function createKitRow(player, index) {
+
+    const row = document.createElement("div");
+
+    row.className =
+        "player-row kit-row";
+
+    const number = document.createElement("div");
+
+    number.className = "player-number";
+    number.textContent = index + 1;
+
+    const info = createPlayerInfo(player);
+
+    const tier = player.tiers[currentKit] || "-";
+
+    const points = document.createElement("div");
+
+    points.className = "player-points";
+
+    if (tierPoints[tier]) {
+
+        points.textContent =
+            `${tier} · ${tierPoints[tier]} Points`;
+
+    } else {
+
+        points.textContent = "-";
+    }
+
+    row.appendChild(number);
+    row.appendChild(info);
+    row.appendChild(points);
+
+    return row;
+}
+
+/* =========================
+   RENDER TABLE
+========================= */
+
+function renderTable() {
+
+    playerList.innerHTML = "";
+
+    renderTableHeader();
+
+    const filteredPlayers = getSortedPlayers();
+
     if (filteredPlayers.length === 0) {
-        const empty = document.createElement("div");
+
+        const empty =
+            document.createElement("div");
 
         empty.className = "empty-message";
+
         empty.textContent = "No players found.";
 
         playerList.appendChild(empty);
+
         return;
     }
 
     filteredPlayers.forEach((player, index) => {
-        const row = document.createElement("div");
 
-        row.className = "player-row";
+        if (currentKit === "overall") {
 
-        /* Rank */
-        const number = document.createElement("div");
+            playerList.appendChild(
+                createOverallRow(player, index)
+            );
 
-        number.className = "player-number";
-        number.textContent = String(index + 1);
-
-        /* Player info */
-        const playerInfo = document.createElement("div");
-
-        playerInfo.className = "player-info";
-
-        const skin = document.createElement("img");
-
-        skin.className = "player-skin";
-        skin.src = getSkinUrl(player.name);
-        skin.alt = player.name;
-
-        const name = document.createElement("div");
-
-        name.className = "player-name";
-        name.textContent = player.name;
-
-        const tier = document.createElement("span");
-
-        tier.className = "player-tier";
-        tier.textContent = getPlayerTier(player, currentKit);
-
-        name.appendChild(tier);
-
-        playerInfo.appendChild(skin);
-        playerInfo.appendChild(name);
-
-        /* Points */
-        const points = document.createElement("div");
-
-        points.className = "player-points";
-
-        const playerPoints = getPlayerPoints(player, currentKit);
-
-        if (playerPoints === null) {
-            points.textContent = "—";
-        } else if (currentKit === "overall") {
-            points.textContent = `${playerPoints} Points`;
         } else {
-            points.textContent = `${playerPoints} Points`;
+
+            playerList.appendChild(
+                createKitRow(player, index)
+            );
         }
-
-        row.appendChild(number);
-        row.appendChild(playerInfo);
-        row.appendChild(points);
-
-        playerList.appendChild(row);
     });
 }
 
-
 /* =========================
-   UPDATE INFO
+   INFO
 ========================= */
 
 function updateInfo() {
-    const kit = kits.find((item) => item.id === currentKit);
+
+    const kit = kits.find(
+        (item) => item.id === currentKit
+    );
 
     if (!kit) {
         return;
@@ -383,42 +524,49 @@ function updateInfo() {
     infoIcon.alt = kit.name;
 
     infoTitle.textContent = kit.name;
-    infoDescription.textContent = kit.description;
+    infoDescription.textContent =
+        kit.description;
 }
-
 
 /* =========================
    SEARCH
 ========================= */
 
-playerSearch.addEventListener("input", (event) => {
-    searchText = event.target.value.trim();
+playerSearch.addEventListener(
+    "input",
+    (event) => {
 
-    renderPlayers();
-});
+        searchText =
+            event.target.value.trim();
 
+        renderTable();
+    }
+);
 
 /* =========================
    MOBILE MENU
 ========================= */
 
-menuButton.addEventListener("click", () => {
-    mobileMenu.classList.toggle("open");
-});
+menuButton.addEventListener(
+    "click",
+    () => {
 
+        mobileMenu.classList.toggle("open");
+    }
+);
 
 /* =========================
    LANGUAGE
 ========================= */
 
 const translations = {
+
     ja: {
         home: "Home",
         discord: "Discord",
         tierlist: "TierList",
         support: "Support",
-        search: "プレイヤーを検索...",
-        description: "全キットを基準にした総合ランキングです。"
+        search: "プレイヤーを検索..."
     },
 
     en: {
@@ -426,8 +574,7 @@ const translations = {
         discord: "Discord",
         tierlist: "TierList",
         support: "Support",
-        search: "Search player...",
-        description: "Overall ranking based on all kits."
+        search: "Search player..."
     },
 
     ko: {
@@ -435,8 +582,7 @@ const translations = {
         discord: "Discord",
         tierlist: "TierList",
         support: "Support",
-        search: "플레이어 검색...",
-        description: "모든 키트를 기준으로 한 종합 랭킹입니다."
+        search: "플레이어 검색..."
     },
 
     zh: {
@@ -444,8 +590,7 @@ const translations = {
         discord: "Discord",
         tierlist: "TierList",
         support: "Support",
-        search: "搜索玩家...",
-        description: "基于所有套装的综合排名。"
+        search: "搜索玩家..."
     },
 
     es: {
@@ -453,8 +598,7 @@ const translations = {
         discord: "Discord",
         tierlist: "TierList",
         support: "Support",
-        search: "Buscar jugador...",
-        description: "Clasificación general basada en todos los kits."
+        search: "Buscar jugador..."
     },
 
     fr: {
@@ -462,8 +606,7 @@ const translations = {
         discord: "Discord",
         tierlist: "TierList",
         support: "Support",
-        search: "Rechercher un joueur...",
-        description: "Classement général basé sur tous les kits."
+        search: "Rechercher un joueur..."
     },
 
     de: {
@@ -471,8 +614,7 @@ const translations = {
         discord: "Discord",
         tierlist: "TierList",
         support: "Support",
-        search: "Spieler suchen...",
-        description: "Gesamtrangliste basierend auf allen Kits."
+        search: "Spieler suchen..."
     },
 
     pt: {
@@ -480,97 +622,129 @@ const translations = {
         discord: "Discord",
         tierlist: "TierList",
         support: "Support",
-        search: "Pesquisar jogador...",
-        description: "Ranking geral baseado em todos os kits."
+        search: "Pesquisar jogador..."
     }
 };
 
-
 function applyLanguage(language) {
-    const translation = translations[language];
+
+    const translation =
+        translations[language];
 
     if (!translation) {
         return;
     }
 
-    const navLinks = document.querySelectorAll(".nav-links a");
+    const navLinks =
+        document.querySelectorAll(
+            ".nav-links a"
+        );
 
     if (navLinks.length >= 4) {
-        navLinks[0].textContent = translation.home;
-        navLinks[1].textContent = translation.discord;
-        navLinks[2].textContent = translation.tierlist;
-        navLinks[3].textContent = translation.support;
+
+        navLinks[0].textContent =
+            translation.home;
+
+        navLinks[1].textContent =
+            translation.discord;
+
+        navLinks[2].textContent =
+            translation.tierlist;
+
+        navLinks[3].textContent =
+            translation.support;
     }
 
-    const mobileLinks = document.querySelectorAll(".mobile-menu a");
+    const mobileLinks =
+        document.querySelectorAll(
+            ".mobile-menu a"
+        );
 
     if (mobileLinks.length >= 4) {
-        mobileLinks[0].textContent = translation.home;
-        mobileLinks[1].textContent = translation.discord;
-        mobileLinks[2].textContent = translation.tierlist;
-        mobileLinks[3].textContent = translation.support;
+
+        mobileLinks[0].textContent =
+            translation.home;
+
+        mobileLinks[1].textContent =
+            translation.discord;
+
+        mobileLinks[2].textContent =
+            translation.tierlist;
+
+        mobileLinks[3].textContent =
+            translation.support;
     }
 
-    playerSearch.placeholder = translation.search;
+    playerSearch.placeholder =
+        translation.search;
 
-    if (currentKit === "overall") {
-        infoDescription.textContent = translation.description;
-    }
-
-    localStorage.setItem("pvpbattles-language", language);
+    localStorage.setItem(
+        "pvpbattles-language",
+        language
+    );
 }
 
+languageSelect.addEventListener(
+    "change",
+    () => {
 
-languageSelect.addEventListener("change", () => {
-    applyLanguage(languageSelect.value);
-});
-
+        applyLanguage(
+            languageSelect.value
+        );
+    }
+);
 
 /* =========================
-   AUTO LANGUAGE
+   LANGUAGE INIT
 ========================= */
 
 function initializeLanguage() {
-    const savedLanguage =
-        localStorage.getItem("pvpbattles-language");
 
-    if (savedLanguage && translations[savedLanguage]) {
-        languageSelect.value = savedLanguage;
-        applyLanguage(savedLanguage);
+    const saved =
+        localStorage.getItem(
+            "pvpbattles-language"
+        );
+
+    if (saved && translations[saved]) {
+
+        languageSelect.value = saved;
+
+        applyLanguage(saved);
+
         return;
     }
 
-    const browserLanguage =
+    const browser =
         navigator.language.toLowerCase();
 
-    let detected = "ja";
+    let language = "ja";
 
-    if (browserLanguage.startsWith("en")) {
-        detected = "en";
-    } else if (browserLanguage.startsWith("ko")) {
-        detected = "ko";
-    } else if (browserLanguage.startsWith("zh")) {
-        detected = "zh";
-    } else if (browserLanguage.startsWith("es")) {
-        detected = "es";
-    } else if (browserLanguage.startsWith("fr")) {
-        detected = "fr";
-    } else if (browserLanguage.startsWith("de")) {
-        detected = "de";
-    } else if (browserLanguage.startsWith("pt")) {
-        detected = "pt";
+    if (browser.startsWith("en")) {
+        language = "en";
+    } else if (browser.startsWith("ko")) {
+        language = "ko";
+    } else if (browser.startsWith("zh")) {
+        language = "zh";
+    } else if (browser.startsWith("es")) {
+        language = "es";
+    } else if (browser.startsWith("fr")) {
+        language = "fr";
+    } else if (browser.startsWith("de")) {
+        language = "de";
+    } else if (browser.startsWith("pt")) {
+        language = "pt";
     }
 
-    languageSelect.value = detected;
-    applyLanguage(detected);
-}
+    languageSelect.value = language;
 
+    applyLanguage(language);
+}
 
 /* =========================
    START
 ========================= */
 
 renderKitTabs();
-renderPlayers();
+renderTable();
 updateInfo();
 initializeLanguage();

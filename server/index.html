@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Server | PVPBattles</title>
+    <meta name="description" content="PVPBattles Minecraft Server">
+
+    <style>
+        @font-face {
+            font-family: "Minecraft";
+            src: url("../assets/fonts/minecraft_font.ttf") format("truetype");
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(58, 167, 224, 0.08), transparent 35%),
+                #050713;
+            color: #ffffff;
+            font-family: "Minecraft", sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* Header */
+
+        .site-header {
+            position: relative;
+            z-index: 10;
+            padding: 18px 16px 10px;
+            text-align: center;
+            background: rgba(5, 7, 19, 0.94);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-logo-link {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 12px;
+        }
+
+        .header-logo {
+            display: block;
+            width: 170px;
+            height: auto;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2px;
+        }
+
+        .navbar a {
+            position: relative;
+            padding: 8px 13px;
+            color: #9da8bd;
+            text-decoration: none;
+            font-size: 13px;
+            border-radius: 7px;
+            transition: 0.2s ease;
+        }
+
+        .navbar a:hover,
+        .navbar a.active {
+            color: #ffffff;
+            background: rgba(85, 192, 255, 0.1);
+        }
+
+        .navbar a + a::before {
+            content: "｜";
+            position: absolute;
+            left: -3px;
+            color: #344056;
+            pointer-events: none;
+        }
+
+        /* Main */
+
+        main {
+            width: min(1100px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .server-hero {
+            min-height: 48vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 70px 0 55px;
+        }
+
+        .eyebrow {
+            margin: 0 0 14px;
+            color: #55c0ff;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(42px, 8vw, 76px);
+            line-height: 1;
+            letter-spacing: 2px;
+        }
+
+        .hero-description {
+            max-width: 620px;
+            margin: 22px auto 0;
+            color: #8f9bb0;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* Status */
+
+        .server-card {
+            max-width: 760px;
+            margin: 0 auto 80px;
+            padding: 38px;
+            text-align: center;
+            background: rgba(12, 17, 34, 0.8);
+            border: 1px solid rgba(85, 192, 255, 0.16);
+            border-radius: 16px;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.25);
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 13px;
+            border-radius: 999px;
+            background: rgba(255, 180, 60, 0.08);
+            border: 1px solid rgba(255, 180, 60, 0.18);
+            color: #ffbf5f;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #ffbf5f;
+            box-shadow: 0 0 10px rgba(255, 191, 95, 0.5);
+        }
+
+        .server-card h2 {
+            margin: 24px 0 10px;
+            font-size: 28px;
+        }
+
+        .server-card p {
+            margin: 0 auto;
+            max-width: 570px;
+            color: #8f9bb0;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        /* IP */
+
+        .ip-box {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #080c18;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .ip-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #657188;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+        }
+
+        .ip {
+            color: #55c0ff;
+            font-size: clamp(20px, 5vw, 30px);
+        }
+
+        /* Info */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 80px;
+        }
+
+        .info-card {
+            padding: 25px;
+            background: rgba(12, 17, 34, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+        }
+
+        .info-card h3 {
+            margin: 0 0 9px;
+            font-size: 17px;
+        }
+
+        .info-card p {
+            margin: 0;
+            color: #7f8ba1;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+
+        footer {
+            padding: 30px 16px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            color: #566177;
+            font-size: 11px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 700px) {
+            .header-logo {
+                width: 140px;
+            }
+
+            .navbar a {
+                padding: 7px 8px;
+                font-size: 10px;
+            }
+
+            .navbar a + a::before {
+                left: -4px;
+            }
+
+            main {
+                width: min(100% - 24px, 1100px);
+            }
+
+            .server-hero {
+                min-height: 42vh;
+                padding: 55px 0 40px;
+            }
+
+            .hero-description {
+                font-size: 13px;
+            }
+
+            .server-card {
+                padding: 28px 18px;
+                margin-bottom: 55px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                margin-bottom: 55px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="site-header">
+    <a href="../home/" class="header-logo-link">
+        <img
+            src="../assets/header.png"
+            class="header-logo"
+            alt="PVPBattles"
+        >
+    </a>
+
+    <nav class="navbar" aria-label="Main navigation">
+        <a href="../home/">Home</a>
+        <a href="../tierlist/">TierList</a>
+        <a href="../news/">News</a>
+        <a
+            href="https://discord.gg/tyCm7xx4jz"
+            target="_blank"
+            rel="noopener noreferrer"
+        >Discord</a>
+        <a href="../server/" class="active">Server</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="server-hero">
+        <p class="eyebrow">PVPBATTLES NETWORK</p>
+
+        <h1>SERVER</h1>
+
+        <p class="hero-description">
+            A competitive Minecraft PvP server focused on fair competition,
+            rankings and a clean gameplay experience.
+        </p>
+    </section>
+
+    <section class="server-card">
+
+        <div class="status">
+            <span class="status-dot"></span>
+            COMING SOON
+        </div>
+
+        <h2>PVPBattles Server</h2>
+
+        <p>
+            The PVPBattles Minecraft server is currently being prepared.
+            More information will be announced soon.
+        </p>
+
+        <div class="ip-box">
+            <span class="ip-label">SERVER IP</span>
+            <span class="ip">Coming soon</span>
+        </div>
+
+    </section>
+
+    <section class="info-grid">
+
+        <article class="info-card">
+            <h3>Competitive PvP</h3>
+            <p>
+                Built for players who want serious and competitive Minecraft PvP.
+            </p>
+        </article>
+
+        <article class="info-card">
+            <h3>TierList</h3>
+            <p>
+                Player rankings from LT5 to HT1 based on competitive performance.
+            </p>
+        </article>
+
+        <article class="info-card">
+            <h3>Low Latency</h3>
+            <p>
+                A Japan-based server designed to provide a smooth PvP experience.
+            </p>
+        </article>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 PVPBattles. All rights reserved.
+</footer>
+
+</body>
+</html>

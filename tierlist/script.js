@@ -1,87 +1,90 @@
 "use strict";
 
-/* =========================
+
+/* =========================================
    KIT DATA
-========================= */
+========================================= */
 
 const kits = [
     {
         id: "overall",
         name: "overall",
-        image: "../assets/tierlist/overall.png",
-        description: "Overall ranking based on all kits."
+        image: "../assets/tierlist/overall.png"
     },
     {
         id: "sword",
         name: "Sword",
-        image: "../assets/tierlist/sword.png",
-        description: "Sword PvP rankings."
+        image: "../assets/tierlist/sword.png"
     },
     {
         id: "axe",
         name: "Axe",
-        image: "../assets/tierlist/axe.png",
-        description: "Axe PvP rankings."
+        image: "../assets/tierlist/axe.png"
     },
     {
         id: "uhc",
         name: "UHC",
-        image: "../assets/tierlist/uhc.png",
-        description: "UHC PvP rankings."
+        image: "../assets/tierlist/uhc.png"
     },
     {
         id: "pot",
         name: "Pot",
-        image: "../assets/tierlist/pot.png",
-        description: "Pot PvP rankings."
+        image: "../assets/tierlist/pot.png"
     },
     {
         id: "mace",
         name: "Mace",
-        image: "../assets/tierlist/mace.png",
-        description: "Mace PvP rankings."
+        image: "../assets/tierlist/mace.png"
     },
     {
         id: "endgame",
         name: "EndGame",
-        image: "../assets/tierlist/endgame.png",
-        description: "EndGame PvP rankings."
+        image: "../assets/tierlist/endgame.png"
     },
     {
         id: "smp",
         name: "SMP",
-        image: "../assets/tierlist/smp.png",
-        description: "SMP PvP rankings."
+        image: "../assets/tierlist/smp.png"
     },
     {
         id: "nethpot",
         name: "NethPot",
-        image: "../assets/tierlist/nethpot.png",
-        description: "NethPot PvP rankings."
+        image: "../assets/tierlist/nethpot.png"
     }
 ];
 
-/* =========================
-   TIER POINTS
-========================= */
+
+const tierOrder = [
+    "HT1",
+    "HT2",
+    "HT3",
+    "HT4",
+    "HT5",
+    "LT1",
+    "LT2",
+    "LT3",
+    "LT4",
+    "LT5"
+];
+
 
 const tierPoints = {
-    HT1: 10,
-    HT2: 9,
-    HT3: 8,
-    HT4: 7,
-    HT5: 6,
-
-    LT1: 5,
-    LT2: 4,
-    LT3: 3,
-    LT4: 2,
-    LT5: 1
+    HT1: 100,
+    HT2: 90,
+    HT3: 80,
+    HT4: 70,
+    HT5: 60,
+    LT1: 50,
+    LT2: 40,
+    LT3: 30,
+    LT4: 20,
+    LT5: 10
 };
 
-/* =========================
+
+/* =========================================
    PLAYER DATA
-========================= */
+========================================= */
 
 const players = [
     {
@@ -115,402 +118,372 @@ const players = [
     }
 ];
 
-/* =========================
-   STATE
-========================= */
 
-let currentKit = "overall";
-let searchText = "";
+/* =========================================
+   TRANSLATIONS
+========================================= */
 
-/* =========================
+const translations = {
+    ja: {
+        "nav.home": "ホーム",
+        "nav.discord": "Discord",
+        "nav.support": "サポート",
+        "tier.description": "PVPBattles プレイヤーランキング",
+        "search": "検索...",
+        "players": "プレイヤー",
+        "points": "ポイント",
+        "player": "プレイヤー"
+    },
+
+    en: {
+        "nav.home": "Home",
+        "nav.discord": "Discord",
+        "nav.support": "Support",
+        "tier.description": "PVPBattles player rankings",
+        "search": "Search...",
+        "players": "Players",
+        "points": "Points",
+        "player": "Player"
+    },
+
+    ko: {
+        "nav.home": "홈",
+        "nav.discord": "Discord",
+        "nav.support": "지원",
+        "tier.description": "PVPBattles 플레이어 랭킹",
+        "search": "검색...",
+        "players": "플레이어",
+        "points": "포인트",
+        "player": "플레이어"
+    },
+
+    zh: {
+        "nav.home": "首页",
+        "nav.discord": "Discord",
+        "nav.support": "支持",
+        "tier.description": "PVPBattles 玩家排名",
+        "search": "搜索...",
+        "players": "玩家",
+        "points": "积分",
+        "player": "玩家"
+    },
+
+    es: {
+        "nav.home": "Inicio",
+        "nav.discord": "Discord",
+        "nav.support": "Soporte",
+        "tier.description": "Clasificación de jugadores de PVPBattles",
+        "search": "Buscar...",
+        "players": "Jugadores",
+        "points": "Puntos",
+        "player": "Jugador"
+    },
+
+    fr: {
+        "nav.home": "Accueil",
+        "nav.discord": "Discord",
+        "nav.support": "Support",
+        "tier.description": "Classement des joueurs PVPBattles",
+        "search": "Rechercher...",
+        "players": "Joueurs",
+        "points": "Points",
+        "player": "Joueur"
+    },
+
+    de: {
+        "nav.home": "Startseite",
+        "nav.discord": "Discord",
+        "nav.support": "Support",
+        "tier.description": "PVPBattles-Spielerrangliste",
+        "search": "Suchen...",
+        "players": "Spieler",
+        "points": "Punkte",
+        "player": "Spieler"
+    },
+
+    pt: {
+        "nav.home": "Início",
+        "nav.discord": "Discord",
+        "nav.support": "Suporte",
+        "tier.description": "Ranking de jogadores PVPBattles",
+        "search": "Pesquisar...",
+        "players": "Jogadores",
+        "points": "Pontos",
+        "player": "Jogador"
+    }
+};
+
+
+/* =========================================
    ELEMENTS
-========================= */
+========================================= */
 
-const kitTabs = document.getElementById("kitTabs");
-const playerList = document.getElementById("playerList");
+const tierTabs = document.getElementById("tierTabs");
+const tierTable = document.getElementById("tierTable");
 const playerSearch = document.getElementById("playerSearch");
-
-const tableHeader = document.getElementById("tableHeader");
-
-const infoIcon = document.getElementById("infoIcon");
-const infoTitle = document.getElementById("infoTitle");
-const infoDescription = document.getElementById(
-    "infoDescription"
-);
+const clearSearch = document.getElementById("clearSearch");
+const playerCount = document.getElementById("playerCount");
 
 const menuButton = document.getElementById("menuButton");
-const mobileMenu = document.getElementById("mobileMenu");
+const navbar = document.getElementById("navbar");
+const languageSelect = document.getElementById("languageSelect");
 
-const languageSelect =
-    document.getElementById("languageSelect");
 
-/* =========================
-   SKIN
-========================= */
+let currentKit = "overall";
 
-function getSkinUrl(playerName) {
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function getTierClass(tier) {
+    if (!tier || tier === "-") {
+        return "tier-none";
+    }
+
+    return `tier-${tier.toLowerCase()}`;
+}
+
+
+function getTierPoints(tier) {
+    return tierPoints[tier] ?? null;
+}
+
+
+function getOverallPoints(player) {
+    const values = Object.values(player.tiers);
+
+    if (values.some((tier) => !tier || tier === "-")) {
+        return null;
+    }
+
+    return values.reduce((total, tier) => {
+        return total + (getTierPoints(tier) || 0);
+    }, 0);
+}
+
+
+function getAvatar(name) {
+    return `https://mc-heads.net/avatar/${encodeURIComponent(name)}/48`;
+}
+
+
+function getCurrentTranslation(key) {
+    const language = localStorage.getItem("pvpbattles-language") || "ja";
+
     return (
-        "https://mc-heads.net/avatar/" +
-        encodeURIComponent(playerName) +
-        "/48"
+        translations[language]?.[key] ||
+        translations.ja[key] ||
+        key
     );
 }
 
-/* =========================
-   KIT TABS
-========================= */
 
-function renderKitTabs() {
+/* =========================================
+   TABS
+========================================= */
 
-    kitTabs.innerHTML = "";
+function renderTabs() {
+
+    tierTabs.innerHTML = "";
 
     kits.forEach((kit) => {
 
         const button = document.createElement("button");
 
         button.type = "button";
-        button.className = "kit-button";
 
-        if (kit.id === currentKit) {
-            button.classList.add("active");
+        button.className =
+            "tier-tab" +
+            (kit.id === currentKit ? " active" : "");
+
+        if (kit.id === "overall") {
+            button.classList.add("tier-tab-overall");
         }
 
-        const image = document.createElement("img");
+        if (kit.image) {
 
-        image.src = kit.image;
-        image.alt = kit.name;
+            const image = document.createElement("img");
+
+            image.src = kit.image;
+            image.alt = "";
+
+            image.onerror = () => {
+                image.style.display = "none";
+            };
+
+            button.appendChild(image);
+        }
 
         const text = document.createElement("span");
 
         text.textContent = kit.name;
 
-        button.appendChild(image);
         button.appendChild(text);
 
         button.addEventListener("click", () => {
 
             currentKit = kit.id;
 
-            renderKitTabs();
+            renderTabs();
             renderTable();
-            updateInfo();
+
         });
 
-        kitTabs.appendChild(button);
+        tierTabs.appendChild(button);
     });
 }
 
-/* =========================
-   OVERALL POINTS
-========================= */
 
-function getOverallPoints(player) {
+/* =========================================
+   OVERALL TABLE
+========================================= */
 
-    let total = 0;
+function renderOverall(filteredPlayers) {
 
-    for (const kit of kits) {
+    const kitColumns = kits.filter(
+        (kit) => kit.id !== "overall"
+    );
 
-        if (kit.id === "overall") {
-            continue;
-        }
+    let html = `
+        <div class="tier-table">
 
-        const tier = player.tiers[kit.id];
+            <div class="table-head"
+                style="
+                    grid-template-columns:
+                    60px
+                    minmax(210px, 1fr)
+                    minmax(570px, 2fr)
+                    110px;
+                "
+            >
 
-        if (!tierPoints[tier]) {
-            return null;
-        }
+                <div>#</div>
 
-        total += tierPoints[tier];
-    }
+                <div>
+                    ${getCurrentTranslation("player")}
+                </div>
 
-    return Math.round((total / 80) * 300);
-}
+                <div>
+                    TIERS
+                </div>
 
-/* =========================
-   SORT PLAYERS
-========================= */
+                <div style="text-align:right">
+                    ${getCurrentTranslation("points")}
+                </div>
 
-function getSortedPlayers() {
+            </div>
+    `;
 
-    const filtered = players.filter((player) => {
-
-        return player.name
-            .toLowerCase()
-            .includes(searchText.toLowerCase());
-    });
-
-    if (currentKit === "overall") {
-
-        return filtered.sort((a, b) => {
-
-            const aPoints = getOverallPoints(a);
-            const bPoints = getOverallPoints(b);
-
-            if (aPoints === null && bPoints === null) {
-                return a.name.localeCompare(b.name);
-            }
-
-            if (aPoints === null) {
-                return 1;
-            }
-
-            if (bPoints === null) {
-                return -1;
-            }
-
-            return bPoints - aPoints;
-        });
-    }
-
-    return filtered.sort((a, b) => {
-
-        const aTier = tierPoints[a.tiers[currentKit]] || 0;
-        const bTier = tierPoints[b.tiers[currentKit]] || 0;
-
-        return bTier - aTier;
-    });
-}
-
-/* =========================
-   TABLE HEADER
-========================= */
-
-function renderTableHeader() {
-
-    tableHeader.innerHTML = "";
-
-    if (currentKit === "overall") {
-
-        tableHeader.className =
-            "table-header overall-header";
-
-        const rank = document.createElement("div");
-
-        rank.textContent = "#";
-
-        const player = document.createElement("div");
-
-        player.textContent = "PLAYER";
-
-        tableHeader.appendChild(rank);
-        tableHeader.appendChild(player);
-
-        kits.slice(1).forEach((kit) => {
-
-            const kitHeader =
-                document.createElement("div");
-
-            kitHeader.className = "overall-kit-head";
-
-            const image = document.createElement("img");
-
-            image.src = kit.image;
-            image.alt = kit.name;
-
-            const name = document.createElement("span");
-
-            name.textContent = kit.name;
-
-            kitHeader.appendChild(image);
-            kitHeader.appendChild(name);
-
-            tableHeader.appendChild(kitHeader);
-        });
-
-        const points = document.createElement("div");
-
-        points.textContent = "POINTS";
-
-        tableHeader.appendChild(points);
-
-        return;
-    }
-
-    tableHeader.className =
-        "table-header kit-header";
-
-    const rank = document.createElement("div");
-
-    rank.textContent = "#";
-
-    const player = document.createElement("div");
-
-    player.textContent = "PLAYER";
-
-    const tier = document.createElement("div");
-
-    tier.textContent = "TIER / POINTS";
-
-    tableHeader.appendChild(rank);
-    tableHeader.appendChild(player);
-    tableHeader.appendChild(tier);
-}
-
-/* =========================
-   CREATE PLAYER INFO
-========================= */
-
-function createPlayerInfo(player) {
-
-    const wrapper = document.createElement("div");
-
-    wrapper.className = "player-info";
-
-    const skin = document.createElement("img");
-
-    skin.className = "player-skin";
-    skin.src = getSkinUrl(player.name);
-    skin.alt = player.name;
-
-    const name = document.createElement("div");
-
-    name.className = "player-name";
-    name.textContent = player.name;
-
-    wrapper.appendChild(skin);
-    wrapper.appendChild(name);
-
-    return wrapper;
-}
-
-/* =========================
-   OVERALL ROW
-========================= */
-
-function createOverallRow(player, index) {
-
-    const row = document.createElement("div");
-
-    row.className =
-        "player-row overall-row";
-
-    const number = document.createElement("div");
-
-    number.className = "player-number";
-    number.textContent = index + 1;
-
-    row.appendChild(number);
-
-    row.appendChild(createPlayerInfo(player));
-
-    kits.slice(1).forEach((kit) => {
-
-        const tier = document.createElement("div");
-
-        tier.className = "overall-tier";
-
-        tier.textContent =
-            player.tiers[kit.id] || "-";
-
-        row.appendChild(tier);
-    });
-
-    const points = document.createElement("div");
-
-    points.className = "overall-points";
-
-    const overallPoints =
-        getOverallPoints(player);
-
-    points.textContent =
-        overallPoints === null
-            ? "-"
-            : `${overallPoints} Points`;
-
-    row.appendChild(points);
-
-    return row;
-}
-
-/* =========================
-   NORMAL KIT ROW
-========================= */
-
-function createKitRow(player, index) {
-
-    const row = document.createElement("div");
-
-    row.className =
-        "player-row kit-row";
-
-    const number = document.createElement("div");
-
-    number.className = "player-number";
-    number.textContent = index + 1;
-
-    const info = createPlayerInfo(player);
-
-    const tier = player.tiers[currentKit] || "-";
-
-    const points = document.createElement("div");
-
-    points.className = "player-points";
-
-    if (tierPoints[tier]) {
-
-        points.textContent =
-            `${tier} · ${tierPoints[tier]} Points`;
-
-    } else {
-
-        points.textContent = "-";
-    }
-
-    row.appendChild(number);
-    row.appendChild(info);
-    row.appendChild(points);
-
-    return row;
-}
-
-/* =========================
-   RENDER TABLE
-========================= */
-
-function renderTable() {
-
-    playerList.innerHTML = "";
-
-    renderTableHeader();
-
-    const filteredPlayers = getSortedPlayers();
-
-    if (filteredPlayers.length === 0) {
-
-        const empty =
-            document.createElement("div");
-
-        empty.className = "empty-message";
-
-        empty.textContent = "No players found.";
-
-        playerList.appendChild(empty);
-
-        return;
-    }
 
     filteredPlayers.forEach((player, index) => {
 
-        if (currentKit === "overall") {
+        const overallPoints = getOverallPoints(player);
 
-            playerList.appendChild(
-                createOverallRow(player, index)
-            );
+        html += `
+            <div class="player-row"
+                style="
+                    grid-template-columns:
+                    60px
+                    minmax(210px, 1fr)
+                    minmax(570px, 2fr)
+                    110px;
+                "
+            >
 
-        } else {
+                <div class="rank ${index === 0 ? "gold" : ""}">
+                    ${index + 1}
+                </div>
 
-            playerList.appendChild(
-                createKitRow(player, index)
-            );
-        }
+
+                <div class="player">
+
+                    <img
+                        class="avatar"
+                        src="${getAvatar(player.name)}"
+                        alt="${player.name}"
+                        loading="lazy"
+                    >
+
+                    <div class="player-info">
+
+                        <a
+                            class="player-name"
+                            href="#"
+                            onclick="return false;"
+                        >
+                            ${escapeHtml(player.name)}
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="overall-tiers">
+        `;
+
+
+        kitColumns.forEach((kit) => {
+
+            const tier =
+                player.tiers[kit.id] || "-";
+
+            html += `
+                <div class="tier-cell ${getTierClass(tier)}">
+
+                    <div class="tier-cell-content">
+
+                        <span class="kit-label">
+                            ${kit.name}
+                        </span>
+
+                        ${tier}
+
+                    </div>
+
+                </div>
+            `;
+        });
+
+
+        html += `
+                </div>
+
+
+                <div class="points">
+
+                    ${
+                        overallPoints === null
+                            ? "-"
+                            : overallPoints
+                    }
+
+                    <span>
+                        ${getCurrentTranslation("points")}
+                    </span>
+
+                </div>
+
+            </div>
+        `;
     });
+
+
+    html += `</div>`;
+
+    tierTable.innerHTML =
+        filteredPlayers.length
+            ? html
+            : `<div class="empty">No players found.</div>`;
 }
 
-/* =========================
-   INFO
-========================= */
 
-function updateInfo() {
+/* =========================================
+   NORMAL KIT TABLE
+========================================= */
+
+function renderKit(filteredPlayers) {
 
     const kit = kits.find(
         (item) => item.id === currentKit
@@ -520,169 +493,290 @@ function updateInfo() {
         return;
     }
 
-    infoIcon.src = kit.image;
-    infoIcon.alt = kit.name;
 
-    infoTitle.textContent = kit.name;
-    infoDescription.textContent =
-        kit.description;
+    let html = `
+        <div class="tier-table">
+
+            <div class="table-head">
+
+                <div>#</div>
+
+                <div>
+                    ${getCurrentTranslation("player")}
+                </div>
+
+                <div>
+                    TIER
+                </div>
+
+                <div style="text-align:right">
+                    ${getCurrentTranslation("points")}
+                </div>
+
+            </div>
+    `;
+
+
+    filteredPlayers.forEach((player, index) => {
+
+        const tier =
+            player.tiers[currentKit] || "-";
+
+        const points =
+            getTierPoints(tier);
+
+
+        html += `
+            <div class="player-row">
+
+                <div class="rank ${index === 0 ? "gold" : ""}">
+                    ${index + 1}
+                </div>
+
+
+                <div class="player">
+
+                    <img
+                        class="avatar"
+                        src="${getAvatar(player.name)}"
+                        alt="${player.name}"
+                        loading="lazy"
+                    >
+
+                    <div class="player-info">
+
+                        <a
+                            class="player-name"
+                            href="#"
+                            onclick="return false;"
+                        >
+                            ${escapeHtml(player.name)}
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="normal-tier">
+
+                    <div class="tier-cell ${getTierClass(tier)}">
+                        ${tier}
+                    </div>
+
+                </div>
+
+
+                <div class="points">
+
+                    ${
+                        points === null
+                            ? "-"
+                            : points
+                    }
+
+                    <span>
+                        ${getCurrentTranslation("points")}
+                    </span>
+
+                </div>
+
+            </div>
+        `;
+    });
+
+
+    html += `</div>`;
+
+
+    tierTable.innerHTML =
+        filteredPlayers.length
+            ? html
+            : `<div class="empty">No players found.</div>`;
 }
 
-/* =========================
-   SEARCH
-========================= */
 
-playerSearch.addEventListener(
-    "input",
-    (event) => {
+/* =========================================
+   TABLE RENDER
+========================================= */
 
-        searchText =
-            event.target.value.trim();
+function renderTable() {
 
-        renderTable();
+    const query =
+        playerSearch.value
+            .trim()
+            .toLowerCase();
+
+
+    const filteredPlayers =
+        players.filter((player) =>
+            player.name
+                .toLowerCase()
+                .includes(query)
+        );
+
+
+    playerCount.textContent =
+        `${filteredPlayers.length} ${getCurrentTranslation("players")}`;
+
+
+    if (currentKit === "overall") {
+        renderOverall(filteredPlayers);
+    } else {
+        renderKit(filteredPlayers);
     }
-);
 
-/* =========================
-   MOBILE MENU
-========================= */
 
-menuButton.addEventListener(
-    "click",
-    () => {
+    clearSearch.classList.toggle(
+        "visible",
+        playerSearch.value.length > 0
+    );
+}
 
-        mobileMenu.classList.toggle("open");
-    }
-);
 
-/* =========================
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* =========================================
    LANGUAGE
-========================= */
-
-const translations = {
-
-    ja: {
-        home: "Home",
-        discord: "Discord",
-        tierlist: "TierList",
-        support: "Support",
-        search: "プレイヤーを検索..."
-    },
-
-    en: {
-        home: "Home",
-        discord: "Discord",
-        tierlist: "TierList",
-        support: "Support",
-        search: "Search player..."
-    },
-
-    ko: {
-        home: "Home",
-        discord: "Discord",
-        tierlist: "TierList",
-        support: "Support",
-        search: "플레이어 검색..."
-    },
-
-    zh: {
-        home: "Home",
-        discord: "Discord",
-        tierlist: "TierList",
-        support: "Support",
-        search: "搜索玩家..."
-    },
-
-    es: {
-        home: "Home",
-        discord: "Discord",
-        tierlist: "TierList",
-        support: "Support",
-        search: "Buscar jugador..."
-    },
-
-    fr: {
-        home: "Home",
-        discord: "Discord",
-        tierlist: "TierList",
-        support: "Support",
-        search: "Rechercher un joueur..."
-    },
-
-    de: {
-        home: "Home",
-        discord: "Discord",
-        tierlist: "TierList",
-        support: "Support",
-        search: "Spieler suchen..."
-    },
-
-    pt: {
-        home: "Home",
-        discord: "Discord",
-        tierlist: "TierList",
-        support: "Support",
-        search: "Pesquisar jogador..."
-    }
-};
+========================================= */
 
 function applyLanguage(language) {
 
-    const translation =
-        translations[language];
-
-    if (!translation) {
-        return;
+    if (!translations[language]) {
+        language = "ja";
     }
 
-    const navLinks =
-        document.querySelectorAll(
-            ".nav-links a"
-        );
-
-    if (navLinks.length >= 4) {
-
-        navLinks[0].textContent =
-            translation.home;
-
-        navLinks[1].textContent =
-            translation.discord;
-
-        navLinks[2].textContent =
-            translation.tierlist;
-
-        navLinks[3].textContent =
-            translation.support;
-    }
-
-    const mobileLinks =
-        document.querySelectorAll(
-            ".mobile-menu a"
-        );
-
-    if (mobileLinks.length >= 4) {
-
-        mobileLinks[0].textContent =
-            translation.home;
-
-        mobileLinks[1].textContent =
-            translation.discord;
-
-        mobileLinks[2].textContent =
-            translation.tierlist;
-
-        mobileLinks[3].textContent =
-            translation.support;
-    }
-
-    playerSearch.placeholder =
-        translation.search;
 
     localStorage.setItem(
         "pvpbattles-language",
         language
     );
+
+
+    document.documentElement.lang =
+        language;
+
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach((element) => {
+
+            const key =
+                element.dataset.i18n;
+
+            const value =
+                translations[language]?.[key];
+
+            if (value) {
+                element.textContent = value;
+            }
+        });
+
+
+    playerSearch.placeholder =
+        translations[language]?.search ||
+        "Search...";
+
+
+    languageSelect.value =
+        language;
+
+
+    renderTable();
 }
+
+
+/* =========================================
+   LANGUAGE AUTO DETECTION
+========================================= */
+
+function detectLanguage() {
+
+    const saved =
+        localStorage.getItem(
+            "pvpbattles-language"
+        );
+
+    if (saved && translations[saved]) {
+        return saved;
+    }
+
+
+    const browser =
+        navigator.language
+            .toLowerCase();
+
+
+    if (browser.startsWith("ja")) {
+        return "ja";
+    }
+
+    if (browser.startsWith("ko")) {
+        return "ko";
+    }
+
+    if (browser.startsWith("zh")) {
+        return "zh";
+    }
+
+    if (browser.startsWith("es")) {
+        return "es";
+    }
+
+    if (browser.startsWith("fr")) {
+        return "fr";
+    }
+
+    if (browser.startsWith("de")) {
+        return "de";
+    }
+
+    if (
+        browser.startsWith("pt") ||
+        browser.startsWith("pt-br")
+    ) {
+        return "pt";
+    }
+
+    return "en";
+}
+
+
+/* =========================================
+   EVENTS
+========================================= */
+
+playerSearch.addEventListener(
+    "input",
+    renderTable
+);
+
+
+clearSearch.addEventListener(
+    "click",
+    () => {
+
+        playerSearch.value = "";
+
+        renderTable();
+
+        playerSearch.focus();
+    }
+);
+
 
 languageSelect.addEventListener(
     "change",
@@ -694,57 +788,37 @@ languageSelect.addEventListener(
     }
 );
 
-/* =========================
-   LANGUAGE INIT
-========================= */
 
-function initializeLanguage() {
+menuButton.addEventListener(
+    "click",
+    () => {
 
-    const saved =
-        localStorage.getItem(
-            "pvpbattles-language"
+        navbar.classList.toggle(
+            "open"
         );
-
-    if (saved && translations[saved]) {
-
-        languageSelect.value = saved;
-
-        applyLanguage(saved);
-
-        return;
     }
+);
 
-    const browser =
-        navigator.language.toLowerCase();
 
-    let language = "ja";
+navbar
+    .querySelectorAll("a")
+    .forEach((link) => {
 
-    if (browser.startsWith("en")) {
-        language = "en";
-    } else if (browser.startsWith("ko")) {
-        language = "ko";
-    } else if (browser.startsWith("zh")) {
-        language = "zh";
-    } else if (browser.startsWith("es")) {
-        language = "es";
-    } else if (browser.startsWith("fr")) {
-        language = "fr";
-    } else if (browser.startsWith("de")) {
-        language = "de";
-    } else if (browser.startsWith("pt")) {
-        language = "pt";
-    }
+        link.addEventListener(
+            "click",
+            () => {
+                navbar.classList.remove("open");
+            }
+        );
+    });
 
-    languageSelect.value = language;
 
-    applyLanguage(language);
-}
-
-/* =========================
+/* =========================================
    START
-========================= */
+========================================= */
 
-renderKitTabs();
-renderTable();
-updateInfo();
-initializeLanguage();
+renderTabs();
+
+applyLanguage(
+    detectLanguage()
+);

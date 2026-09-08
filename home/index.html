@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>PVPBattles | Competitive Minecraft PvP</title>
 
@@ -11,372 +14,286 @@
         content="PVPBattles - Competitive Minecraft PvP, rankings, statistics and TierList."
     >
 
-    <!-- Minecraft Font -->
-    <style>
-        @font-face {
-            font-family: "PVPBattlesMinecraft";
-            src: url("../assets/fonts/minecraft_font.ttf?v=10") format("truetype");
-            font-weight: 400;
-            font-style: normal;
-            font-display: block;
-        }
+    <link
+        rel="preload"
+        href="../assets/fonts/minecraft_font.woff2?v=1"
+        as="font"
+        type="font/woff2"
+        crossorigin
+    >
 
-        html,
-        body,
-        body *,
-        button,
-        a {
-            font-family: "PVPBattlesMinecraft" !important;
-        }
-    </style>
-
-    <link rel="stylesheet" href="style.css?v=10">
+    <link rel="stylesheet" href="style.css?v=1">
 </head>
 
 <body>
 
-    <!-- Header -->
-    <header class="site-header">
+<header class="site-header">
 
-        <a href="./" class="header-logo-link">
-            <img
-                src="../assets/header.png"
-                alt="PVPBattles"
-                class="header-logo"
-            >
+    <a href="./" class="header-logo-link">
+        <img
+            src="../assets/header.png"
+            alt="PVPBattles"
+            class="header-logo"
+        >
+    </a>
+
+    <nav class="navbar" aria-label="Main navigation">
+        <a href="./" class="active">Home</a>
+        <a href="../tierlist/">TierList</a>
+        <a href="../news/">News</a>
+        <a
+            href="https://discord.gg/tyCm7xx4jz"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Discord
         </a>
+        <a href="../server/">Server</a>
+    </nav>
 
-        <nav class="navbar" aria-label="Main navigation">
+</header>
 
-            <a href="./" class="active">Home</a>
 
-            <a href="../tierlist/">TierList</a>
+<main>
 
-            <a href="../news/">News</a>
+    <section class="hero">
+        <div class="hero-content">
+
+            <p class="eyebrow">
+                COMPETITIVE MINECRAFT PVP
+            </p>
+
+            <h1>PVPBattles</h1>
+
+            <p class="hero-description">
+                A competitive Minecraft PvP community focused on
+                skill, rankings and a clean gameplay experience.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                    class="button button-disabled"
+                    disabled
+                >
+                    Play Now
+                </button>
+
+                <a
+                    href="../tierlist/"
+                    class="button button-primary"
+                >
+                    View TierList
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <p class="section-label">
+                WHY PVPBATTLES
+            </p>
+
+            <h2>Built for PvP</h2>
+
+            <p>
+                Everything you need for competitive Minecraft PvP.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <article class="feature-card">
+                <h3>Competitive PvP</h3>
+                <p>
+                    Focused on skill-based and competitive
+                    Minecraft PvP.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>TierList</h3>
+                <p>
+                    Player rankings from LT5 to HT1 based on
+                    PvP performance.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>Leaderboards</h3>
+                <p>
+                    Track the strongest players and compete
+                    for the top spots.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>Player Statistics</h3>
+                <p>
+                    Keep track of your PvP performance and
+                    progression.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>Low Latency</h3>
+                <p>
+                    Japan-based infrastructure designed for
+                    responsive gameplay.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>Custom UI</h3>
+                <p>
+                    Clean and easy-to-use interfaces for a
+                    better experience.
+                </p>
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <p class="section-label">
+                PLAYER RANKINGS
+            </p>
+
+            <h2>TierList</h2>
+
+            <p>
+                See where the best PvP players stand.
+            </p>
+
+        </div>
+
+
+        <div class="tier-preview-card">
+
+            <div class="tier-list">
+
+                <div class="tier-row">
+                    <span class="tier ht1">HT1</span>
+                    <span>Highest Tier</span>
+                </div>
+
+                <div class="tier-row">
+                    <span class="tier ht2">HT2</span>
+                    <span>High Tier</span>
+                </div>
+
+                <div class="tier-row">
+                    <span class="tier ht3">HT3</span>
+                    <span>High Tier</span>
+                </div>
+
+                <div class="tier-row">
+                    <span class="tier ht4">HT4</span>
+                    <span>High Tier</span>
+                </div>
+
+                <div class="tier-row">
+                    <span class="tier ht5">HT5</span>
+                    <span>High Tier</span>
+                </div>
+
+                <div class="tier-row">
+                    <span class="tier lt5">LT5</span>
+                    <span>Low Tier</span>
+                </div>
+
+            </div>
+
+
+            <a
+                href="../tierlist/"
+                class="button button-primary tier-button"
+            >
+                Open TierList
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="server-card">
+
+            <p class="section-label">
+                SERVER
+            </p>
+
+            <h2>Coming Soon</h2>
+
+            <p>
+                The PVPBattles Minecraft server is currently
+                being prepared.
+            </p>
+
+            <div class="server-status">
+                <span class="status-dot"></span>
+                <span>COMING SOON</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="support-card">
+
+            <div>
+                <p class="section-label">
+                    NEED HELP?
+                </p>
+
+                <h2>Join our Discord</h2>
+
+                <p>
+                    Get updates, support and talk with the
+                    PVPBattles community.
+                </p>
+            </div>
 
             <a
                 href="https://discord.gg/tyCm7xx4jz"
                 target="_blank"
                 rel="noopener noreferrer"
+                class="button button-primary"
             >
-                Discord
+                Join Discord
             </a>
 
-            <a href="../server/">Server</a>
+        </div>
 
-        </nav>
+    </section>
 
-    </header>
+</main>
 
 
-    <main>
+<footer class="site-footer">
+    <p>© 2026 PVPBattles. All rights reserved.</p>
+</footer>
 
-        <!-- Hero -->
-        <section class="hero">
 
-            <div class="hero-content">
-
-                <p class="eyebrow">
-                    COMPETITIVE MINECRAFT PVP
-                </p>
-
-                <h1>
-                    PVPBattles
-                </h1>
-
-                <p class="hero-description">
-                    A competitive Minecraft PvP community focused on
-                    skill, rankings and a clean gameplay experience.
-                </p>
-
-                <div class="hero-buttons">
-
-                    <button
-                        class="button button-disabled"
-                        disabled
-                    >
-                        Play Now
-                    </button>
-
-                    <a
-                        href="../tierlist/"
-                        class="button button-primary"
-                    >
-                        View TierList
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- Features -->
-        <section
-            class="section features-section"
-            id="features"
-        >
-
-            <div class="section-heading">
-
-                <p class="section-label">
-                    WHY PVPBATTLES
-                </p>
-
-                <h2>
-                    Built for PvP
-                </h2>
-
-                <p>
-                    Everything you need for competitive Minecraft PvP.
-                </p>
-
-            </div>
-
-
-            <div class="feature-grid">
-
-                <article class="feature-card">
-
-                    <h3>
-                        Competitive PvP
-                    </h3>
-
-                    <p>
-                        Focused on skill-based and competitive
-                        Minecraft PvP.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <h3>
-                        TierList
-                    </h3>
-
-                    <p>
-                        Player rankings from LT5 to HT1 based on
-                        PvP performance.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <h3>
-                        Leaderboards
-                    </h3>
-
-                    <p>
-                        Track the strongest players and compete
-                        for the top spots.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <h3>
-                        Player Statistics
-                    </h3>
-
-                    <p>
-                        Keep track of your PvP performance and
-                        progression.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <h3>
-                        Low Latency
-                    </h3>
-
-                    <p>
-                        Japan-based infrastructure designed for
-                        responsive gameplay.
-                    </p>
-
-                </article>
-
-
-                <article class="feature-card">
-
-                    <h3>
-                        Custom UI
-                    </h3>
-
-                    <p>
-                        Clean and easy-to-use interfaces for a
-                        better experience.
-                    </p>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- TierList Preview -->
-        <section class="section tier-preview">
-
-            <div class="section-heading">
-
-                <p class="section-label">
-                    PLAYER RANKINGS
-                </p>
-
-                <h2>
-                    TierList
-                </h2>
-
-                <p>
-                    See where the best PvP players stand.
-                </p>
-
-            </div>
-
-
-            <div class="tier-preview-card">
-
-                <div class="tier-list">
-
-                    <div class="tier-row">
-                        <span class="tier ht1">HT1</span>
-                        <span>Highest Tier</span>
-                    </div>
-
-                    <div class="tier-row">
-                        <span class="tier ht2">HT2</span>
-                        <span>High Tier</span>
-                    </div>
-
-                    <div class="tier-row">
-                        <span class="tier ht3">HT3</span>
-                        <span>High Tier</span>
-                    </div>
-
-                    <div class="tier-row">
-                        <span class="tier ht4">HT4</span>
-                        <span>High Tier</span>
-                    </div>
-
-                    <div class="tier-row">
-                        <span class="tier ht5">HT5</span>
-                        <span>High Tier</span>
-                    </div>
-
-                    <div class="tier-row">
-                        <span class="tier lt5">LT5</span>
-                        <span>Low Tier</span>
-                    </div>
-
-                </div>
-
-
-                <a
-                    href="../tierlist/"
-                    class="button button-primary tier-button"
-                >
-                    Open TierList
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- Server -->
-        <section class="section server-section">
-
-            <div class="server-card">
-
-                <p class="section-label">
-                    SERVER
-                </p>
-
-                <h2>
-                    Coming Soon
-                </h2>
-
-                <p>
-                    The PVPBattles Minecraft server is currently
-                    being prepared.
-                </p>
-
-                <div class="server-status">
-
-                    <span class="status-dot"></span>
-
-                    <span>
-                        COMING SOON
-                    </span>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- Support -->
-        <section class="section support-section">
-
-            <div class="support-card">
-
-                <div>
-
-                    <p class="section-label">
-                        NEED HELP?
-                    </p>
-
-                    <h2>
-                        Join our Discord
-                    </h2>
-
-                    <p>
-                        Get updates, support and talk with the
-                        PVPBattles community.
-                    </p>
-
-                </div>
-
-
-                <a
-                    href="https://discord.gg/tyCm7xx4jz"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="button button-primary"
-                >
-                    Join Discord
-                </a>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- Footer -->
-    <footer class="site-footer">
-
-        <p>
-            © 2026 PVPBattles. All rights reserved.
-        </p>
-
-    </footer>
-
-
-    <script src="script.js?v=10"></script>
+<script src="script.js?v=1"></script>
 
 </body>
 </html>

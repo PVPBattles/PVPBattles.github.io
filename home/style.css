@@ -1,18 +1,21 @@
 @font-face {
-    font-family: "Minecraft";
-    src: url("../assets/fonts/minecraft_font.ttf?v=3") format("truetype");
-    font-weight: normal;
+    font-family: "PVPBattlesMinecraft";
+    src:
+        url("../assets/fonts/minecraft_font.woff2?v=1")
+        format("woff2"),
+        url("../assets/fonts/minecraft_font.ttf?v=1")
+        format("truetype");
+    font-weight: 400;
     font-style: normal;
-    font-display: block;
+    font-display: swap;
 }
 
 :root {
     --bg: #050713;
-    --bg-soft: #090d1c;
     --card: #0c1224;
     --card-hover: #111a31;
     --border: rgba(255, 255, 255, 0.08);
-    --text: #f4f7fb;
+    --text: #ffffff;
     --muted: #9da8bd;
     --blue: #55c0ff;
     --blue-dark: #3aa7e0;
@@ -20,16 +23,21 @@
 
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: "Minecraft", sans-serif;
 }
 
-html {
-    scroll-behavior: smooth;
+html,
+body,
+button,
+a,
+input,
+textarea,
+select,
+option {
+    font-family: "PVPBattlesMinecraft", sans-serif;
 }
 
 body {
+    margin: 0;
     min-height: 100vh;
     background:
         radial-gradient(
@@ -43,21 +51,10 @@ body {
     overflow-x: hidden;
 }
 
-a,
-button {
-    font-family: "Minecraft", sans-serif;
-}
-
-/* =========================
-   HEADER
-========================= */
-
 .site-header {
-    position: relative;
-    z-index: 10;
     padding: 18px 16px 10px;
     text-align: center;
-    background: rgba(5, 7, 19, 0.94);
+    background: rgba(5, 7, 19, 0.96);
     border-bottom: 1px solid var(--border);
 }
 
@@ -82,15 +79,11 @@ button {
 }
 
 .navbar a {
-    position: relative;
     padding: 8px 13px;
     color: var(--muted);
     text-decoration: none;
     font-size: 13px;
     border-radius: 7px;
-    transition:
-        color 0.2s ease,
-        background 0.2s ease;
 }
 
 .navbar a:hover,
@@ -98,26 +91,6 @@ button {
     color: #ffffff;
     background: rgba(85, 192, 255, 0.1);
 }
-
-.navbar a + a::before {
-    content: "｜";
-    position: absolute;
-    left: -3px;
-    color: #344056;
-    pointer-events: none;
-}
-
-/* =========================
-   MAIN
-========================= */
-
-main {
-    width: 100%;
-}
-
-/* =========================
-   HERO
-========================= */
 
 .hero {
     min-height: 520px;
@@ -144,12 +117,9 @@ main {
 }
 
 .hero h1 {
+    margin: 0 0 22px;
     font-size: clamp(42px, 8vw, 82px);
     line-height: 1.1;
-    margin-bottom: 22px;
-    color: #ffffff;
-    text-shadow:
-        0 0 30px rgba(85, 192, 255, 0.18);
 }
 
 .hero-description {
@@ -162,15 +132,10 @@ main {
 .hero-buttons {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 12px;
     flex-wrap: wrap;
+    gap: 12px;
     margin-top: 32px;
 }
-
-/* =========================
-   BUTTONS
-========================= */
 
 .button {
     display: inline-flex;
@@ -178,15 +143,10 @@ main {
     justify-content: center;
     min-height: 44px;
     padding: 11px 20px;
-    border-radius: 8px;
     border: 1px solid transparent;
+    border-radius: 8px;
     text-decoration: none;
     font-size: 13px;
-    cursor: pointer;
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
 }
 
 .button-primary {
@@ -196,11 +156,6 @@ main {
         var(--blue-dark),
         var(--blue)
     );
-    border-color: rgba(255, 255, 255, 0.08);
-}
-
-.button-primary:hover {
-    transform: translateY(-2px);
 }
 
 .button-disabled {
@@ -210,10 +165,6 @@ main {
     cursor: not-allowed;
 }
 
-/* =========================
-   SECTIONS
-========================= */
-
 .section {
     width: min(1100px, calc(100% - 40px));
     margin: 0 auto;
@@ -221,26 +172,18 @@ main {
 }
 
 .section-heading {
-    text-align: center;
     margin-bottom: 35px;
-}
-
-.section-heading .section-label {
-    margin-bottom: 8px;
+    text-align: center;
 }
 
 .section-heading h2 {
+    margin: 0 0 10px;
     font-size: clamp(28px, 5vw, 42px);
-    margin-bottom: 10px;
 }
 
 .section-heading > p:last-child {
     color: var(--muted);
 }
-
-/* =========================
-   FEATURES
-========================= */
 
 .feature-grid {
     display: grid;
@@ -253,31 +196,18 @@ main {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-3px);
-    background: var(--card-hover);
-    border-color: rgba(85, 192, 255, 0.18);
 }
 
 .feature-card h3 {
-    margin-bottom: 10px;
+    margin: 0 0 10px;
     font-size: 17px;
 }
 
 .feature-card p {
+    margin: 0;
     color: var(--muted);
     font-size: 13px;
 }
-
-/* =========================
-   TIERLIST PREVIEW
-========================= */
 
 .tier-preview-card {
     width: min(650px, 100%);
@@ -312,46 +242,21 @@ main {
     width: 54px;
     min-width: 54px;
     height: 34px;
+    color: #ffffff;
     border-radius: 6px;
     font-size: 12px;
-    color: #ffffff;
 }
 
-.ht1 {
-    background: #ff4d67;
-}
-
-.ht2 {
-    background: #ff7a45;
-}
-
-.ht3 {
-    background: #ffad3d;
-}
-
-.ht4 {
-    background: #d9c84a;
-}
-
-.ht5 {
-    background: #70b95c;
-}
-
-.lt5 {
-    background: #6388c7;
-}
+.ht1 { background: #ff4d67; }
+.ht2 { background: #ff7a45; }
+.ht3 { background: #ffad3d; }
+.ht4 { background: #d9c84a; }
+.ht5 { background: #70b95c; }
+.lt5 { background: #6388c7; }
 
 .tier-button {
     width: 100%;
     margin-top: 20px;
-}
-
-/* =========================
-   SERVER
-========================= */
-
-.server-section {
-    padding-top: 30px;
 }
 
 .server-card {
@@ -368,13 +273,9 @@ main {
     border-radius: 14px;
 }
 
-.server-card .section-label {
-    margin-bottom: 8px;
-}
-
 .server-card h2 {
+    margin: 5px 0 10px;
     font-size: clamp(28px, 5vw, 42px);
-    margin-bottom: 10px;
 }
 
 .server-card p:not(.section-label) {
@@ -401,15 +302,6 @@ main {
     background: #647086;
 }
 
-/* =========================
-   SUPPORT
-========================= */
-
-.support-section {
-    padding-top: 30px;
-    padding-bottom: 70px;
-}
-
 .support-card {
     display: flex;
     align-items: center;
@@ -431,10 +323,6 @@ main {
     font-size: 13px;
 }
 
-/* =========================
-   FOOTER
-========================= */
-
 .site-footer {
     padding: 25px 20px;
     text-align: center;
@@ -442,10 +330,6 @@ main {
     font-size: 11px;
     border-top: 1px solid var(--border);
 }
-
-/* =========================
-   TABLET
-========================= */
 
 @media (max-width: 850px) {
     .feature-grid {
@@ -462,10 +346,6 @@ main {
     }
 }
 
-/* =========================
-   MOBILE
-========================= */
-
 @media (max-width: 600px) {
     .site-header {
         padding: 15px 10px 9px;
@@ -475,21 +355,9 @@ main {
         width: 140px;
     }
 
-    .header-logo-link {
-        margin-bottom: 9px;
-    }
-
-    .navbar {
-        gap: 0;
-    }
-
     .navbar a {
         padding: 7px 8px;
         font-size: 10px;
-    }
-
-    .navbar a + a::before {
-        left: -2px;
     }
 
     .hero {
@@ -497,53 +365,23 @@ main {
         padding: 50px 18px;
     }
 
-    .eyebrow {
-        font-size: 9px;
-        letter-spacing: 1.4px;
-        margin-bottom: 13px;
-    }
-
-    .hero h1 {
-        font-size: 42px;
-        margin-bottom: 17px;
-    }
-
-    .hero-description {
-        font-size: 12px;
-        line-height: 1.8;
-    }
-
-    .hero-buttons {
-        margin-top: 24px;
-        gap: 8px;
-    }
-
-    .button {
-        min-height: 42px;
-        padding: 10px 15px;
-        font-size: 11px;
-    }
-
-    .section {
-        width: min(100% - 28px, 1100px);
-        padding: 45px 0;
-    }
-
-    .section-heading {
-        margin-bottom: 25px;
-    }
-
+    .eyebrow,
     .section-label {
         font-size: 9px;
         letter-spacing: 1.4px;
     }
 
-    .section-heading h2 {
-        font-size: 28px;
+    .hero h1 {
+        font-size: 42px;
     }
 
-    .section-heading > p:last-child {
-        font-size: 11px;
+    .hero-description {
+        font-size: 12px;
+    }
+
+    .section {
+        width: calc(100% - 28px);
+        padding: 45px 0;
     }
 
     .feature-grid {
@@ -557,12 +395,10 @@ main {
 
     .feature-card h3 {
         font-size: 14px;
-        margin-bottom: 7px;
     }
 
     .feature-card p {
         font-size: 11px;
-        line-height: 1.7;
     }
 
     .tier-preview-card {
@@ -590,27 +426,13 @@ main {
         font-size: 28px;
     }
 
-    .server-card p:not(.section-label) {
-        font-size: 11px;
-    }
-
     .support-card {
         flex-direction: column;
         align-items: stretch;
         padding: 22px;
-        gap: 18px;
-    }
-
-    .support-card h2 {
-        font-size: 20px;
     }
 
     .support-card .button {
         width: 100%;
-    }
-
-    .site-footer {
-        padding: 20px 12px;
-        font-size: 9px;
     }
 }

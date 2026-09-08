@@ -4,28 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PVPBattles</title>
+    <title>Home | PVPBattles</title>
     <meta
         name="description"
-        content="PVPBattles - Competitive Minecraft PvP."
+        content="PVPBattles - Competitive Minecraft PvP"
     >
 
     <style>
         @font-face {
             font-family: "Minecraft";
-            src: url("../assets/fonts/minecraft_font.ttf") format("truetype");
-            font-display: swap;
-        }
-
-        :root {
-            --bg: #050713;
-            --bg-light: #080b19;
-            --card: #0b1020;
-            --border: rgba(255, 255, 255, 0.08);
-            --text: #ffffff;
-            --muted: #9da8bd;
-            --blue: #55c0ff;
-            --blue-dark: #3aa7e0;
+            src: url("../assets/fonts/minecraft_font.ttf?v=2") format("truetype");
+            font-weight: 400;
+            font-style: normal;
+            font-display: block;
         }
 
         * {
@@ -36,18 +27,28 @@
             scroll-behavior: smooth;
         }
 
+        body,
+        button,
+        a,
+        h1,
+        h2,
+        h3,
+        p,
+        span {
+            font-family: "Minecraft", sans-serif;
+        }
+
         body {
             margin: 0;
             min-height: 100vh;
+            color: #ffffff;
             background:
                 radial-gradient(
                     circle at 50% 0%,
-                    rgba(55, 150, 220, 0.12),
+                    rgba(58, 167, 224, 0.10),
                     transparent 38%
                 ),
-                var(--bg);
-            color: var(--text);
-            font-family: "Minecraft", sans-serif;
+                #050713;
         }
 
         a {
@@ -55,7 +56,7 @@
         }
 
         /* =========================
-           HEADER
+           Header
         ========================= */
 
         .site-header {
@@ -64,7 +65,7 @@
             padding: 18px 16px 10px;
             text-align: center;
             background: rgba(5, 7, 19, 0.94);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .header-logo-link {
@@ -90,19 +91,17 @@
         .navbar a {
             position: relative;
             padding: 8px 13px;
-            color: var(--muted);
+            color: #9da8bd;
             text-decoration: none;
             font-size: 13px;
             border-radius: 7px;
-            transition:
-                color 0.2s ease,
-                background 0.2s ease;
+            transition: 0.2s ease;
         }
 
         .navbar a:hover,
         .navbar a.active {
-            color: var(--text);
-            background: rgba(85, 192, 255, 0.1);
+            color: #ffffff;
+            background: rgba(85, 192, 255, 0.10);
         }
 
         .navbar a + a::before {
@@ -114,361 +113,347 @@
         }
 
         /* =========================
-           HERO
+           Main
+        ========================= */
+
+        main {
+            width: min(1100px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        /* =========================
+           Hero
         ========================= */
 
         .hero {
-            position: relative;
-            overflow: hidden;
-            min-height: 590px;
+            min-height: 72vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            padding: 80px 20px;
+            align-items: center;
             text-align: center;
+            padding: 80px 0 70px;
         }
 
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 520px;
-            height: 520px;
-            top: -250px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(85, 192, 255, 0.08);
-            border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            width: min(900px, 100%);
-        }
-
-        .hero-badge {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 7px 13px;
-            color: var(--blue);
-            background: rgba(85, 192, 255, 0.08);
-            border: 1px solid rgba(85, 192, 255, 0.2);
-            border-radius: 999px;
-            font-size: 12px;
+        .eyebrow {
+            margin: 0 0 16px;
+            color: #55c0ff;
+            font-size: 13px;
+            letter-spacing: 2px;
         }
 
         .hero h1 {
             margin: 0;
-            font-size: clamp(42px, 8vw, 82px);
+            font-size: clamp(44px, 9vw, 88px);
             line-height: 1;
             letter-spacing: 2px;
-            text-shadow: 0 0 30px rgba(85, 192, 255, 0.15);
-        }
-
-        .hero h1 span {
-            color: var(--blue);
         }
 
         .hero-subtitle {
             max-width: 650px;
             margin: 25px auto 0;
-            color: var(--muted);
-            font-size: clamp(14px, 2vw, 18px);
+            color: #8f9bb0;
+            font-size: 15px;
             line-height: 1.8;
         }
+
+        /* =========================
+           Buttons
+        ========================= */
 
         .hero-buttons {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 12px;
-            margin-top: 35px;
+            margin-top: 32px;
         }
 
         .button {
             display: inline-flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            min-width: 150px;
             min-height: 46px;
-            padding: 0 22px;
-            border: 1px solid transparent;
+            padding: 12px 20px;
             border-radius: 8px;
-            font-family: inherit;
-            font-size: 13px;
             text-decoration: none;
-            cursor: pointer;
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease,
-                border-color 0.2s ease;
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
+            font-size: 13px;
+            transition: 0.2s ease;
         }
 
         .button-primary {
-            color: #03101a;
-            background: var(--blue);
+            color: #06101b;
+            background: #55c0ff;
+            box-shadow: 0 8px 30px rgba(85, 192, 255, 0.16);
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            background: #70caff;
         }
 
         .button-secondary {
-            color: var(--text);
+            color: #ffffff;
             background: rgba(255, 255, 255, 0.04);
-            border-color: var(--border);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .button-secondary:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.07);
         }
 
         .button-disabled {
-            color: #697388;
-            background: rgba(255, 255, 255, 0.03);
-            border-color: var(--border);
+            color: #667086;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             cursor: not-allowed;
             pointer-events: none;
         }
 
         /* =========================
-           SECTIONS
+           Sections
         ========================= */
 
         .section {
-            width: min(1120px, calc(100% - 32px));
-            margin: 0 auto;
-            padding: 90px 0;
+            padding: 55px 0;
         }
 
-        .section-header {
-            margin-bottom: 35px;
-            text-align: center;
+        .section-heading {
+            margin-bottom: 28px;
         }
 
         .section-label {
-            margin-bottom: 10px;
-            color: var(--blue);
-            font-size: 12px;
-            text-transform: uppercase;
+            margin: 0 0 8px;
+            color: #55c0ff;
+            font-size: 11px;
+            letter-spacing: 1.5px;
         }
 
-        .section-title {
+        .section-heading h2 {
             margin: 0;
-            font-size: clamp(26px, 4vw, 38px);
+            font-size: 30px;
         }
 
-        .section-description {
-            max-width: 650px;
-            margin: 15px auto 0;
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.8;
+        .section-heading p {
+            margin: 10px 0 0;
+            color: #758197;
+            font-size: 13px;
         }
 
         /* =========================
-           FEATURES
+           Features
         ========================= */
 
         .features {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: 16px;
         }
 
         .feature-card {
             padding: 26px;
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255, 255, 255, 0.045),
-                    rgba(255, 255, 255, 0.015)
-                );
-            border: 1px solid var(--border);
+            background: rgba(12, 17, 34, 0.70);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 12px;
-            transition:
-                transform 0.2s ease,
-                border-color 0.2s ease;
+            transition: 0.2s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(85, 192, 255, 0.25);
-        }
-
-        .feature-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            margin-bottom: 18px;
-            color: var(--blue);
-            background: rgba(85, 192, 255, 0.08);
-            border-radius: 9px;
-            font-size: 17px;
+            transform: translateY(-3px);
+            border-color: rgba(85, 192, 255, 0.18);
         }
 
         .feature-card h3 {
             margin: 0 0 10px;
-            font-size: 16px;
+            font-size: 17px;
         }
 
         .feature-card p {
             margin: 0;
-            color: var(--muted);
-            font-size: 12px;
-            line-height: 1.8;
+            color: #7f8ba1;
+            font-size: 13px;
+            line-height: 1.7;
         }
 
         /* =========================
-           TIERLIST PREVIEW
+           TierList Preview
         ========================= */
 
         .tier-preview {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 20px;
-            align-items: stretch;
-        }
-
-        .tier-preview-card,
-        .server-card,
-        .support-card {
-            padding: 35px;
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(85, 192, 255, 0.07),
-                    rgba(255, 255, 255, 0.02)
-                );
-            border: 1px solid var(--border);
+            padding: 30px;
+            background: rgba(12, 17, 34, 0.70);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 14px;
         }
 
-        .tier-preview-card h3,
-        .server-card h3,
-        .support-card h3 {
-            margin: 0 0 12px;
-            font-size: 22px;
-        }
-
-        .tier-preview-card p,
-        .server-card p,
-        .support-card p {
-            margin: 0;
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.8;
-        }
-
-        .tier-levels {
-            display: flex;
-            flex-wrap: wrap;
+        .tier-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
             gap: 8px;
-            margin-top: 25px;
         }
 
         .tier {
-            padding: 8px 11px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            font-size: 11px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 58px;
+            border-radius: 8px;
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
         }
 
-        .tier.ht1 { color: #ff4b4b; }
-        .tier.ht2 { color: #ff8b32; }
-        .tier.ht3 { color: #ffb52e; }
-        .tier.ht4 { color: #ffe047; }
-        .tier.ht5 { color: #fff1a3; }
-        .tier.lt1 { color: #45d483; }
-        .tier.lt2 { color: #36cfa9; }
-        .tier.lt3 { color: #3ec5c5; }
-        .tier.lt4 { color: #55a8ff; }
-        .tier.lt5 { color: #9b9cff; }
-
-        /* =========================
-           SERVER
-        ========================= */
-
-        .server-section {
-            padding-top: 20px;
+        .ht1 {
+            color: #ff5b5b;
         }
 
-        .server-card {
+        .lt1 {
+            color: #ff8b45;
+        }
+
+        .ht2 {
+            color: #ffd34e;
+        }
+
+        .lt2 {
+            color: #a8d94c;
+        }
+
+        .ht3 {
+            color: #55c7ff;
+        }
+
+        .lt3 {
+            color: #668cff;
+        }
+
+        .ht4 {
+            color: #b477ff;
+        }
+
+        .lt4 {
+            color: #d47cff;
+        }
+
+        .ht5 {
+            color: #ff75c8;
+        }
+
+        .lt5 {
+            color: #ff8caa;
+        }
+
+        .tier-button {
+            margin-top: 22px;
             text-align: center;
         }
 
-        .coming-soon {
-            display: inline-block;
-            margin: 5px 0 25px;
-            padding: 8px 14px;
-            color: var(--blue);
-            background: rgba(85, 192, 255, 0.08);
-            border: 1px solid rgba(85, 192, 255, 0.2);
+        /* =========================
+           Server
+        ========================= */
+
+        .server-box {
+            padding: 34px;
+            text-align: center;
+            background: rgba(12, 17, 34, 0.75);
+            border: 1px solid rgba(85, 192, 255, 0.13);
+            border-radius: 14px;
+        }
+
+        .server-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 13px;
+            color: #ffbf5f;
+            background: rgba(255, 180, 60, 0.08);
+            border: 1px solid rgba(255, 180, 60, 0.18);
             border-radius: 999px;
             font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        .server-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #ffbf5f;
+        }
+
+        .server-box h2 {
+            margin: 20px 0 8px;
+            font-size: 28px;
+        }
+
+        .server-box p {
+            margin: 0;
+            color: #7f8ba1;
+            font-size: 13px;
+            line-height: 1.7;
         }
 
         .server-ip {
-            margin-top: 25px;
-            padding: 16px;
-            color: #7c879b;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 13px;
+            margin-top: 24px;
+            padding: 18px;
+            background: #080c18;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 9px;
+        }
+
+        .server-ip-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #59657a;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+        }
+
+        .server-ip-value {
+            color: #55c0ff;
+            font-size: 21px;
         }
 
         /* =========================
-           SUPPORT
+           Support
         ========================= */
 
-        .support-section {
-            padding-top: 20px;
-        }
-
-        .support-card {
+        .support {
+            padding: 70px 0 90px;
             text-align: center;
         }
 
-        .support-card .button {
-            margin-top: 25px;
+        .support h2 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .support p {
+            margin: 12px auto 24px;
+            max-width: 550px;
+            color: #7f8ba1;
+            font-size: 13px;
+            line-height: 1.7;
         }
 
         /* =========================
-           FOOTER
+           Footer
         ========================= */
 
         footer {
-            margin-top: 40px;
-            padding: 30px 20px;
+            padding: 30px 16px;
             text-align: center;
-            color: #68738a;
-            border-top: 1px solid var(--border);
+            color: #566177;
             font-size: 11px;
-        }
-
-        footer strong {
-            color: #aeb8ca;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         /* =========================
-           RESPONSIVE
+           Mobile
         ========================= */
 
-        @media (max-width: 800px) {
-            .features {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .tier-preview {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                min-height: 520px;
-            }
-        }
-
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
             .site-header {
                 padding-top: 14px;
             }
@@ -477,60 +462,80 @@
                 width: 140px;
             }
 
-            .navbar {
-                gap: 0;
-            }
-
             .navbar a {
                 padding: 7px 8px;
                 font-size: 10px;
             }
 
             .navbar a + a::before {
-                left: -2px;
+                left: -4px;
+            }
+
+            main {
+                width: min(100% - 24px, 1100px);
             }
 
             .hero {
-                min-height: 500px;
-                padding: 60px 16px;
-            }
-
-            .hero h1 {
-                font-size: 45px;
+                min-height: 65vh;
+                padding: 60px 0 50px;
             }
 
             .hero-subtitle {
-                font-size: 12px;
+                font-size: 13px;
             }
 
             .hero-buttons {
-                flex-direction: column;
-                width: min(300px, 100%);
-                margin-right: auto;
-                margin-left: auto;
+                width: 100%;
             }
 
             .button {
                 width: 100%;
+                max-width: 280px;
             }
 
             .section {
-                width: min(100% - 24px, 1120px);
-                padding: 65px 0;
+                padding: 42px 0;
             }
 
             .features {
                 grid-template-columns: 1fr;
             }
 
-            .feature-card {
-                padding: 22px;
+            .tier-preview {
+                padding: 18px;
             }
 
-            .tier-preview-card,
-            .server-card,
-            .support-card {
-                padding: 25px 20px;
+            .tier-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .server-box {
+                padding: 27px 18px;
+            }
+
+            .support {
+                padding: 55px 0 70px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .navbar a {
+                padding-left: 6px;
+                padding-right: 6px;
+                font-size: 9px;
+            }
+
+            .navbar a + a::before {
+                content: "";
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .section-heading h2,
+            .support h2 {
+                font-size: 25px;
             }
         }
     </style>
@@ -538,234 +543,243 @@
 
 <body>
 
-    <!-- =========================
-         COMMON HEADER
-    ========================= -->
+<header class="site-header">
 
-    <header class="site-header">
-        <a href="../home/" class="header-logo-link">
-            <img
-                src="../assets/header.png"
-                class="header-logo"
-                alt="PVPBattles"
-            >
+    <a href="../home/" class="header-logo-link">
+        <img
+            src="../assets/header.png"
+            class="header-logo"
+            alt="PVPBattles"
+        >
+    </a>
+
+    <nav class="navbar" aria-label="Main navigation">
+        <a href="../home/" class="active">Home</a>
+        <a href="../tierlist/">TierList</a>
+        <a href="../news/">News</a>
+
+        <a
+            href="https://discord.gg/tyCm7xx4jz"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Discord
         </a>
 
-        <nav class="navbar" aria-label="Main navigation">
-            <a href="../home/" class="active">Home</a>
-            <a href="../tierlist/">TierList</a>
-            <a href="../news/">News</a>
+        <a href="../server/">Server</a>
+    </nav>
+
+</header>
+
+<main>
+
+    <!-- Hero -->
+
+    <section class="hero">
+
+        <p class="eyebrow">COMPETITIVE MINECRAFT PVP</p>
+
+        <h1>PVPBattles</h1>
+
+        <p class="hero-subtitle">
+            A competitive Minecraft PvP community focused on skill,
+            rankings and a clean gameplay experience.
+        </p>
+
+        <div class="hero-buttons">
+
+            <span class="button button-disabled">
+                Play Now
+            </span>
+
             <a
-                href="https://discord.gg/tyCm7xx4jz"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="../tierlist/"
+                class="button button-secondary"
             >
-                Discord
+                View TierList
             </a>
-            <a href="../server/">Server</a>
-        </nav>
-    </header>
 
-    <main>
+        </div>
 
-        <!-- HERO -->
+    </section>
 
-        <section class="hero">
-            <div class="hero-content">
+    <!-- Features -->
 
-                <div class="hero-badge">
-                    COMPETITIVE MINECRAFT PVP
-                </div>
+    <section class="section">
 
-                <h1>
-                    PVP<span>Battles</span>
-                </h1>
+        <div class="section-heading">
+            <p class="section-label">WHY PVPBATTLES</p>
 
-                <p class="hero-subtitle">
-                    A competitive Minecraft PvP community focused on
-                    skill, rankings, and fair competition.
-                </p>
+            <h2>Built for PvP</h2>
 
-                <div class="hero-buttons">
-                    <span class="button button-disabled">
-                        Play Now
-                    </span>
+            <p>
+                Everything you need for competitive Minecraft PvP.
+            </p>
+        </div>
 
-                    <a
-                        href="../tierlist/"
-                        class="button button-secondary"
-                    >
-                        View TierList
-                    </a>
-                </div>
+        <div class="features">
 
-            </div>
-        </section>
-
-        <!-- FEATURES -->
-
-        <section class="section">
-
-            <div class="section-header">
-                <div class="section-label">WHY PVPBATTLES</div>
-
-                <h2 class="section-title">
-                    Built for Competitive PvP
-                </h2>
-
-                <p class="section-description">
-                    Everything you need to track your PvP performance
-                    and compete with other players.
-                </p>
-            </div>
-
-            <div class="features">
-
-                <article class="feature-card">
-                    <div class="feature-icon">⚔</div>
-                    <h3>Competitive PvP</h3>
-                    <p>
-                        Compete against other Minecraft PvP players
-                        and prove your skills.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">◆</div>
-                    <h3>TierList</h3>
-                    <p>
-                        Player rankings from LT5 to HT1 across
-                        multiple PvP kits.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">★</div>
-                    <h3>Leaderboards</h3>
-                    <p>
-                        See who stands at the top of the PVPBattles
-                        rankings.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">◈</div>
-                    <h3>Player Statistics</h3>
-                    <p>
-                        Keep track of player performance and
-                        competitive progress.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">⌁</div>
-                    <h3>Low Latency</h3>
-                    <p>
-                        A Japan-based environment designed for
-                        responsive PvP gameplay.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">▣</div>
-                    <h3>Custom UI</h3>
-                    <p>
-                        Clean and easy-to-use interfaces designed
-                        for both desktop and mobile.
-                    </p>
-                </article>
-
-            </div>
-
-        </section>
-
-        <!-- TIERLIST -->
-
-        <section class="section">
-
-            <div class="section-header">
-                <div class="section-label">RANKINGS</div>
-
-                <h2 class="section-title">
-                    Find Your Tier
-                </h2>
-
-                <p class="section-description">
-                    Check player rankings across every supported
-                    PvP kit.
-                </p>
-            </div>
-
-            <div class="tier-preview">
-
-                <div class="tier-preview-card">
-                    <h3>PVPBattles TierList</h3>
-
-                    <p>
-                        From LT5 to HT1, see where players stand
-                        across different competitive kits.
-                    </p>
-
-                    <div class="tier-levels">
-                        <span class="tier ht1">HT1</span>
-                        <span class="tier ht2">HT2</span>
-                        <span class="tier ht3">HT3</span>
-                        <span class="tier ht4">HT4</span>
-                        <span class="tier ht5">HT5</span>
-                        <span class="tier lt1">LT1</span>
-                        <span class="tier lt2">LT2</span>
-                        <span class="tier lt3">LT3</span>
-                        <span class="tier lt4">LT4</span>
-                        <span class="tier lt5">LT5</span>
-                    </div>
-                </div>
-
-                <div class="tier-preview-card">
-                    <h3>Check the Rankings</h3>
-
-                    <p>
-                        Explore the full TierList and find your
-                        favorite players.
-                    </p>
-
-                    <div class="hero-buttons">
-                        <a
-                            href="../tierlist/"
-                            class="button button-primary"
-                        >
-                            Open TierList
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- SERVER -->
-
-        <section class="section server-section">
-
-            <div class="section-header">
-                <div class="section-label">SERVER</div>
-
-                <h2 class="section-title">
-                    PVPBattles Server
-                </h2>
-
-                <p class="section-description">
-                    The server is currently under development.
-                </p>
-            </div>
-
-            <div class="server-card">
-
-                <div class="coming-soon">
-                    COMING SOON
-                </div>
-
-                <h3>Server</h3>
-
+            <article class="feature-card">
+                <h3>Competitive PvP</h3>
                 <p>
-                    The PVPBattles Minecraft server will be
-                    ava
+                    Focused on skill-based and competitive Minecraft PvP.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>TierList</h3>
+                <p>
+                    Player rankings from LT5 to HT1 based on PvP performance.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>Leaderboards</h3>
+                <p>
+                    Track the strongest players and compete for the top spots.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>Player Statistics</h3>
+                <p>
+                    Keep track of your PvP performance and progress.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>Low Latency</h3>
+                <p>
+                    A Japan-based network designed for a smooth PvP experience.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <h3>Custom UI</h3>
+                <p>
+                    A clean and easy-to-use interface designed for players.
+                </p>
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- TierList -->
+
+    <section class="section">
+
+        <div class="section-heading">
+            <p class="section-label">RANKING SYSTEM</p>
+
+            <h2>TierList</h2>
+
+            <p>
+                From LT5 to HT1.
+            </p>
+        </div>
+
+        <div class="tier-preview">
+
+            <div class="tier-row">
+                <div class="tier ht1">HT1</div>
+                <div class="tier lt1">LT1</div>
+                <div class="tier ht2">HT2</div>
+                <div class="tier lt2">LT2</div>
+                <div class="tier ht3">HT3</div>
+                <div class="tier lt3">LT3</div>
+                <div class="tier ht4">HT4</div>
+                <div class="tier lt4">LT4</div>
+                <div class="tier ht5">HT5</div>
+                <div class="tier lt5">LT5</div>
+            </div>
+
+            <div class="tier-button">
+                <a
+                    href="../tierlist/"
+                    class="button button-secondary"
+                >
+                    Open TierList
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Server -->
+
+    <section class="section">
+
+        <div class="section-heading">
+            <p class="section-label">MINECRAFT SERVER</p>
+
+            <h2>Server</h2>
+
+            <p>
+                The PVPBattles server is currently being prepared.
+            </p>
+        </div>
+
+        <div class="server-box">
+
+            <div class="server-status">
+                <span class="server-dot"></span>
+                COMING SOON
+            </div>
+
+            <h2>PVPBattles</h2>
+
+            <p>
+                More information about the server will be announced soon.
+            </p>
+
+            <div class="server-ip">
+
+                <span class="server-ip-label">
+                    SERVER IP
+                </span>
+
+                <span class="server-ip-value">
+                    Coming soon
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Support -->
+
+    <section
+        class="support"
+        id="support"
+    >
+
+        <h2>Need Help?</h2>
+
+        <p>
+            Join our Discord community for support,
+            announcements and more.
+        </p>
+
+        <a
+            href="https://discord.gg/tyCm7xx4jz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button button-secondary"
+        >
+            Join Discord
+        </a>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 PVPBattles. All rights reserved.
+</footer>
+
+</body>
+</html>
